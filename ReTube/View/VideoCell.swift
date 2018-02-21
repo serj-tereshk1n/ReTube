@@ -6,12 +6,8 @@
 //  Copyright © 2018 sergey.tereshkin. All rights reserved.
 //
 
-class VideoCell: UICollectionViewCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-    }
-    
+class VideoCell: BaseCollectionViewCell {
+
     let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -47,15 +43,12 @@ class VideoCell: UICollectionViewCell {
     
     let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        view.backgroundColor = .ytLightGray
         return view
     }()
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupViews() {
+    override func setupViews() {
+        super.setupViews()
         
         addSubview(thumbnailImageView)
         addSubview(separatorView)

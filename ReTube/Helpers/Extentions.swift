@@ -12,6 +12,10 @@ extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
+    
+    static let ytRed = UIColor.rgb(red: 230, green: 32, blue: 31)
+    static let ytRedDark = UIColor.rgb(red: 194, green: 31, blue: 31)
+    static let ytLightGray = UIColor.rgb(red: 230, green: 230, blue: 230)
 }
 
 extension UIView {
