@@ -10,7 +10,6 @@ class MenuCell: BaseCollectionViewCell {
     
     let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "ic_home").withRenderingMode(.alwaysTemplate)
         iv.tintColor = .menuSelectedColor
         return iv
     }()
@@ -34,7 +33,7 @@ class MenuCell: BaseCollectionViewCell {
 
     override var isSelected: Bool {
         didSet{
-            imageView.tintColor = isHighlighted ? .white : .menuSelectedColor
+            imageView.tintColor = isSelected ? .white : .menuSelectedColor
         }
     }
 }

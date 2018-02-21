@@ -39,9 +39,7 @@ class MenuBar: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCellId, for: indexPath) as! MenuCell
-        let image: UIImage = menuButtons[indexPath.row]
-        cell.imageView.image = image.withRenderingMode(.alwaysTemplate)
-        
+        cell.imageView.image = menuButtons[indexPath.row].withRenderingMode(.alwaysTemplate)
         return cell
     }
     
