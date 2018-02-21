@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1BF23D28203E16910055CB20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF23D27203E16910055CB20 /* Constants.swift */; };
 		CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CB042DBF203C373100451B39 /* HCYoutubeParser.m */; };
-		CB042DC3203C850000451B39 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB042DC2203C850000451B39 /* Constants.swift */; };
 		CB0B8C5D203B37D200321C48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B8C5C203B37D200321C48 /* AppDelegate.swift */; };
 		CB0B8C5F203B37D200321C48 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B8C5E203B37D200321C48 /* HomeController.swift */; };
 		CB0B8C64203B37D200321C48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB0B8C63203B37D200321C48 /* Assets.xcassets */; };
@@ -23,10 +23,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1BF23D27203E16910055CB20 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CB042DBE203C373000451B39 /* ReTube-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReTube-Bridging-Header.h"; sourceTree = "<group>"; };
 		CB042DBF203C373100451B39 /* HCYoutubeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCYoutubeParser.m; sourceTree = "<group>"; };
 		CB042DC0203C373100451B39 /* HCYoutubeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCYoutubeParser.h; sourceTree = "<group>"; };
-		CB042DC2203C850000451B39 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CB0B8C59203B37D200321C48 /* ReTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB0B8C5C203B37D200321C48 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB0B8C5E203B37D200321C48 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 		CB6B85BD203DC32100E108B2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CB042DC2203C850000451B39 /* Constants.swift */,
+				1BF23D27203E16910055CB20 /* Constants.swift */,
 				CB0DC39C203D86AF0032605D /* YTStructs.swift */,
 				CB0DC39E203D87C90032605D /* YTHelper.swift */,
 			);
@@ -205,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB0B8C5F203B37D200321C48 /* HomeController.swift in Sources */,
+				1BF23D28203E16910055CB20 /* Constants.swift in Sources */,
 				CB6B85BB203DC25100E108B2 /* VideoCell.swift in Sources */,
 				CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */,
 				CB0DC39D203D86AF0032605D /* YTStructs.swift in Sources */,
@@ -213,7 +214,6 @@
 				CB6B85DF203DE25200E108B2 /* BaseCollectionViewCell.swift in Sources */,
 				CB6B85BF203DD08200E108B2 /* MenuBar.swift in Sources */,
 				CB0DC39F203D87C90032605D /* YTHelper.swift in Sources */,
-				CB042DC3203C850000451B39 /* Constants.swift in Sources */,
 				CB6B85B8203DC1E900E108B2 /* Extentions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

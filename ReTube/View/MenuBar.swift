@@ -28,6 +28,9 @@ class MenuBar: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIC
         
         addConstraintsWithFormat(format: "H:|[v0]|", views: collectionView)
         addConstraintsWithFormat(format: "V:|[v0]|", views: collectionView)
+        
+        let selectedIndexPath = NSIndexPath(item: 0, section: 0)
+        collectionView.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: .bottom)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -36,7 +39,9 @@ class MenuBar: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCellId, for: indexPath) as! MenuCell
-        cell.imageView.image = menuButtons[indexPath.row]
+        let image: UIImage = menuButtons[indexPath.row]
+        cell.imageView.image = image.withRenderingMode(.alwaysTemplate)
+        
         return cell
     }
     

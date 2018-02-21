@@ -16,6 +16,7 @@ extension UIColor {
     static let ytRed = UIColor.rgb(red: 230, green: 32, blue: 31)
     static let ytRedDark = UIColor.rgb(red: 194, green: 31, blue: 31)
     static let ytLightGray = UIColor.rgb(red: 230, green: 230, blue: 230)
+    static let menuSelectedColor = UIColor.rgb(red: 91, green: 14, blue: 13)
 }
 
 extension UIView {
