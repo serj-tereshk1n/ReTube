@@ -10,9 +10,10 @@ class VideoCell: BaseCollectionViewCell {
 
     var video: VideoTemp? {
         didSet {
+//            thumbnailImageView.image = UIImage(named: (video?.thumbnailImageName) ?? "placeholder")
+//            userProfileImageView.image = UIImage(named: (video?.channel?.profileImageName) ?? "")
+            
             titleLabel.text = video?.title
-            thumbnailImageView.image = UIImage(named: (video?.thumbnailImageName) ?? "placeholder")
-            userProfileImageView.image = UIImage(named: (video?.channel?.profileImageName) ?? "")
             
             if let channelName = video?.channel?.name, let numberOfViews = video?.numberOfViews {
                 let numberFormatter = NumberFormatter()
@@ -35,9 +36,17 @@ class VideoCell: BaseCollectionViewCell {
                     titleLabelHeightConstraint?.constant = 20
                 }
             }
+            
+            if let videoThumbnail = video?.thumbnailImageName {
+                thumbnailImageView.loadImage(withUrl: videoThumbnail)
+            }
+        
+            if let channelThumbnail = video?.channel?.profileImageName {
+                userProfileImageView.loadImage(withUrl: channelThumbnail)
+            }
         }
     }
-    
+
     let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill

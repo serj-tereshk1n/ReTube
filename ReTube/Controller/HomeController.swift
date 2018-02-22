@@ -10,36 +10,85 @@ import UIKit
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var videos: [VideoTemp] = {
-        var channel = ChannelTemp()
-        channel.name = "AcademeG"
-        channel.profileImageName = "academeg_image"
-        
-        var plagiatVideo = VideoTemp()
-        plagiatVideo.thumbnailImageName = "academeg_plagiat_thumbnail"
-        plagiatVideo.title = "Плагиат против ВАЗ 375 сил и выезд из 5 секунд."
-        plagiatVideo.channel = channel
-        plagiatVideo.numberOfViews = 12341344
-        
-        var zilVideo = VideoTemp()
-        zilVideo.thumbnailImageName = "zil_thumbnail"
-        zilVideo.title = "ВАЛЯЩИЙ ЗИЛ 130"
-        zilVideo.channel = channel
-        zilVideo.numberOfViews = 234243434
-        
-        var dislikeVideo = VideoTemp()
-        dislikeVideo.thumbnailImageName = "thumbnail_dislike"
-        dislikeVideo.title = "Дизлайк"
-        dislikeVideo.channel = channel
-        dislikeVideo.numberOfViews = 345352344
-        
-        return [plagiatVideo, zilVideo, dislikeVideo]
-    }()
+//    var videos: [VideoTemp] = {
+//        var channel = ChannelTemp()
+//        channel.name = "AcademeG"
+//        channel.profileImageName = "academeg_image"
+//
+//        var plagiatVideo = VideoTemp()
+//        plagiatVideo.thumbnailImageName = "academeg_plagiat_thumbnail"
+//        plagiatVideo.title = "Плагиат против ВАЗ 375 сил и выезд из 5 секунд."
+//        plagiatVideo.channel = channel
+//        plagiatVideo.numberOfViews = 12341344
+//
+//        var zilVideo = VideoTemp()
+//        zilVideo.thumbnailImageName = "zil_thumbnail"
+//        zilVideo.title = "ВАЛЯЩИЙ ЗИЛ 130"
+//        zilVideo.channel = channel
+//        zilVideo.numberOfViews = 234243434
+//
+//        var dislikeVideo = VideoTemp()
+//        dislikeVideo.thumbnailImageName = "thumbnail_dislike"
+//        dislikeVideo.title = "Дизлайк"
+//        dislikeVideo.channel = channel
+//        dislikeVideo.numberOfViews = 345352344
+//
+//        return [plagiatVideo, zilVideo, dislikeVideo]
+//    }()
 
+    var videos = [VideoTemp]()
+    
     let kCellId = "homeCell"
+    
+    private func fetchVideos() {
+        let url = URL(string: "https://s3-us-west-2.amazonaws.com/youtubeassets/home.json")
+        let request : URLRequest = URLRequest(url: url!)
+        URLSession.shared.dataTask(with: request) {
+            (data, response, error) in
+            
+            if (error != nil) {
+                print("Ooops, errror hase occored")
+                return
+            } else if let data = data {
+                
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                    
+                    for dic in json as! [[String: AnyObject]] {
+                        print(dic["title"] ?? "[default value]")
+                        
+                        let channel = ChannelTemp()
+                        channel.name = dic["channel"]!["name"] as? String
+                        channel.profileImageName = dic["channel"]!["profile_image_name"] as? String
+                        
+                        let video = VideoTemp()
+                        video.title = dic["title"] as? String
+                        video.thumbnailImageName = dic["thumbnail_image_name"] as? String
+                        video.numberOfViews = dic["number_of_views"] as? NSNumber
+                        video.duration = dic["duration"] as? Int
+                        video.channel = channel
+                        
+                        self.videos.append(video)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.collectionView?.reloadData()
+                    }
+                    
+                    print(json)
+                } catch let jsonError {
+                    print(jsonError)
+                }
+                
+            }
+            
+        }.resume()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchVideos()
         
         navigationController?.navigationBar.isTranslucent = false
         
