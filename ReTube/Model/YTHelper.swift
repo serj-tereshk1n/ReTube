@@ -28,7 +28,8 @@ import Foundation
 // https://www.googleapis.com/youtube/v3/search?
 // key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
 // channelId=UC0lT9K8Wfuc1KPqm6YjRf1A
-// part=snippet,id&order=date
+// part=snippet,id
+// order=date
 // maxResults=20
 
 class YTHelper: NSObject {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1BF23D28203E16910055CB20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF23D27203E16910055CB20 /* Constants.swift */; };
 		CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CB042DBF203C373100451B39 /* HCYoutubeParser.m */; };
+		CB073F7D203EECED00DF2017 /* VideoTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB073F7C203EECED00DF2017 /* VideoTemp.swift */; };
 		CB0B8C5D203B37D200321C48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B8C5C203B37D200321C48 /* AppDelegate.swift */; };
 		CB0B8C5F203B37D200321C48 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B8C5E203B37D200321C48 /* HomeController.swift */; };
 		CB0B8C64203B37D200321C48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB0B8C63203B37D200321C48 /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 		CB042DBE203C373000451B39 /* ReTube-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReTube-Bridging-Header.h"; sourceTree = "<group>"; };
 		CB042DBF203C373100451B39 /* HCYoutubeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCYoutubeParser.m; sourceTree = "<group>"; };
 		CB042DC0203C373100451B39 /* HCYoutubeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCYoutubeParser.h; sourceTree = "<group>"; };
+		CB073F7C203EECED00DF2017 /* VideoTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTemp.swift; sourceTree = "<group>"; };
 		CB0B8C59203B37D200321C48 /* ReTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB0B8C5C203B37D200321C48 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB0B8C5E203B37D200321C48 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				1BF23D27203E16910055CB20 /* Constants.swift */,
 				CB0DC39C203D86AF0032605D /* YTStructs.swift */,
 				CB0DC39E203D87C90032605D /* YTHelper.swift */,
+				CB073F7C203EECED00DF2017 /* VideoTemp.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				CB0B8C5F203B37D200321C48 /* HomeController.swift in Sources */,
 				1BF23D28203E16910055CB20 /* Constants.swift in Sources */,
 				CB6B85BB203DC25100E108B2 /* VideoCell.swift in Sources */,
+				CB073F7D203EECED00DF2017 /* VideoTemp.swift in Sources */,
 				CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */,
 				CB0DC39D203D86AF0032605D /* YTStructs.swift in Sources */,
 				CB0B8C5D203B37D200321C48 /* AppDelegate.swift in Sources */,
