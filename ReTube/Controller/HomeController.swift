@@ -126,14 +126,17 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationItem.rightBarButtonItems = [moreBarButtonItem, searchBarButtonItem]
     }
     
+    let settingsLauncher = SettingsLauncher()
+    
+    @objc private func handleMore() {
+        //show settings
+        settingsLauncher.showSettings()
+    }
+    
     @objc private func handleSearch() {
         
     }
-    
-    @objc private func handleMore() {
-        
-    }
-    
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return videos.count
     }

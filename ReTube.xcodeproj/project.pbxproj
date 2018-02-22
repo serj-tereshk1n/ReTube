@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1BB71586203F8B42002ED3A9 /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB71585203F8B42002ED3A9 /* SettingsLauncher.swift */; };
 		1BF23D28203E16910055CB20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF23D27203E16910055CB20 /* Constants.swift */; };
 		CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CB042DBF203C373100451B39 /* HCYoutubeParser.m */; };
 		CB073F7D203EECED00DF2017 /* VideoTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB073F7C203EECED00DF2017 /* VideoTemp.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1BB71585203F8B42002ED3A9 /* SettingsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
 		1BF23D27203E16910055CB20 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CB042DBE203C373000451B39 /* ReTube-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReTube-Bridging-Header.h"; sourceTree = "<group>"; };
 		CB042DBF203C373100451B39 /* HCYoutubeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCYoutubeParser.m; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			children = (
 				CB0B8C5C203B37D200321C48 /* AppDelegate.swift */,
 				CB0B8C5E203B37D200321C48 /* HomeController.swift */,
+				1BB71585203F8B42002ED3A9 /* SettingsLauncher.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				CB0B8C5F203B37D200321C48 /* HomeController.swift in Sources */,
 				1BF23D28203E16910055CB20 /* Constants.swift in Sources */,
 				CB6B85BB203DC25100E108B2 /* VideoCell.swift in Sources */,
+				1BB71586203F8B42002ED3A9 /* SettingsLauncher.swift in Sources */,
 				CB073F7D203EECED00DF2017 /* VideoTemp.swift in Sources */,
 				CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */,
 				CB0DC39D203D86AF0032605D /* YTStructs.swift in Sources */,
