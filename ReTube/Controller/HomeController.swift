@@ -9,32 +9,6 @@
 import UIKit
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    
-//    var videos: [VideoTemp] = {
-//        var channel = ChannelTemp()
-//        channel.name = "AcademeG"
-//        channel.profileImageName = "academeg_image"
-//
-//        var plagiatVideo = VideoTemp()
-//        plagiatVideo.thumbnailImageName = "academeg_plagiat_thumbnail"
-//        plagiatVideo.title = "Плагиат против ВАЗ 375 сил и выезд из 5 секунд."
-//        plagiatVideo.channel = channel
-//        plagiatVideo.numberOfViews = 12341344
-//
-//        var zilVideo = VideoTemp()
-//        zilVideo.thumbnailImageName = "zil_thumbnail"
-//        zilVideo.title = "ВАЛЯЩИЙ ЗИЛ 130"
-//        zilVideo.channel = channel
-//        zilVideo.numberOfViews = 234243434
-//
-//        var dislikeVideo = VideoTemp()
-//        dislikeVideo.thumbnailImageName = "thumbnail_dislike"
-//        dislikeVideo.title = "Дизлайк"
-//        dislikeVideo.channel = channel
-//        dislikeVideo.numberOfViews = 345352344
-//
-//        return [plagiatVideo, zilVideo, dislikeVideo]
-//    }()
 
     var videos = [VideoTemp]()
     
@@ -113,9 +87,22 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }()
     
     private func setupMenuBar() {
+        
+        navigationController?.hidesBarsOnSwipe = true
+        
+        let redView = UIView()
+        redView.backgroundColor = .ytRed
+        
+        view.addSubview(redView)
         view.addSubview(menuBar)
+        
+        view.addConstraintsWithFormat(format: "H:|[v0]|", views: redView)
+        view.addConstraintsWithFormat(format: "V:[v0(50)]", views: redView)
         view.addConstraintsWithFormat(format: "H:|[v0]|", views: menuBar)
-        view.addConstraintsWithFormat(format: "V:|[v0(50)]", views: menuBar)
+        view.addConstraintsWithFormat(format: "V:[v0(50)]", views: menuBar)
+        
+        menuBar.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
+        
     }
     
     private func setupNavBarButtons() {
@@ -131,7 +118,13 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     @objc private func handleMore() {
         //show settings
         settingsLauncher.showSettings()
+//        showControllerForSettings()
     }
+    
+//    private func showControllerForSettings() {
+//        let dummySettingsController = UIViewController()
+//        navigationController?.pushViewController(dummySettingsController, animated: true)
+//    }
     
     @objc private func handleSearch() {
         

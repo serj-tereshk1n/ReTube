@@ -6,13 +6,13 @@
 //  Copyright © 2018 sergey.tereshkin. All rights reserved.
 //
 
+import SDWebImage
+
 class VideoCell: BaseCollectionViewCell {
 
     var video: VideoTemp? {
         didSet {
-//            thumbnailImageView.image = UIImage(named: (video?.thumbnailImageName) ?? "placeholder")
-//            userProfileImageView.image = UIImage(named: (video?.channel?.profileImageName) ?? "")
-            
+
             titleLabel.text = video?.title
             
             if let channelName = video?.channel?.name, let numberOfViews = video?.numberOfViews {
@@ -38,11 +38,16 @@ class VideoCell: BaseCollectionViewCell {
             }
             
             if let videoThumbnail = video?.thumbnailImageName {
-                thumbnailImageView.loadImage(withUrl: videoThumbnail)
+                thumbnailImageView.sd_setImage(with: URL(string: videoThumbnail),
+                                               placeholderImage: UIImage(named: "placeholder.png"))
+                
+//                thumbnailImageView.loadImage(withUrl: videoThumbnail)
             }
         
             if let channelThumbnail = video?.channel?.profileImageName {
-                userProfileImageView.loadImage(withUrl: channelThumbnail)
+                userProfileImageView.sd_setImage(with: URL(string: channelThumbnail),
+                                               placeholderImage: UIImage(named: "placeholder.png"))
+//                userProfileImageView.loadImage(withUrl: channelThumbnail)
             }
         }
     }
@@ -78,6 +83,8 @@ class VideoCell: BaseCollectionViewCell {
         tv.text = "PaySend — международные онлайн-переводы с карты на карту с фикс."
         tv.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0)
         tv.textColor = .lightGray
+        tv.isEditable = false
+        tv.isSelectable = false
         return tv
     }()
     
