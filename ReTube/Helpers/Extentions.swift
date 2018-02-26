@@ -30,3 +30,10 @@ extension UIView {
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
     }
 }
+
+extension UITextView {
+    func lockEditing(lock: Bool) {
+        isEditable = !lock
+        isSelectable = !lock
+    }
+}

@@ -15,54 +15,14 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     let kCellId = "homeCell"
     
     private func fetchVideos() {
-        let url = URL(string: "https://s3-us-west-2.amazonaws.com/youtubeassets/home.json")
-        let request : URLRequest = URLRequest(url: url!)
-        URLSession.shared.dataTask(with: request) {
-            (data, response, error) in
-            
-            if (error != nil) {
-                print("Ooops, errror hase occored")
-                return
-            } else if let data = data {
-                
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                    
-                    for dic in json as! [[String: AnyObject]] {
-                        print(dic["title"] ?? "[default value]")
-                        
-                        let channel = ChannelTemp()
-                        channel.name = dic["channel"]!["name"] as? String
-                        channel.profileImageName = dic["channel"]!["profile_image_name"] as? String
-                        
-                        let video = VideoTemp()
-                        video.title = dic["title"] as? String
-                        video.thumbnailImageName = dic["thumbnail_image_name"] as? String
-                        video.numberOfViews = dic["number_of_views"] as? NSNumber
-                        video.duration = dic["duration"] as? Int
-                        video.channel = channel
-                        
-                        self.videos.append(video)
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.collectionView?.reloadData()
-                    }
-                    
-                    print(json)
-                } catch let jsonError {
-                    print(jsonError)
-                }
-                
-            }
-            
-        }.resume()
+        ApiService.sharedInstance.fetchVideos { (videos) in
+            self.videos = videos
+            self.collectionView?.reloadData()
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        fetchVideos()
         
         navigationController?.navigationBar.isTranslucent = false
         
@@ -77,6 +37,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         
+        fetchVideos()
         setupMenuBar()
         setupNavBarButtons()
     }

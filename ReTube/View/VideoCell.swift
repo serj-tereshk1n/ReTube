@@ -9,10 +9,10 @@
 import SDWebImage
 
 class VideoCell: BaseCollectionViewCell {
-
+    
     var video: VideoTemp? {
         didSet {
-
+        
             titleLabel.text = video?.title
             
             if let channelName = video?.channel?.name, let numberOfViews = video?.numberOfViews {
@@ -21,9 +21,12 @@ class VideoCell: BaseCollectionViewCell {
                 
                 let strViews = numberFormatter.string(from: numberOfViews) ?? "0"
                 let subtitleText = "\(channelName) • \(strViews) • 2 years ago"
+                
+                subtitleTextView.lockEditing(lock: false)
                 subtitleTextView.text = subtitleText
+                subtitleTextView.lockEditing(lock: true)
             }
-            
+
             // measure title text
             if let title = video?.title {
                 let size = CGSize(width: frame.width - 16 - 44 - 8 - 16, height: 1000)
@@ -40,15 +43,13 @@ class VideoCell: BaseCollectionViewCell {
             if let videoThumbnail = video?.thumbnailImageName {
                 thumbnailImageView.sd_setImage(with: URL(string: videoThumbnail),
                                                placeholderImage: UIImage(named: "placeholder.png"))
-                
-//                thumbnailImageView.loadImage(withUrl: videoThumbnail)
             }
         
             if let channelThumbnail = video?.channel?.profileImageName {
                 userProfileImageView.sd_setImage(with: URL(string: channelThumbnail),
                                                placeholderImage: UIImage(named: "placeholder.png"))
-//                userProfileImageView.loadImage(withUrl: channelThumbnail)
             }
+            
         }
     }
 
@@ -83,8 +84,6 @@ class VideoCell: BaseCollectionViewCell {
         tv.text = "PaySend — международные онлайн-переводы с карты на карту с фикс."
         tv.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0)
         tv.textColor = .lightGray
-        tv.isEditable = false
-        tv.isSelectable = false
         return tv
     }()
     
