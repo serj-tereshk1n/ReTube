@@ -9,17 +9,17 @@
 import UIKit
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
-    var videos = [VideoTemp]()
     
-    let kCellId = "homeCell"
+    let kSectionCellId = "kSectionCellId"
+    let kFeedCellId = "kFeedCellId"
+    let kTrandingCellId = "kTrandingCellId"
+    let kSubscriptionsCellId = "kSubscriptionsCellId"
     
-    private func fetchVideos() {
-        ApiService.sharedInstance.fetchVideos { (videos) in
-            self.videos = videos
-            self.collectionView?.reloadData()
-        }
-    }
+    lazy var menuBar: MenuBar = {
+        let mb = MenuBar()
+        mb.homeController = self
+        return mb
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,25 +27,31 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationController?.navigationBar.isTranslucent = false
         
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 32, height: view.frame.height))
-        titleLabel.text = "Home"
+        titleLabel.text = "  Home"
         titleLabel.textColor = .white
         titleLabel.font = UIFont.systemFont(ofSize: 20)
         navigationItem.titleView = titleLabel
         
-        collectionView?.backgroundColor = .white
-        collectionView?.register(VideoCell.self, forCellWithReuseIdentifier: kCellId)
-        collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-        
-        fetchVideos()
+        setupCollectionView()
         setupMenuBar()
         setupNavBarButtons()
     }
     
-    let menuBar: MenuBar = {
-        let mb = MenuBar()
-        return mb
-    }()
+    private func setupCollectionView() {
+        if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .horizontal
+            flowLayout.minimumLineSpacing = 0
+        }
+        
+        collectionView?.backgroundColor = .white
+//        collectionView?.register(VideoCell.self, forCellWithReuseIdentifier: kCellId)
+        collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: kSectionCellId)
+        collectionView?.register(TrandingCell.self, forCellWithReuseIdentifier: kTrandingCellId)
+        collectionView?.register(SubscriptionFeed.self, forCellWithReuseIdentifier: kSubscriptionsCellId)
+        collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        collectionView?.isPagingEnabled = true
+    }
     
     private func setupMenuBar() {
         
@@ -79,32 +85,56 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     @objc private func handleMore() {
         //show settings
         settingsLauncher.showSettings()
-//        showControllerForSettings()
     }
-    
-//    private func showControllerForSettings() {
-//        let dummySettingsController = UIViewController()
-//        navigationController?.pushViewController(dummySettingsController, animated: true)
-//    }
     
     @objc private func handleSearch() {
         
     }
-
+    
+    func scrollToMenuAt(indexPath: IndexPath) {
+        collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        if let titleLabel = navigationItem.titleView as? UILabel {
+            titleLabel.text = "  \(titles[Int(indexPath.row)])"
+        }
+    }
+    
+    // MARK - CollectionView delegate/dataSource
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return videos.count
+        return 4
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCellId, for: indexPath) as! VideoCell
-        cell.video = videos[indexPath.row]
-        return cell
+        
+        if indexPath.item == 1 {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: kTrandingCellId, for: indexPath) as! TrandingCell
+        } else if indexPath.item == 2 {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: kSubscriptionsCellId, for: indexPath) as! SubscriptionFeed
+        } else {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: kSectionCellId, for: indexPath) as! FeedCell
+        }
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kSectionCellId, for: indexPath) as! FeedCell
+//        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = view.frame.width
-        let height = (width - 32) * 9 / 16
-        return CGSize(width: width, height: height + 104)
+        return CGSize(width: view.frame.width, height: view.frame.height - 50)
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        menuBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
+    }
+    
+    let titles = ["Home", "Trending", "Playlists", "Profile"]
+    
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let index = targetContentOffset.pointee.x / view.frame.width
+        let indexPath = IndexPath(item: Int(index), section: 0)
+        menuBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        
+        if let titleLabel = navigationItem.titleView as? UILabel {
+            titleLabel.text = "  \(titles[Int(index)])"
+        }
     }
 }
 

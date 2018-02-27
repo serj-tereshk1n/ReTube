@@ -10,6 +10,7 @@ class MenuBar: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     let kCellId = "menuCellId"
     let menuButtons: [UIImage] = [#imageLiteral(resourceName: "ic_home"), #imageLiteral(resourceName: "ic_videos"), #imageLiteral(resourceName: "ic_playlist"), #imageLiteral(resourceName: "ic_profile")]
+    var homeController: HomeController?
     
     lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -56,12 +57,7 @@ class MenuBar: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let x = CGFloat(indexPath.item) * frame.width / CGFloat(menuButtons.count)
-        self.horizontalBarLeftAnchorConstraint?.constant = x
-        
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
-            self.layoutIfNeeded()
-        }, completion: nil)
+        homeController?.scrollToMenuAt(indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

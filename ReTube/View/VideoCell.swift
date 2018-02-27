@@ -22,9 +22,7 @@ class VideoCell: BaseCollectionViewCell {
                 let strViews = numberFormatter.string(from: numberOfViews) ?? "0"
                 let subtitleText = "\(channelName) • \(strViews) • 2 years ago"
                 
-                subtitleTextView.lockEditing(lock: false)
                 subtitleTextView.text = subtitleText
-                subtitleTextView.lockEditing(lock: true)
             }
 
             // measure title text
@@ -84,6 +82,9 @@ class VideoCell: BaseCollectionViewCell {
         tv.text = "PaySend — международные онлайн-переводы с карты на карту с фикс."
         tv.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0)
         tv.textColor = .lightGray
+        tv.isEditable = false
+        tv.isSelectable = false
+        tv.isScrollEnabled = false
         return tv
     }()
     
