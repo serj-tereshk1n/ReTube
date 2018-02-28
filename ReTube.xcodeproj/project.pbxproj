@@ -28,6 +28,7 @@
 		CB6B85BF203DD08200E108B2 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B85BE203DD08200E108B2 /* MenuBar.swift */; };
 		CB6B85DF203DE25200E108B2 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B85DE203DE25200E108B2 /* BaseCollectionViewCell.swift */; };
 		CB6B85E1203DE32700E108B2 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B85E0203DE32700E108B2 /* MenuCell.swift */; };
+		CB832C302047016B00C643C0 /* VideoLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB832C2F2047016B00C643C0 /* VideoLauncher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		CB6B85BE203DD08200E108B2 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		CB6B85DE203DE25200E108B2 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB6B85E0203DE32700E108B2 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		CB832C2F2047016B00C643C0 /* VideoLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoLauncher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 				CB0B8C5C203B37D200321C48 /* AppDelegate.swift */,
 				CB0B8C5E203B37D200321C48 /* HomeController.swift */,
 				1BB71585203F8B42002ED3A9 /* SettingsLauncher.swift */,
+				CB832C2F2047016B00C643C0 /* VideoLauncher.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				1BB71586203F8B42002ED3A9 /* SettingsLauncher.swift in Sources */,
 				CB1253A32040822F00A6A6B8 /* SettingCell.swift in Sources */,
 				CB073F7D203EECED00DF2017 /* VideoTemp.swift in Sources */,
+				CB832C302047016B00C643C0 /* VideoLauncher.swift in Sources */,
 				CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */,
 				CB0DC39D203D86AF0032605D /* YTStructs.swift in Sources */,
 				CB0B8C5D203B37D200321C48 /* AppDelegate.swift in Sources */,

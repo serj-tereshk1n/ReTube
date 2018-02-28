@@ -57,4 +57,9 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
         let height = (width - 32) * 9 / 16
         return CGSize(width: width, height: height + 104)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let videoLauncher = VideoLauncher()
+        videoLauncher.showVideoPlayer()
+    }
 }
