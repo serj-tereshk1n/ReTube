@@ -113,8 +113,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         } else {
             return collectionView.dequeueReusableCell(withReuseIdentifier: kSectionCellId, for: indexPath) as! FeedCell
         }
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kSectionCellId, for: indexPath) as! FeedCell
-//        return cell
+
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
