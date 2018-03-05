@@ -1,14 +1,14 @@
 //
-//  PlayerView.swift
+//  MinimizedPlayerView.swift
 //  ReTube
 //
-//  Created by sergey.tereshkin on 01/03/2018.
+//  Created by sergey.tereshkin on 05/03/2018.
 //  Copyright © 2018 sergey.tereshkin. All rights reserved.
 //
 
 import UIKit
 
-class PlayerView: UIView {
+class MinimizedPlayerView: UIView {
 
     /*
     // Only override draw() if you perform custom drawing.
