@@ -29,4 +29,11 @@ extension UIView {
         }
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
     }
+    
+    func addFullScreenConstraintsFor(views: UIView..., inside: UIView) {
+        for (_, view) in views.enumerated() {
+            inside.addConstraintsWithFormat(format: "H:|[v0]|", views: view)
+            inside.addConstraintsWithFormat(format: "V:|[v0]|", views: view)
+        }
+    }
 }

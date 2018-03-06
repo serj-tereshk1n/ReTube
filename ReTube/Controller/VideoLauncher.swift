@@ -13,7 +13,7 @@ class VideoLauncher: NSObject {
     // constant and static members
     static let sharedInstance = VideoLauncher()
     
-    let kMinimizedPlayerHeight: CGFloat = 75
+    let kMinimizedPlayerHeight: CGFloat = 72
     let kMinimizedPlayerMargin: CGFloat = 16
     
     // variable memebers
@@ -28,7 +28,7 @@ class VideoLauncher: NSObject {
     
     let minimizedPlayerView: MinimizedPlayerView = {
         let mplayer = MinimizedPlayerView()
-        mplayer.backgroundColor = .green
+        mplayer.backgroundColor = .black
         mplayer.isUserInteractionEnabled = true
         mplayer.alpha = 0
         return mplayer
@@ -36,7 +36,6 @@ class VideoLauncher: NSObject {
     
     let playerView: MainPlayerView = {
         let player = MainPlayerView()
-        player.backgroundColor = .green
         player.isUserInteractionEnabled = true
         return player
     }()

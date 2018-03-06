@@ -13,66 +13,226 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-    
         setupPlayerView()
     }
 
     let player = YTPlayerView()
     
-    let controlsContainerView: UIView = {
+    let playerOverlayView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .black
+        view.backgroundColor = .clear
         return view
     }()
     
+    let controlsPanelView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.alpha = 0
+        return view
+    }()
+    
+    let activityIndicatorView: UIView = {
+        let container = UIView()
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        container.backgroundColor = .black
+        container.addSubview(indicator)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
+        indicator.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
+        indicator.startAnimating()
+        return container
+    }()
+    
+    lazy var pausePlayButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "ic_pause"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+        return button
+    }()
+    
+    let videoCurrentTimeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "00:00"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
+    }()
+    
+    lazy var seekSlider: UISlider = {
+        let slider = UISlider()
+        slider.setThumbImage(#imageLiteral(resourceName: "ic_thumb"), for: .normal)
+        slider.minimumTrackTintColor = .ytRed
+        slider.maximumTrackTintColor = .white
+        slider.addTarget(self, action: #selector(seekSliderDidChange(slider:)), for: .valueChanged)
+        return slider
+    }()
+    
+    let videoLengthLabel: UILabel = {
+        let label = UILabel()
+        label.text = "00:00"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
+    }()
+    
+    let kTimerInterval: Double = 3.5
+    var controlsTimer: Timer?
+
     func setupPlayerView() {
-        
-//        let vars = ["playsinline": 1, "controls": 0]
-        let lbl = UILabel()
-        lbl.text = "I am the player :)"
-        lbl.textAlignment = .center
-        
+
         addSubview(player)
-        addSubview(lbl)
-        addSubview(controlsContainerView)
+        addSubview(playerOverlayView)
         
-        addConstraintsWithFormat(format: "H:|[v0]|", views: lbl)
-        addConstraintsWithFormat(format: "V:|[v0]|", views: lbl)
-        addConstraintsWithFormat(format: "H:|[v0]|", views: player)
-        addConstraintsWithFormat(format: "V:|[v0]|", views: player)
-        addConstraintsWithFormat(format: "H:|[v0]|", views: controlsContainerView)
-        addConstraintsWithFormat(format: "V:|[v0]|", views: controlsContainerView)
+        playerOverlayView.addSubview(controlsPanelView)
         
-        controlsContainerView.alpha = 0
-        controlsContainerView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        player.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(_:))))
+        addFullScreenConstraintsFor(views: player, playerOverlayView, inside: self)
+        addFullScreenConstraintsFor(views: controlsPanelView, inside: playerOverlayView)
         
-//        player.delegate = self
-//        player.load(withVideoId: "LEcbagW4O-s", playerVars: vars)
-       
+        controlsPanelView.addSubview(pausePlayButton)
+        controlsPanelView.addSubview(seekSlider)
+
+        let seekBarContainerView = UIView()
+        
+        controlsPanelView.addSubview(seekBarContainerView)
+        
+        seekBarContainerView.addSubview(videoCurrentTimeLabel)
+        seekBarContainerView.addSubview(seekSlider)
+        seekBarContainerView.addSubview(videoLengthLabel)
+        
+        controlsPanelView.addConstraintsWithFormat(format: "H:|[v0]|", views: seekBarContainerView)
+        controlsPanelView.addConstraintsWithFormat(format: "V:[v0(30)]-8-|", views: seekBarContainerView)
+        
+        seekBarContainerView.addConstraintsWithFormat(format: "H:|-4-[v0(50)]-4-[v1]-4-[v2(50)]-4-|", views: videoCurrentTimeLabel, seekSlider, videoLengthLabel)
+        seekBarContainerView.addConstraintsWithFormat(format: "V:|[v0]|", views: videoCurrentTimeLabel)
+        seekBarContainerView.addConstraintsWithFormat(format: "V:|[v0]|", views: seekSlider)
+        seekBarContainerView.addConstraintsWithFormat(format: "V:|[v0]|", views: videoLengthLabel)
+        
+        NSLayoutConstraint.activate([
+            pausePlayButton.centerXAnchor.constraint(equalTo: controlsPanelView.centerXAnchor),
+            pausePlayButton.centerYAnchor.constraint(equalTo: controlsPanelView.centerYAnchor)
+            ])
+        
+        playerOverlayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showControls(_:))))
+        controlsPanelView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideControls(_:))))
+        
+        let vars = ["playsinline": 1,
+                    "controls": 0,
+                    "rel": 0,
+                    "showinfo": 0]
+
+        player.delegate = self
+        player.load(withVideoId: "-s3j-ptJD10", playerVars: vars)
     }
     
-    var isControlsVisible = false
-    
-    @objc func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
-        
+    @objc func showControls(_ gestureRecognizer: UITapGestureRecognizer) {
         UIView.animate(withDuration: 0.15, animations: {
-            if self.isControlsVisible {
-                self.controlsContainerView.alpha = 0
-            } else {
-                self.controlsContainerView.alpha = 1
-            }
+            self.controlsPanelView.alpha = 1
         }) { (_) in
-            self.isControlsVisible = !self.isControlsVisible
+            self.resetHideControlsTimer()
         }
+    }
+    
+    @objc func hideControls(_ gestureRecognizer: UITapGestureRecognizer) {
+        controlsTimer?.invalidate()
+        UIView.animate(withDuration: 0.15, animations: {
+            self.controlsPanelView.alpha = 0
+        })
+    }
+    
+    // MARK - Handle player controls events
+    @objc func handlePlayPause() {
+        
+        resetHideControlsTimer()
+        
+        switch player.playerState() {
+        case .playing:
+            player.pauseVideo()
+            break;
+        case .paused:
+            player.playVideo()
+            break;
+        case .ended:
+            player.seek(toSeconds: 0, allowSeekAhead: true)
+            break;
+        default:
+            print("Oooppps!")
+        }
+    }
+    
+    // MARK slider
+    @objc func seekSliderDidChange(slider: UISlider) {
+        player.seek(toSeconds: slider.value, allowSeekAhead: true)
+        resetHideControlsTimer()
+    }
+    
+    func resetHideControlsTimer() {
+        controlsTimer?.invalidate()
+        controlsTimer = Timer.scheduledTimer(timeInterval: kTimerInterval, target: self, selector: #selector(hideControls), userInfo: nil, repeats: true)
     }
     
     // MARK - YTPlayerViewDelegate
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+        let duration: TimeInterval = playerView.duration()
+
+        seekSlider.maximumValue = Float(duration)
+        seekSlider.minimumValue = 0
+        
+        videoLengthLabel.text = timeStringFromSeconds(seconds: Int(duration))
+        
         playerView.playVideo()
     }
 
+    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
+        switch state {
+        case .playing:
+            pausePlayButton.setImage(#imageLiteral(resourceName: "ic_pause"), for: .normal)
+            break;
+        case .paused:
+            pausePlayButton.setImage(#imageLiteral(resourceName: "ic_play_arrow"), for: .normal)
+            break;
+        case .unstarted:
+            // todo
+            break;
+        case .ended:
+            pausePlayButton.setImage(#imageLiteral(resourceName: "ic_replay"), for: .normal)
+            break;
+        default:
+            print("default")
+        }
+    }
+    
+    func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
+        return activityIndicatorView
+    }
+    
+    func playerViewPreferredWebViewBackgroundColor(_ playerView: YTPlayerView) -> UIColor {
+        return .black
+    }
+    
+    func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
+        videoCurrentTimeLabel.text = timeStringFromSeconds(seconds: Int(playTime))
+        seekSlider.setValue(playTime, animated: true)
+    }
+    
+    func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
+     // todo
+    }
+    
+    // MARK Utils
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
+    func timeStringFromSeconds(seconds: Int) -> String {
+        let (h, m, s) = secondsToHoursMinutesSeconds(seconds: seconds)
+        return h > 0 ? "\(h)\(m):\(s)" : "\(m):\(s)"
+    }
+    
+    // what?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
