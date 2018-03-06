@@ -98,6 +98,8 @@ class VideoLauncher: NSObject {
             playerView.addGestureRecognizer(mainViewGestureRecognizer)
             minimizedPlayerView.addGestureRecognizer(minimizedPlayerGestureRecognizer)
             minimizedPlayerView.addGestureRecognizer(tapGesture)
+            
+            playerView.launcher = self
         }
     }
     

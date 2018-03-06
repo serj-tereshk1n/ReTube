@@ -16,6 +16,8 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         setupPlayerView()
     }
 
+    var launcher: VideoLauncher?
+    
     let player = YTPlayerView()
     
     let playerOverlayView: UIView = {
@@ -79,6 +81,14 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         return label
     }()
     
+    let minimizeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "ic_minimize"), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(handleMinimizePlayer), for: .touchUpInside)
+        return button
+    }()
+    
     let kTimerInterval: Double = 3.5
     var controlsTimer: Timer?
 
@@ -94,7 +104,8 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         
         controlsPanelView.addSubview(pausePlayButton)
         controlsPanelView.addSubview(seekSlider)
-
+        controlsPanelView.addSubview(minimizeButton)
+        
         let seekBarContainerView = UIView()
         
         controlsPanelView.addSubview(seekBarContainerView)
@@ -103,6 +114,8 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         seekBarContainerView.addSubview(seekSlider)
         seekBarContainerView.addSubview(videoLengthLabel)
         
+        controlsPanelView.addConstraintsWithFormat(format: "H:|-4-[v0(28)]", views: minimizeButton)
+        controlsPanelView.addConstraintsWithFormat(format: "V:|-4-[v0(28)]", views: minimizeButton)
         controlsPanelView.addConstraintsWithFormat(format: "H:|[v0]|", views: seekBarContainerView)
         controlsPanelView.addConstraintsWithFormat(format: "V:[v0(30)]-8-|", views: seekBarContainerView)
         
@@ -161,6 +174,10 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         default:
             print("Oooppps!")
         }
+    }
+    
+    @objc func handleMinimizePlayer() {
+        launcher?.minimizeVideoPlayer()
     }
     
     // MARK slider
