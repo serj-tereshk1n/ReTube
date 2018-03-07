@@ -54,6 +54,11 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         return button
     }()
     
+    let placeholderImageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    
     let videoCurrentTimeLabel: UILabel = {
         let label = UILabel()
         label.text = "00:00"
@@ -91,15 +96,17 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
     
     let kTimerInterval: Double = 3.5
     var controlsTimer: Timer?
-
+    let videoId = "-s3j-ptJD10"
+    
     func setupPlayerView() {
 
+        addSubview(placeholderImageView)
         addSubview(player)
         addSubview(playerOverlayView)
         
         playerOverlayView.addSubview(controlsPanelView)
         
-        addFullScreenConstraintsFor(views: player, playerOverlayView, inside: self)
+        addFullScreenConstraintsFor(views: player, playerOverlayView, placeholderImageView, inside: self)
         addFullScreenConstraintsFor(views: controlsPanelView, inside: playerOverlayView)
         
         controlsPanelView.addSubview(pausePlayButton)
@@ -136,9 +143,20 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
                     "controls": 0,
                     "rel": 0,
                     "showinfo": 0]
-
+        
         player.delegate = self
-        player.load(withVideoId: "-s3j-ptJD10", playerVars: vars)
+        player.load(withVideoId: videoId, playerVars: vars)
+    }
+    
+    func didMinimized() {
+        placeholderImageView.image = player.asImage()
+        launcher?.minimizedPlayerView.addPlayerView(playerView: player)
+    }
+    
+    func didMaximized() {
+        launcher?.minimizedPlayerView.placeholderImageView.image = player.asImage()
+        insertSubview(player, belowSubview: playerOverlayView)
+        addFullScreenConstraintsFor(views: player, inside: self)
     }
     
     @objc func showControls(_ gestureRecognizer: UITapGestureRecognizer) {

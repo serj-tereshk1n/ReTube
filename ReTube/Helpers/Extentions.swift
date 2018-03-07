@@ -36,4 +36,11 @@ extension UIView {
             inside.addConstraintsWithFormat(format: "V:|[v0]|", views: view)
         }
     }
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: self.bounds.size)
+        let image = renderer.image { ctx in
+            self.drawHierarchy(in: self.bounds, afterScreenUpdates: true)
+        }
+        return image
+    }
 }

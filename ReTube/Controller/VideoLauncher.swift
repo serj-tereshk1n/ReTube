@@ -100,6 +100,7 @@ class VideoLauncher: NSObject {
             minimizedPlayerView.addGestureRecognizer(tapGesture)
             
             playerView.launcher = self
+            minimizedPlayerView.launcher = self
         }
     }
     
@@ -115,6 +116,9 @@ class VideoLauncher: NSObject {
                                          height: self.mainView.frame.height)
             self.minimizedPlayerView.alpha = 0
         }, completion: { (_) in
+//            if self.wasMinimized {
+                self.playerView.didMaximized()
+//            }
             // maybe I will do something later here
         })
     }
@@ -130,9 +134,12 @@ class VideoLauncher: NSObject {
                                          height: self.mainView.frame.height)
             self.minimizedPlayerView.alpha = 1
         }, completion: { (_) in
-            // maybe I will do something later here
+//            self.wasMinimized = true
+            self.playerView.didMinimized()
         })
     }
+    
+//    var wasMinimized = false
     
     func closeVideoPlayer() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
