@@ -8,12 +8,9 @@
 
 import UIKit
 
-class MinimizedPlayerView: UIView, YTPlayerViewDelegate {
+class MinimizedPlayerView: UIView {
 
-//    let player = YTPlayerView()
-    let player = UIView()
-    
-    var launcher: VideoLauncher?
+    let playerContainer = UIView()
     
     let pausePlayButton: UIButton = {
         let button = UIButton(type: .system)
@@ -43,67 +40,26 @@ class MinimizedPlayerView: UIView, YTPlayerViewDelegate {
     
     func setupPlayerView() {
         
-        addSubview(player)
+        addSubview(playerContainer)
         addSubview(closeButton)
         addSubview(pausePlayButton)
         
-        player.addSubview(placeholderImageView)
+        playerContainer.addSubview(placeholderImageView)
         
-        addFullScreenConstraintsFor(views: placeholderImageView, inside: player)
+        addFullScreenConstraintsFor(views: placeholderImageView, inside: playerContainer)
         
-        addConstraintsWithFormat(format: "H:|[v0(128)]", views: player)
-        addConstraintsWithFormat(format: "V:|[v0]|", views: player)
+        addConstraintsWithFormat(format: "H:|[v0(128)]", views: playerContainer)
+        addConstraintsWithFormat(format: "V:|[v0]|", views: playerContainer)
         addConstraintsWithFormat(format: "H:[v0(50)]-8-[v1(50)]-8-|", views: pausePlayButton, closeButton)
         addConstraintsWithFormat(format: "V:|[v0]|", views: pausePlayButton)
         addConstraintsWithFormat(format: "V:|[v0]|", views: closeButton)
         
-        player.backgroundColor = .green
+        playerContainer.backgroundColor = .green
     }
     
-    func addPlayerView(playerView: UIView) {
-        player.addSubview(playerView)
-        addFullScreenConstraintsFor(views: playerView, inside: player)
-    }
-    
-    // MARK - YTPlayerViewDelegate
-    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
-        print("minimized did become active")
-    }
-    
-    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
-        switch state {
-        case .playing:
-            pausePlayButton.setImage(#imageLiteral(resourceName: "ic_pause"), for: .normal)
-            break;
-        case .paused:
-            pausePlayButton.setImage(#imageLiteral(resourceName: "ic_play_arrow"), for: .normal)
-            break;
-        case .unstarted:
-            // todo
-            break;
-        case .ended:
-            pausePlayButton.setImage(#imageLiteral(resourceName: "ic_replay"), for: .normal)
-            break;
-        default:
-            print("default")
-        }
-    }
-    
-//    func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
-//        return activityIndicatorView
-//    }
-    
-    func playerViewPreferredWebViewBackgroundColor(_ playerView: YTPlayerView) -> UIColor {
-        return .black
-    }
-    
-    func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
-//        videoCurrentTimeLabel.text = timeStringFromSeconds(seconds: Int(playTime))
-//        seekSlider.setValue(playTime, animated: true)
-    }
-    
-    func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
-        // todo
+    func inFocusWith(player: UIView) {
+        playerContainer.addSubview(player)
+        addFullScreenConstraintsFor(views: player, inside: playerContainer)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -7,6 +7,17 @@
 //
 
 import Foundation
+extension NSObject {
+    // MARK Utils
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
+    func timeStringFromSeconds(seconds: Int) -> String {
+        let (h, m, s) = secondsToHoursMinutesSeconds(seconds: seconds)
+        return h > 0 ? "\(h)\(m):\(s)" : "\(m):\(s)"
+    }
+}
 
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {

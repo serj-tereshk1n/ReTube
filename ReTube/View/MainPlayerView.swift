@@ -16,8 +16,6 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         setupPlayerView()
     }
 
-    var launcher: VideoLauncher?
-    
     let player = YTPlayerView()
     
     let playerOverlayView: UIView = {
@@ -94,8 +92,25 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         return button
     }()
     
+    let minimizedPlayer: MinimizedPlayerView = {
+        let mplayer = MinimizedPlayerView()
+        mplayer.backgroundColor = .black
+        return mplayer
+    }()
+
     let kTimerInterval: Double = 3.5
     var controlsTimer: Timer?
+    var minimizedContainer: UIView? {
+        didSet {
+            if let mc = minimizedContainer {
+                mc.addSubview(minimizedPlayer)
+                addFullScreenConstraintsFor(views: minimizedPlayer, inside: mc)
+                minimizedPlayer.pausePlayButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+                minimizedPlayer.closeButton.addTarget(self, action: #selector(handleClose), for: .touchUpInside)
+            }
+        }
+    }
+    
     let videoId = "-s3j-ptJD10"
     
     func setupPlayerView() {
@@ -148,17 +163,6 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         player.load(withVideoId: videoId, playerVars: vars)
     }
     
-    func didMinimized() {
-        placeholderImageView.image = player.asImage()
-        launcher?.minimizedPlayerView.addPlayerView(playerView: player)
-    }
-    
-    func didMaximized() {
-        launcher?.minimizedPlayerView.placeholderImageView.image = player.asImage()
-        insertSubview(player, belowSubview: playerOverlayView)
-        addFullScreenConstraintsFor(views: player, inside: self)
-    }
-    
     @objc func showControls(_ gestureRecognizer: UITapGestureRecognizer) {
         UIView.animate(withDuration: 0.15, animations: {
             self.controlsPanelView.alpha = 1
@@ -172,6 +176,21 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         UIView.animate(withDuration: 0.15, animations: {
             self.controlsPanelView.alpha = 0
         })
+    }
+
+    func didMinimized() {
+        placeholderImageView.image = player.asImage()
+        minimizedPlayer.inFocusWith(player: player)
+    }
+    
+    func didMaximized() {
+        minimizedPlayer.placeholderImageView.image = player.asImage()
+        insertSubview(player, belowSubview: playerOverlayView)
+        addFullScreenConstraintsFor(views: player, inside: self)
+    }
+    
+    func didClose() {
+        player.stopVideo()
     }
     
     // MARK - Handle player controls events
@@ -194,8 +213,12 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         }
     }
     
+    @objc func handleClose() {
+        NotificationCenter.default.post(name: K.kCloseVideoPlayerNotification, object: nil)
+    }
+    
     @objc func handleMinimizePlayer() {
-        launcher?.minimizeVideoPlayer()
+//        launcher?.minimizeVideoPlayer()
     }
     
     // MARK slider
@@ -222,22 +245,28 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
     }
 
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
+        
+        var image = UIImage()
+        
         switch state {
         case .playing:
-            pausePlayButton.setImage(#imageLiteral(resourceName: "ic_pause"), for: .normal)
+            image = #imageLiteral(resourceName: "ic_pause")
             break;
         case .paused:
-            pausePlayButton.setImage(#imageLiteral(resourceName: "ic_play_arrow"), for: .normal)
+            image = #imageLiteral(resourceName: "ic_play_arrow")
             break;
         case .unstarted:
             // todo
             break;
         case .ended:
-            pausePlayButton.setImage(#imageLiteral(resourceName: "ic_replay"), for: .normal)
+            image = #imageLiteral(resourceName: "ic_replay")
             break;
         default:
             print("default")
         }
+        
+        pausePlayButton.setImage(image, for: .normal)
+        minimizedPlayer.pausePlayButton.setImage(image, for: .normal)
     }
     
     func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
@@ -255,16 +284,6 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
     
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
      // todo
-    }
-    
-    // MARK Utils
-    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-    }
-    
-    func timeStringFromSeconds(seconds: Int) -> String {
-        let (h, m, s) = secondsToHoursMinutesSeconds(seconds: seconds)
-        return h > 0 ? "\(h)\(m):\(s)" : "\(m):\(s)"
     }
     
     // what?
