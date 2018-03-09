@@ -8,7 +8,7 @@
 
 import SDWebImage
 
-class VideoCell: BaseCollectionViewCell {
+class VideoCellTemp: BaseCollectionViewCell {
     
     var video: VideoTemp? {
         didSet {

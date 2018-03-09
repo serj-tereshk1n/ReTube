@@ -6,10 +6,42 @@
 //  Copyright © 2018 sergey.tereshkin. All rights reserved.
 //
 
+// YT URL Examples:
+
+// PLayLists
+// https://www.googleapis.com/youtube/v3/playlists?
+// maxResults=1
+// channelId=UC0lT9K8Wfuc1KPqm6YjRf1A
+// part=snippet,CcontentDetails
+// key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
+
+// PLayList Items
+// https://www.googleapis.com/youtube/v3/playlistItems?
+// maxResults=2
+// playlistId=PLiCpP_44QZBwAebJGnNzH-gEHAqFL9et5
+// part=snippet,CcontentDetails
+// key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
+
+// Search Videos in Channel
+// https://www.googleapis.com/youtube/v3/search?
+// key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
+// channelId=UC0lT9K8Wfuc1KPqm6YjRf1A
+// part=snippet,id
+// order=date
+// maxResults=20
+
 class ApiService: NSObject {
     
     static let sharedInstance = ApiService()
     
+    // PLayLists
+    let PLAYLISTS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlists?"
+    // PLayList Items
+    let PLAYLIST_ITEMS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlistItems?"
+    // Search Videos in Channel
+    let SEARCH_BASE_URL = "https://www.googleapis.com/youtube/v3/search?"
+    
+    // test url
     let baseUrl = "https://s3-us-west-2.amazonaws.com/youtubeassets/"
     
     func fetchVideos(completion: @escaping ([VideoTemp]) -> ()) {

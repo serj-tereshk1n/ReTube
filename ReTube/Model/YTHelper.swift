@@ -8,30 +8,6 @@
 
 import Foundation
 
-// YT URL Examples:
-
-// PLayLists
-// https://www.googleapis.com/youtube/v3/playlists?
-// maxResults=1
-// channelId=UC0lT9K8Wfuc1KPqm6YjRf1A
-// part=snippet,CcontentDetails
-// key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
-
-// PLayList Items
-// https://www.googleapis.com/youtube/v3/playlistItems?
-// maxResults=2
-// playlistId=PLiCpP_44QZBwAebJGnNzH-gEHAqFL9et5
-// part=snippet,CcontentDetails
-// key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
-
-// Search Videos in Channel
-// https://www.googleapis.com/youtube/v3/search?
-// key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
-// channelId=UC0lT9K8Wfuc1KPqm6YjRf1A
-// part=snippet,id
-// order=date
-// maxResults=20
-
 class YTHelper: NSObject {
     
     //        let url = URL(string: "https://www.googleapis.com/youtube/v3/playlists?maxResults=17&channelId=UC0lT9K8Wfuc1KPqm6YjRf1A&part=snippet%2CcontentDetails&key=\(YT_API_KEY)")

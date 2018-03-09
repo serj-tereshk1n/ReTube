@@ -28,7 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.statusBarStyle = .lightContent
         let statusBarBackgroundView = UIView()
-        statusBarBackgroundView.backgroundColor = .ytRedDark
+//        statusBarBackgroundView.backgroundColor = .ytRedDark
+        statusBarBackgroundView.backgroundColor = UIColor.ytRedDark
         
         let height = Int(UIApplication.shared.statusBarFrame.height)
         

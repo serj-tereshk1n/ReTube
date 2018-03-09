@@ -16,7 +16,6 @@ class MinimizedPlayerView: UIView {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "ic_pause"), for: .normal)
         button.tintColor = .white
-//        button.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
         return button
     }()
     
@@ -24,7 +23,6 @@ class MinimizedPlayerView: UIView {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "ic_close"), for: .normal)
         button.tintColor = .white
-        //        button.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
         return button
     }()
     

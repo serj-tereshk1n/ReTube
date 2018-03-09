@@ -17,8 +17,8 @@ class VideoLauncher: NSObject {
     var lastTouch: CGPoint?
     
     // views
-    var playerCtrlView: PlayerView = {
-        let view = PlayerView()
+    var playerCtrlView: PlayerViewCtrl = {
+        let view = PlayerViewCtrl()
         view.backgroundColor = .clear
         return view
     }()
@@ -106,10 +106,6 @@ class VideoLauncher: NSObject {
     // MARK - Gesture recognizerz
     @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         
-        if UIDevice.current.orientation != .portrait {
-            return
-        }
-        
         switch gestureRecognizer.state {
         case .began, .changed:
             // move player view
@@ -127,7 +123,7 @@ class VideoLauncher: NSObject {
             
             break;
         case .ended:
-            // minimize or show full open player
+            // minimize or show full player
             if let lastTouch = lastTouch {
                 if lastTouch.y > keyWindow.center.y {
                     minimizeVideoPlayer()

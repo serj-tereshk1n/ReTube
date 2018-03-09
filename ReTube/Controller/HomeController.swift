@@ -37,6 +37,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         setupNavBarButtons()
     }
     
+
     private func setupCollectionView() {
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
@@ -46,16 +47,17 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.backgroundColor = .white
 //        collectionView?.register(VideoCell.self, forCellWithReuseIdentifier: kCellId)
         collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: kSectionCellId)
-        collectionView?.register(TrandingCell.self, forCellWithReuseIdentifier: kTrandingCellId)
+        collectionView?.register(PlaylistsHostCell.self, forCellWithReuseIdentifier: kTrandingCellId)
         collectionView?.register(SubscriptionFeed.self, forCellWithReuseIdentifier: kSubscriptionsCellId)
         collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         collectionView?.isPagingEnabled = true
+        collectionView?.alwaysBounceVertical = false
     }
     
     private func setupMenuBar() {
         
-        navigationController?.hidesBarsOnSwipe = true
+//        navigationController?.hidesBarsOnSwipe = true
         
         let redView = UIView()
         redView.backgroundColor = .ytRed
@@ -88,7 +90,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     @objc private func handleSearch() {
-        
+        ///
     }
     
     func scrollToMenuAt(indexPath: IndexPath) {
@@ -107,13 +109,12 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.item == 1 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: kTrandingCellId, for: indexPath) as! TrandingCell
+            return collectionView.dequeueReusableCell(withReuseIdentifier: kTrandingCellId, for: indexPath) as! PlaylistsHostCell
         } else if indexPath.item == 2 {
             return collectionView.dequeueReusableCell(withReuseIdentifier: kSubscriptionsCellId, for: indexPath) as! SubscriptionFeed
         } else {
             return collectionView.dequeueReusableCell(withReuseIdentifier: kSectionCellId, for: indexPath) as! FeedCell
         }
-
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -124,7 +125,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         menuBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
     }
     
-    let titles = ["Home", "Trending", "Playlists", "Profile"]
+    let titles = ["Home", "Playlists", "Liked", "Profile"]
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let index = targetContentOffset.pointee.x / view.frame.width

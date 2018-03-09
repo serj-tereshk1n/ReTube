@@ -37,8 +37,10 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
         addConstraintsWithFormat(format: "H:|[v0]|", views: collectionView)
         addConstraintsWithFormat(format: "V:|[v0]|", views: collectionView)
         
-        collectionView.register(VideoCell.self, forCellWithReuseIdentifier: kFeedCellID)
+        collectionView.register(VideoCVCell.self, forCellWithReuseIdentifier: kFeedCellID)
         
+//        collectionView.register(VideoCellTemp.self, forCellWithReuseIdentifier: kFeedCellID)
+        collectionView.alwaysBounceVertical = false
         fetchVideos()
     }
     
@@ -47,18 +49,29 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFeedCellID, for: indexPath) as! VideoCell
-        cell.video = videos?[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFeedCellID, for: indexPath) as! VideoCVCell
+        
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFeedCellID, for: indexPath) as! VideoCellTemp
+//        cell.video = videos?[indexPath.row]
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = frame.width
         let height = (width - 32) * 9 / 16
-        return CGSize(width: width, height: height + 104)
+        return CGSize(width: width, height: height + 112)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         VideoLauncher.sharedInstance.showVideoPlayer()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }

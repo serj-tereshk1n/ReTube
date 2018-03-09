@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlayerView: UIView {
+class PlayerViewCtrl: UIView {
 
     let kMinimizedPlayerHeight: CGFloat = 72
     let kMinimizedPlayerMargin: CGFloat = 16
