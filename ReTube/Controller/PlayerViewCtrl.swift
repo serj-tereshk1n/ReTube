@@ -64,6 +64,10 @@ class PlayerViewCtrl: UIView {
         portraintPlayerConstraints()
     }
     
+    func loadVideo(id: String) {
+        playerView.loadVideo(id: id)
+    }
+    
     func portraintPlayerConstraints() {
         playerViewContainer.addSubview(playerView)
         addFullScreenConstraintsFor(views: playerView, inside: playerViewContainer)

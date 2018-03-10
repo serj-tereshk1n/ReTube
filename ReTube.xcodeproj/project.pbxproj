@@ -100,6 +100,22 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		1B7D1A752053EA15004D31A6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CB1BD2A62045C58D00CDF423 /* SubscriptionFeed.swift */,
+				CB6B85DE203DE25200E108B2 /* BaseCollectionViewCell.swift */,
+				CB6B85BA203DC25100E108B2 /* VideoCellTemp.swift */,
+				CB6B85E0203DE32700E108B2 /* MenuCell.swift */,
+				CB1253A22040822F00A6A6B8 /* SettingCell.swift */,
+				CB1BD2A220459B4900CDF423 /* FeedCell.swift */,
+				CB1BD2A42045C16D00CDF423 /* PlaylistsHostCell.swift */,
+				CB7A9F572052CD1B0032EC66 /* VideoCVCell.swift */,
+				CB7A9F5B2052EF330032EC66 /* PlaylistCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		8C2D1E974A2913E9029BFF44 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,18 +199,10 @@
 		CB6B85B9203DC23600E108B2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CB6B85DE203DE25200E108B2 /* BaseCollectionViewCell.swift */,
-				CB6B85BA203DC25100E108B2 /* VideoCellTemp.swift */,
+				1B7D1A752053EA15004D31A6 /* Cells */,
 				CB6B85BE203DD08200E108B2 /* MenuBar.swift */,
-				CB6B85E0203DE32700E108B2 /* MenuCell.swift */,
-				CB1253A22040822F00A6A6B8 /* SettingCell.swift */,
-				CB1BD2A220459B4900CDF423 /* FeedCell.swift */,
-				CB1BD2A42045C16D00CDF423 /* PlaylistsHostCell.swift */,
-				CB1BD2A62045C58D00CDF423 /* SubscriptionFeed.swift */,
 				CB831AB120485C8B00203CBD /* MainPlayerView.swift */,
 				CB13ADAB204D807D00F04384 /* MinimizedPlayerView.swift */,
-				CB7A9F572052CD1B0032EC66 /* VideoCVCell.swift */,
-				CB7A9F5B2052EF330032EC66 /* PlaylistCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

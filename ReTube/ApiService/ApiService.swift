@@ -30,19 +30,77 @@
 // order=date
 // maxResults=20
 
+// https://www.googleapis.com/youtube/v3/search?key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M&channelId=UC0lT9K8Wfuc1KPqm6YjRf1A&part=snippet,id&order=date&maxResults=20
+
 class ApiService: NSObject {
     
     static let sharedInstance = ApiService()
     
     // PLayLists
-    let PLAYLISTS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlists?"
+    let PLAYLISTS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlists"
     // PLayList Items
-    let PLAYLIST_ITEMS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlistItems?"
+    let PLAYLIST_ITEMS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
     // Search Videos in Channel
-    let SEARCH_BASE_URL = "https://www.googleapis.com/youtube/v3/search?"
+    let SEARCH_BASE_URL = "https://www.googleapis.com/youtube/v3/search"
     
     // test url
     let baseUrl = "https://s3-us-west-2.amazonaws.com/youtubeassets/"
+    
+    func searchVideosNextPage(nextPageToken: String?, completion: @escaping (YTSearchResponse) -> ()) {
+        var strUrl = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(YT_CHANNEL_ID_ACADEMEG)&part=snippet&order=date&maxResults=20"
+        if let nextPageToken = nextPageToken {
+            strUrl.append("&pageToken=\(nextPageToken)")
+        }
+        let url = URL(string: strUrl)
+        let request : URLRequest = URLRequest(url: url!)
+        URLSession.shared.dataTask(with: request) {
+            (data, response, error) in
+            if (error != nil) {
+                print("Ooops, errror hase occored")
+                return
+            } else if let data = data {
+                do {
+                   
+                    let ytSearchResponse = try JSONDecoder().decode(YTSearchResponse.self, from: data)
+//                    print(ytSearchResponse)
+                    DispatchQueue.main.async {
+                        completion(ytSearchResponse)
+                    }
+                    
+                } catch let error {
+                    print(error)
+                }
+            }
+        }.resume()
+    }
+    
+    func searchPlayListsNextPage(nextPageToken: String?, completion: @escaping (YTPLResponse) -> ()) {
+        var strUrl = "\(PLAYLISTS_BASE_URL)?key=\(YT_API_KEY)&channelId=\(YT_CHANNEL_ID_ACADEMEG)&part=snippet,id&order=date&maxResults=10"
+        if let nextPageToken = nextPageToken {
+            strUrl.append("&pageToken=\(nextPageToken)")
+        }
+        let url = URL(string: strUrl)
+        let request : URLRequest = URLRequest(url: url!)
+        URLSession.shared.dataTask(with: request) {
+            (data, response, error) in
+            if (error != nil) {
+                print("Ooops, errror hase occored")
+                return
+            } else if let data = data {
+                do {
+                    
+                    let ytPlResponse = try JSONDecoder().decode(YTPLResponse.self, from: data)
+                    //                    print(ytSearchResponse)
+                    DispatchQueue.main.async {
+                        completion(ytPlResponse)
+                    }
+                    
+                } catch let error {
+                    print(error)
+                }
+            }
+            }.resume()
+    }
     
     func fetchVideos(completion: @escaping ([VideoTemp]) -> ()) {
         fetchFeedFor(url: "\(baseUrl)home.json", completion: completion)

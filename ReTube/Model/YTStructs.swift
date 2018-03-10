@@ -8,6 +8,10 @@
 
 import Foundation
 
+struct YTItem: Decodable{
+    
+}
+
 struct YTPageInfo: Decodable {
     let resultsPerPage: Int
     let totalResults: Int
@@ -18,7 +22,17 @@ struct YTPLResponse: Decodable {
     let kind: String
     let pageInfo: YTPageInfo
     let nextPageToken: String?
+    let prevPageToken: String?
     let items: [YTPlayList]
+}
+
+struct YTSearchResponse: Decodable {
+    let etag: String
+    let kind: String
+    let pageInfo: YTPageInfo
+    let nextPageToken: String?
+    let prevPageToken: String?
+    let items: [YTVideo]
 }
 
 struct YTChannel: Decodable {
@@ -30,7 +44,7 @@ struct YTPlayList: Decodable {
     let etag: String
     let id: String
     let snippet: YTSnippet
-    let contentDetails: YTContentDetails
+    let contentDetails: YTContentDetails?
 }
 
 struct YTSnippet: Decodable {
@@ -48,18 +62,25 @@ struct YTSnippet: Decodable {
 struct YTThumbnails: Decodable {
     let medium: YTThumbnail
     let high: YTThumbnail
-    let standard: YTThumbnail
+    let standard: YTThumbnail?
     let maxres: YTThumbnail?
 }
 
 struct YTThumbnail: Decodable {
     let url: String
-    let width: Int
-    let height: Int
+    let width: Int?
+    let height: Int?
 }
 
 struct YTVideo: Decodable {
-    
+    let snippet: YTSnippet
+    let id: YTid
+}
+
+struct YTid: Decodable {
+    let kind: String
+    let videoId: String?
+    let playlistId: String?
 }
 
 struct YTResourceId: Decodable {

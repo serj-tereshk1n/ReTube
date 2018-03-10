@@ -111,8 +111,6 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         }
     }
     
-    let videoId = "-s3j-ptJD10"
-    
     func setupPlayerView() {
 
         addSubview(placeholderImageView)
@@ -154,13 +152,17 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         playerOverlayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showControls(_:))))
         controlsPanelView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideControls(_:))))
         
+
+    }
+    
+    func loadVideo(id: String) {
         let vars = ["playsinline": 1,
                     "controls": 0,
                     "rel": 0,
                     "showinfo": 0]
         
         player.delegate = self
-        player.load(withVideoId: videoId, playerVars: vars)
+        player.load(withVideoId: id, playerVars: vars)
     }
     
     @objc func showControls(_ gestureRecognizer: UITapGestureRecognizer) {

@@ -58,6 +58,10 @@ class VideoLauncher: NSObject {
         playerCtrlView.launcher = self
     }
     
+    func loadVideo(id: String) {
+        playerCtrlView.loadVideo(id: id)
+    }
+    
     // show, hide minimize helper functions
     func showVideoPlayer() {
         let minimizedPlayerOffset = playerCtrlView.kMinimizedPlayerHeight + playerCtrlView.kMinimizedPlayerMargin

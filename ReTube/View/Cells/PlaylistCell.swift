@@ -10,6 +10,16 @@ import UIKit
 
 class PlaylistCell: BaseCollectionViewCell {
     
+    var playList: YTPlayList? {
+        didSet {
+            if let thumbUrl = playList?.snippet.thumbnails.medium.url {
+                thumbnailImage.sd_setImage(with: URL(string: thumbUrl),
+                                           placeholderImage: UIImage(named: "placeholder.png"))
+            }
+            titleTextView.text = playList?.snippet.title
+        }
+    }
+    
     let thumbnailImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "zil_thumbnail")

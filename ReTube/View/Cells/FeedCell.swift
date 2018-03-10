@@ -11,6 +11,7 @@ import UIKit
 class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var videos: [VideoTemp]?
+    var ytvideos = [YTVideo]()
     
     let kFeedCellID = "kFeedCellID"
     
@@ -23,9 +24,14 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
         return cv
     }()
     
+    var nextPageToken: String?
+    
     func fetchVideos() {
-        ApiService.sharedInstance.fetchVideos { (videos) in
-            self.videos = videos
+
+        ApiService.sharedInstance.searchVideosNextPage(nextPageToken: nextPageToken) { (ytSearchResponse) in
+            self.ytvideos.append(contentsOf: ytSearchResponse.items)
+            self.nextPageToken = nil
+            self.nextPageToken = ytSearchResponse.nextPageToken
             self.collectionView.reloadData()
         }
     }
@@ -45,15 +51,16 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return videos?.count ?? 0
+        return ytvideos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFeedCellID, for: indexPath) as! VideoCVCell
-        
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFeedCellID, for: indexPath) as! VideoCellTemp
-//        cell.video = videos?[indexPath.row]
-        
+        cell.video = ytvideos[indexPath.row]
+        if indexPath.row == ytvideos.count - 3 && nextPageToken != nil {
+            // request next page
+            fetchVideos()
+        }
         return cell
     }
     
@@ -65,6 +72,7 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         VideoLauncher.sharedInstance.showVideoPlayer()
+        VideoLauncher.sharedInstance.loadVideo(id: ytvideos[indexPath.row].id.videoId ?? "")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

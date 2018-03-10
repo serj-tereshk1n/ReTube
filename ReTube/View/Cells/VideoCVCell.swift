@@ -10,11 +10,15 @@ import UIKit
 
 class VideoCVCell: BaseCollectionViewCell {
     
-//    var video: YTVideo {
-//        didSet {
-//            // toDO
-//        }
-//    }
+    var video: YTVideo? {
+        didSet {
+            if let thumbUrl = video?.snippet.thumbnails.medium.url {
+                thumbnailImageView.sd_setImage(with: URL(string: thumbUrl),
+                                               placeholderImage: UIImage(named: "placeholder.png"))
+            }
+            titleLabel.text = video?.snippet.title
+        }
+    }
     
     let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()

@@ -10,15 +10,18 @@ import UIKit
 
 class PlaylistsHostCell: FeedCell {
     
-    var playLists: [YTPlayList]?
+    var playLists = [YTPlayList]()
     
     let kPlaylistCellId = "kPlaylistCellId"
     
     override func fetchVideos() {
-//        ApiService.sharedInstance.fetchTrending { (videos) in
-//            self.videos = videos
-//            self.collectionView.reloadData()
-//        }
+
+        ApiService.sharedInstance.searchPlayListsNextPage(nextPageToken: nextPageToken) { (ytPlayListsResponse) in
+            self.playLists.append(contentsOf: ytPlayListsResponse.items)
+            self.nextPageToken = nil
+            self.nextPageToken = ytPlayListsResponse.nextPageToken
+            self.collectionView.reloadData()
+        }
     }
     
     override func setupViews() {
@@ -28,13 +31,16 @@ class PlaylistsHostCell: FeedCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return playLists?.count ?? 10
+        return playLists.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPlaylistCellId, for: indexPath) as! PlaylistCell
-//        cell.backgroundColor = UIColor.random()
-
+        cell.playList = playLists[indexPath.row]
+        if indexPath.row == ytvideos.count - 3 && nextPageToken != nil {
+            // request next page
+            fetchVideos()
+        }
         return cell
     }
     
