@@ -36,7 +36,7 @@ class VideoLauncher: NSObject {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(closeVideoPlayer),
-            name: K.kCloseVideoPlayerNotification,
+            name: kCloseVideoPlayerNotification,
             object: nil)
         
         let minimizedPlayerOffset = playerCtrlView.kMinimizedPlayerHeight + playerCtrlView.kMinimizedPlayerMargin

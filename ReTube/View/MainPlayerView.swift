@@ -216,7 +216,7 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
     }
     
     @objc func handleClose() {
-        NotificationCenter.default.post(name: K.kCloseVideoPlayerNotification, object: nil)
+        NotificationCenter.default.post(name: kCloseVideoPlayerNotification, object: nil)
     }
     
     @objc func handleMinimizePlayer() {
