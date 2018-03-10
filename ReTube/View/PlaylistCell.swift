@@ -19,7 +19,7 @@ class PlaylistCell: BaseCollectionViewCell {
     let titleTextView: UITextView = {
         let tv = UITextView()
         tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.font = UIFont.systemFont(ofSize: 16)
+        tv.font = UIFont.systemFont(ofSize: 15)
         tv.text = "Зачем покупать корейца, если есть Geely Atlas ??"
         tv.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0)
         tv.textColor = .black
@@ -45,13 +45,13 @@ class PlaylistCell: BaseCollectionViewCell {
         addSubview(titleTextView)
         thumbnailImage.addSubview(counterBackgroundView)
         
-        addConstraintsWithFormat(format: "H:|-4-[v0]-4-|", views: thumbnailImage)
-        addConstraintsWithFormat(format: "H:|-4-[v0]-4-|", views: titleTextView)
+        addConstraintsWithFormat(format: "H:|[v0]|", views: thumbnailImage)
+        addConstraintsWithFormat(format: "H:|[v0]|", views: titleTextView)
         
         thumbnailImage.addConstraintsWithFormat(format: "V:|[v0]|", views: counterBackgroundView)
         thumbnailImage.addConstraintsWithFormat(format: "H:[v0]|", views: counterBackgroundView)
         
-        addConstraintsWithFormat(format: "V:|-4-[v0]-4-[v1]-4-|", views: thumbnailImage, titleTextView)
+        addConstraintsWithFormat(format: "V:|[v0]-4-[v1]|", views: thumbnailImage, titleTextView)
         
         NSLayoutConstraint.activate([
             
