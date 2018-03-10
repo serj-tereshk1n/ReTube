@@ -47,7 +47,7 @@ class ApiService: NSObject {
     let baseUrl = "https://s3-us-west-2.amazonaws.com/youtubeassets/"
     
     func searchVideosNextPage(nextPageToken: String?, completion: @escaping (YTSearchResponse) -> ()) {
-        var strUrl = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(YT_CHANNEL_ID_ACADEMEG)&part=snippet&order=date&maxResults=20"
+        var strUrl = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(YT_CHANNEL_ID_ACADEMEG)&part=snippet&order=date&type=video&maxResults=20"
         if let nextPageToken = nextPageToken {
             strUrl.append("&pageToken=\(nextPageToken)")
         }

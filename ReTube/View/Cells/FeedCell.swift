@@ -44,8 +44,6 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
         addConstraintsWithFormat(format: "V:|[v0]|", views: collectionView)
         
         collectionView.register(VideoCVCell.self, forCellWithReuseIdentifier: kFeedCellID)
-        
-//        collectionView.register(VideoCellTemp.self, forCellWithReuseIdentifier: kFeedCellID)
         collectionView.alwaysBounceVertical = false
         fetchVideos()
     }
@@ -57,6 +55,7 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFeedCellID, for: indexPath) as! VideoCVCell
         cell.video = ytvideos[indexPath.row]
+
         if indexPath.row == ytvideos.count - 3 && nextPageToken != nil {
             // request next page
             fetchVideos()
