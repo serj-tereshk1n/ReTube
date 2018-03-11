@@ -68,6 +68,10 @@ class PlayerViewCtrl: UIView {
         playerView.loadVideo(id: id)
     }
     
+    func loadPlayList(list: YTPlayList) {
+        playerView.loadPlayList(list: list)
+    }
+    
     func portraintPlayerConstraints() {
         playerViewContainer.addSubview(playerView)
         addFullScreenConstraintsFor(views: playerView, inside: playerViewContainer)

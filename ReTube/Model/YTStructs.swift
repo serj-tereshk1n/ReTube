@@ -35,6 +35,15 @@ struct YTSearchResponse: Decodable {
     let items: [YTVideo]
 }
 
+struct YTPLItemsResponse: Decodable {
+    let etag: String
+    let kind: String
+    let pageInfo: YTPageInfo
+    let nextPageToken: String?
+    let prevPageToken: String?
+    let items: [YTPLVideo]
+}
+
 struct YTChannel: Decodable {
     
 }
@@ -72,6 +81,16 @@ struct YTThumbnail: Decodable {
     let height: Int?
 }
 
+struct YTPLVideo: Decodable {
+    let snippet: YTSnippet
+    let resourceId: YTResourceId?
+}
+
+struct YTResourceId: Decodable {
+    let kind: String
+    let videoId: String
+}
+
 struct YTVideo: Decodable {
     let snippet: YTSnippet
     let id: YTid
@@ -81,11 +100,6 @@ struct YTid: Decodable {
     let kind: String
     let videoId: String?
     let playlistId: String?
-}
-
-struct YTResourceId: Decodable {
-    let kind: String
-    let videoId: String
 }
 
 struct YTContentDetails: Decodable {

@@ -50,7 +50,9 @@ class PlaylistsHostCell: FeedCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
         VideoLauncher.sharedInstance.showVideoPlayer()
+        VideoLauncher.sharedInstance.loadPlayList(list: playLists[indexPath.row])
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

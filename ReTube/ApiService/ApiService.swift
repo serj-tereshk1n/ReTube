@@ -19,7 +19,7 @@
 // https://www.googleapis.com/youtube/v3/playlistItems?
 // maxResults=2
 // playlistId=PLiCpP_44QZBwAebJGnNzH-gEHAqFL9et5
-// part=snippet,CcontentDetails
+// part=snippet,ContentDetails
 // key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
 
 // Search Videos in Channel
@@ -36,6 +36,9 @@ class ApiService: NSObject {
     
     static let sharedInstance = ApiService()
     
+    let CURRENT_CHANNEL_ID = YT_CHANNEL_ID_ACADEMEG
+    
+    
     // PLayLists
     let PLAYLISTS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlists"
     // PLayList Items
@@ -47,7 +50,7 @@ class ApiService: NSObject {
     let baseUrl = "https://s3-us-west-2.amazonaws.com/youtubeassets/"
     
     func searchVideosNextPage(nextPageToken: String?, completion: @escaping (YTSearchResponse) -> ()) {
-        var strUrl = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(YT_CHANNEL_ID_ACADEMEG)&part=snippet&order=date&type=video&maxResults=20"
+        var strUrl = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet&order=date&type=video&maxResults=20"
         if let nextPageToken = nextPageToken {
             strUrl.append("&pageToken=\(nextPageToken)")
         }
@@ -75,7 +78,7 @@ class ApiService: NSObject {
     }
     
     func searchPlayListsNextPage(nextPageToken: String?, completion: @escaping (YTPLResponse) -> ()) {
-        var strUrl = "\(PLAYLISTS_BASE_URL)?key=\(YT_API_KEY)&channelId=\(YT_CHANNEL_ID_ACADEMEG)&part=snippet,id&order=date&maxResults=10"
+        var strUrl = "\(PLAYLISTS_BASE_URL)?key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet,id&order=date&maxResults=10"
         if let nextPageToken = nextPageToken {
             strUrl.append("&pageToken=\(nextPageToken)")
         }
@@ -90,6 +93,34 @@ class ApiService: NSObject {
                 do {
                     
                     let ytPlResponse = try JSONDecoder().decode(YTPLResponse.self, from: data)
+                    //                    print(ytSearchResponse)
+                    DispatchQueue.main.async {
+                        completion(ytPlResponse)
+                    }
+                    
+                } catch let error {
+                    print(error)
+                }
+            }
+            }.resume()
+    }
+    
+    func fetchPlayListItems(id: String, nextPageToken: String?, completion: @escaping (YTPLItemsResponse) -> ()) {
+        var strUrl = "\(PLAYLIST_ITEMS_BASE_URL)?key=\(YT_API_KEY)&playlistId=\(id)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet,id&order=date&maxResults=10"
+        if let nextPageToken = nextPageToken {
+            strUrl.append("&pageToken=\(nextPageToken)")
+        }
+        let url = URL(string: strUrl)
+        let request : URLRequest = URLRequest(url: url!)
+        URLSession.shared.dataTask(with: request) {
+            (data, response, error) in
+            if (error != nil) {
+                print("Ooops, errror hase occored")
+                return
+            } else if let data = data {
+                do {
+                    
+                    let ytPlResponse = try JSONDecoder().decode(YTPLItemsResponse.self, from: data)
                     //                    print(ytSearchResponse)
                     DispatchQueue.main.async {
                         completion(ytPlResponse)

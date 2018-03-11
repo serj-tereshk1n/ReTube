@@ -62,6 +62,10 @@ class VideoLauncher: NSObject {
         playerCtrlView.loadVideo(id: id)
     }
     
+    func loadPlayList(list: YTPlayList) {
+        playerCtrlView.loadPlayList(list: list)
+    }
+    
     // show, hide minimize helper functions
     func showVideoPlayer() {
         let minimizedPlayerOffset = playerCtrlView.kMinimizedPlayerHeight + playerCtrlView.kMinimizedPlayerMargin

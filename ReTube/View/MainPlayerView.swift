@@ -156,6 +156,8 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
     }
     
     func loadVideo(id: String) {
+        plVideos = [YTPLVideo]()
+        
         let vars = ["playsinline": 1,
                     "controls": 0,
                     "rel": 0,
@@ -163,6 +165,30 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         
         player.delegate = self
         player.load(withVideoId: id, playerVars: vars)
+    }
+    
+    func loadNextVideo() {
+        currentVideoIndex = currentVideoIndex + 1
+        let vars = ["playsinline": 1,
+                    "controls": 0,
+                    "rel": 0,
+                    "showinfo": 0]
+        
+        player.delegate = self
+        let videoId = plVideos[currentVideoIndex].resourceId?.videoId ?? ""
+        player.load(withVideoId: videoId, playerVars: vars)
+    }
+    
+    var currentVideoIndex = -1
+    var nextPageToken: String?
+    var plVideos = [YTPLVideo]()
+    
+    func loadPlayList(list: YTPlayList) {
+        ApiService.sharedInstance.fetchPlayListItems(id: list.id, nextPageToken: nextPageToken) { (response) in
+            self.nextPageToken = response.nextPageToken
+            self.plVideos.append(contentsOf: response.items)
+            self.loadNextVideo()
+        }
     }
     
     @objc func showControls(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -261,7 +287,13 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
             // todo
             break;
         case .ended:
-            image = #imageLiteral(resourceName: "ic_replay")
+            
+            if plVideos.count > 0 {
+                loadNextVideo()
+            } else {
+               image = #imageLiteral(resourceName: "ic_replay")
+            }
+            
             break;
         default:
             print("default")
