@@ -126,7 +126,7 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: kMargins, left: kMargins, bottom: kMargins, right: kMargins)
+        return UIEdgeInsets(top: kMargins, left: 0, bottom: kMargins, right: kMargins)
     }
     
 }
