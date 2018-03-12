@@ -10,10 +10,10 @@ import UIKit
 
 class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var videos: [VideoTemp]?
-    var ytvideos = [YTVideo]()
+    var videos = [YTVideo]()
     
     let kFeedCellID = "kFeedCellID"
+    var nextPageToken: String?
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -24,12 +24,10 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
         return cv
     }()
     
-    var nextPageToken: String?
-    
     func fetchVideos() {
 
         ApiService.sharedInstance.searchVideosNextPage(nextPageToken: nextPageToken) { (ytSearchResponse) in
-            self.ytvideos.append(contentsOf: ytSearchResponse.items)
+            self.videos.append(contentsOf: ytSearchResponse.items)
             self.nextPageToken = nil
             self.nextPageToken = ytSearchResponse.nextPageToken
             self.collectionView.reloadData()
@@ -42,21 +40,20 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
         addSubview(collectionView)
         addConstraintsWithFormat(format: "H:|[v0]|", views: collectionView)
         addConstraintsWithFormat(format: "V:|[v0]|", views: collectionView)
-        
-        collectionView.register(VideoCVCell.self, forCellWithReuseIdentifier: kFeedCellID)
+        collectionView.register(VideoCell.self, forCellWithReuseIdentifier: kFeedCellID)
         collectionView.alwaysBounceVertical = false
         fetchVideos()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ytvideos.count
+        return videos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFeedCellID, for: indexPath) as! VideoCVCell
-        cell.video = ytvideos[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFeedCellID, for: indexPath) as! VideoCell
+        cell.video = videos[indexPath.row]
 
-        if indexPath.row == ytvideos.count - 3 && nextPageToken != nil {
+        if indexPath.row == videos.count - 3 && nextPageToken != nil {
             // request next page
             fetchVideos()
         }
@@ -71,7 +68,7 @@ class FeedCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         VideoLauncher.sharedInstance.showVideoPlayer()
-        VideoLauncher.sharedInstance.loadVideo(id: ytvideos[indexPath.row].id.videoId ?? "")
+        VideoLauncher.sharedInstance.loadVideo(id: videos[indexPath.row].id.videoId ?? "")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

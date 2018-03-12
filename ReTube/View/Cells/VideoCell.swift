@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VideoCVCell: BaseCollectionViewCell {
+class VideoCell: BaseCollectionViewCell {
     
     var video: YTVideo? {
         didSet {

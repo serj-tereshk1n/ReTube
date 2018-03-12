@@ -17,6 +17,7 @@ class PlaylistCell: BaseCollectionViewCell {
                                            placeholderImage: UIImage(named: "placeholder.png"))
             }
             titleTextView.text = playList?.snippet.title
+            counterLabel.text = "\(playList?.contentDetails?.itemCount ?? 0)"
         }
     }
     
@@ -40,33 +41,62 @@ class PlaylistCell: BaseCollectionViewCell {
         return tv
     }()
     
-    let counterBackgroundView: UIView = {
+    let counterView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         return view
     }()
     
+    let counterIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "ic_playlist_play")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    let counterLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
+    }()
+    
+    let counterStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
-//        backgroundColor = UIColor.rgb(red: 25, green: 25, blue: 25)
-        
         addSubview(thumbnailImage)
         addSubview(titleTextView)
-        thumbnailImage.addSubview(counterBackgroundView)
+        thumbnailImage.addSubview(counterView)
+        counterView.addSubview(counterStackView)
         
         addConstraintsWithFormat(format: "H:|[v0]|", views: thumbnailImage)
         addConstraintsWithFormat(format: "H:|[v0]|", views: titleTextView)
         
-        thumbnailImage.addConstraintsWithFormat(format: "V:|[v0]|", views: counterBackgroundView)
-        thumbnailImage.addConstraintsWithFormat(format: "H:[v0]|", views: counterBackgroundView)
+        thumbnailImage.addConstraintsWithFormat(format: "V:|[v0]|", views: counterView)
+        thumbnailImage.addConstraintsWithFormat(format: "H:[v0]|", views: counterView)
         
         addConstraintsWithFormat(format: "V:|[v0]-4-[v1]|", views: thumbnailImage, titleTextView)
         
+        counterStackView.addArrangedSubview(counterLabel)
+        counterStackView.addArrangedSubview(counterIcon)
+        
         NSLayoutConstraint.activate([
             
-            counterBackgroundView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1 / 2.2),
-            thumbnailImage.heightAnchor.constraint(equalTo: thumbnailImage.widthAnchor, multiplier: 9 / 16)
+            counterView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1 / 2.2),
+            thumbnailImage.heightAnchor.constraint(equalTo: thumbnailImage.widthAnchor, multiplier: 9 / 16),
+            counterStackView.centerXAnchor.constraint(equalTo: counterView.centerXAnchor),
+            counterStackView.centerYAnchor.constraint(equalTo: counterView.centerYAnchor),
+            counterStackView.widthAnchor.constraint(equalTo: counterView.widthAnchor, multiplier: 1),
+            counterStackView.heightAnchor.constraint(equalTo: counterView.heightAnchor, multiplier: 0.5)
             
             ])
 

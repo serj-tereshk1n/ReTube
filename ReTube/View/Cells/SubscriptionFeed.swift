@@ -9,10 +9,10 @@
 import UIKit
 
 class SubscriptionFeed: FeedCell {
-    override func fetchVideos() {
-        ApiService.sharedInstance.fetchSubscriptions { (videos) in
-            self.videos = videos
-            self.collectionView.reloadData()
-        }
-    }
+//    override func fetchVideos() {
+//        ApiService.sharedInstance.fetchSubscriptions { (videos) in
+//            self.videos = videos
+//            self.collectionView.reloadData()
+//        }
+//    }
 }

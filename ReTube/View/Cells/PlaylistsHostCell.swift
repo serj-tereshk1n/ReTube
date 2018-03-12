@@ -37,7 +37,7 @@ class PlaylistsHostCell: FeedCell {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPlaylistCellId, for: indexPath) as! PlaylistCell
         cell.playList = playLists[indexPath.row]
-        if indexPath.row == ytvideos.count - 3 && nextPageToken != nil {
+        if indexPath.row == videos.count - 3 && nextPageToken != nil {
             // request next page
             fetchVideos()
         }
@@ -46,11 +46,10 @@ class PlaylistsHostCell: FeedCell {
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewSize = collectionView.frame.size.width - 32 - 16
-        return CGSize(width: collectionViewSize/2, height: collectionViewSize/2)
+        return CGSize(width: collectionViewSize/2, height: (collectionViewSize/2) * 0.85)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
         VideoLauncher.sharedInstance.showVideoPlayer()
         VideoLauncher.sharedInstance.loadPlayList(list: playLists[indexPath.row])
     }

@@ -36,6 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.addConstraintsWithFormat(format: "H:|[v0]|", views: statusBarBackgroundView)
         window?.addConstraintsWithFormat(format: "V:|[v0(\(height))]", views: statusBarBackgroundView)
         
+//        ApiService.sharedInstance.download()
+        
         return true
     }
     

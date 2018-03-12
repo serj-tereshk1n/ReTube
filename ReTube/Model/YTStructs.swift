@@ -8,10 +8,6 @@
 
 import Foundation
 
-struct YTItem: Decodable{
-    
-}
-
 struct YTPageInfo: Decodable {
     let resultsPerPage: Int
     let totalResults: Int
@@ -83,7 +79,6 @@ struct YTThumbnail: Decodable {
 
 struct YTPLVideo: Decodable {
     let snippet: YTSnippet
-    let resourceId: YTResourceId?
 }
 
 struct YTResourceId: Decodable {

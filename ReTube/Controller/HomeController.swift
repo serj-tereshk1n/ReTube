@@ -15,6 +15,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     let kTrandingCellId = "kTrandingCellId"
     let kSubscriptionsCellId = "kSubscriptionsCellId"
     
+    let settingsLauncher = SettingsLauncher()
+    
     lazy var menuBar: MenuBar = {
         let mb = MenuBar()
         mb.homeController = self
@@ -37,7 +39,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         setupNavBarButtons()
     }
     
-
     private func setupCollectionView() {
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
@@ -82,8 +83,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationItem.rightBarButtonItems = [moreBarButtonItem, searchBarButtonItem]
     }
     
-    let settingsLauncher = SettingsLauncher()
-    
     @objc private func handleMore() {
         //show settings
         settingsLauncher.showSettings()
@@ -125,7 +124,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         menuBar.horizontalBarLeftAnchorConstraint?.constant = scrollView.contentOffset.x / 4
     }
     
-    let titles = ["Home", "Playlists", "Liked", "Profile"]
+    let titles = ["Feed", "Playlists", "Liked", "Profile"]
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let index = targetContentOffset.pointee.x / view.frame.width

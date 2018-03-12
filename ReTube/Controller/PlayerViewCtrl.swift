@@ -60,6 +60,7 @@ class PlayerViewCtrl: UIView {
         playerViewContainer.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 9 / 16).isActive = true
         
         playerView.minimizedContainer = minimizedPlayerContainerView
+        playerView.listContainer = bottomView
         
         portraintPlayerConstraints()
     }

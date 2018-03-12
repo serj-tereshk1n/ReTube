@@ -9,7 +9,7 @@
 class MenuBar: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let kCellId = "menuCellId"
-    let menuButtons: [UIImage] = [#imageLiteral(resourceName: "ic_home"), #imageLiteral(resourceName: "ic_videos"), #imageLiteral(resourceName: "ic_playlist"), #imageLiteral(resourceName: "ic_profile")]
+    let menuButtons: [UIImage] = [#imageLiteral(resourceName: "ic_videos"), #imageLiteral(resourceName: "ic_playlist"), #imageLiteral(resourceName: "ic_favorite_border"), #imageLiteral(resourceName: "ic_profile")]
     var homeController: HomeController?
     
     lazy var collectionView: UICollectionView = {

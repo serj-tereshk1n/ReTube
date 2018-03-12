@@ -9,7 +9,12 @@
 import UIKit
 import AVFoundation
 
-class MainPlayerView: UIView, YTPlayerViewDelegate {
+class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
+    
+    // MARK - PlaylistViewDelegate
+    func didSelectVideoWith(id: String) {
+        loadVideo(id: id)
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,20 +22,19 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
     }
 
     let player = YTPlayerView()
-    
+    let kTimerInterval: Double = 3.5
+    var controlsTimer: Timer?
     let playerOverlayView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         return view
     }()
-    
     let controlsPanelView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         view.alpha = 0
         return view
     }()
-    
     let activityIndicatorView: UIView = {
         let container = UIView()
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -42,7 +46,6 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         indicator.startAnimating()
         return container
     }()
-    
     lazy var pausePlayButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "ic_pause"), for: .normal)
@@ -51,12 +54,10 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         button.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
         return button
     }()
-    
     let placeholderImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
-    
     let videoCurrentTimeLabel: UILabel = {
         let label = UILabel()
         label.text = "00:00"
@@ -65,7 +66,6 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         label.textAlignment = .center
         return label
     }()
-    
     lazy var seekSlider: UISlider = {
         let slider = UISlider()
         slider.setThumbImage(#imageLiteral(resourceName: "ic_thumb"), for: .normal)
@@ -74,7 +74,6 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         slider.addTarget(self, action: #selector(seekSliderDidChange(slider:)), for: .valueChanged)
         return slider
     }()
-    
     let videoLengthLabel: UILabel = {
         let label = UILabel()
         label.text = "00:00"
@@ -83,7 +82,6 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         label.textAlignment = .center
         return label
     }()
-    
     let minimizeButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "ic_minimize"), for: .normal)
@@ -91,15 +89,16 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         button.addTarget(self, action: #selector(handleMinimizePlayer), for: .touchUpInside)
         return button
     }()
-    
     let minimizedPlayer: MinimizedPlayerView = {
         let mplayer = MinimizedPlayerView()
         mplayer.backgroundColor = .black
         return mplayer
     }()
-
-    let kTimerInterval: Double = 3.5
-    var controlsTimer: Timer?
+    let playlistView: PlaylistView = {
+        let view = PlaylistView()
+        view.backgroundColor = .white
+        return view
+    }()
     var minimizedContainer: UIView? {
         didSet {
             if let mc = minimizedContainer {
@@ -110,53 +109,52 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
             }
         }
     }
-    
+    var listContainer: UIView? {
+        didSet {
+            if let container =  listContainer{
+                container.addSubview(playlistView)
+                addFullScreenConstraintsFor(views: playlistView, inside: container)
+                
+            }
+        }
+    }
+
     func setupPlayerView() {
 
         addSubview(placeholderImageView)
         addSubview(player)
         addSubview(playerOverlayView)
-        
         playerOverlayView.addSubview(controlsPanelView)
-        
         addFullScreenConstraintsFor(views: player, playerOverlayView, placeholderImageView, inside: self)
         addFullScreenConstraintsFor(views: controlsPanelView, inside: playerOverlayView)
-        
         controlsPanelView.addSubview(pausePlayButton)
         controlsPanelView.addSubview(seekSlider)
         controlsPanelView.addSubview(minimizeButton)
-        
         let seekBarContainerView = UIView()
-        
         controlsPanelView.addSubview(seekBarContainerView)
-        
         seekBarContainerView.addSubview(videoCurrentTimeLabel)
         seekBarContainerView.addSubview(seekSlider)
         seekBarContainerView.addSubview(videoLengthLabel)
-        
         controlsPanelView.addConstraintsWithFormat(format: "H:|-4-[v0(28)]", views: minimizeButton)
         controlsPanelView.addConstraintsWithFormat(format: "V:|-4-[v0(28)]", views: minimizeButton)
         controlsPanelView.addConstraintsWithFormat(format: "H:|[v0]|", views: seekBarContainerView)
         controlsPanelView.addConstraintsWithFormat(format: "V:[v0(30)]-8-|", views: seekBarContainerView)
-        
         seekBarContainerView.addConstraintsWithFormat(format: "H:|-4-[v0(50)]-4-[v1]-4-[v2(50)]-4-|", views: videoCurrentTimeLabel, seekSlider, videoLengthLabel)
         seekBarContainerView.addConstraintsWithFormat(format: "V:|[v0]|", views: videoCurrentTimeLabel)
         seekBarContainerView.addConstraintsWithFormat(format: "V:|[v0]|", views: seekSlider)
         seekBarContainerView.addConstraintsWithFormat(format: "V:|[v0]|", views: videoLengthLabel)
-        
         NSLayoutConstraint.activate([
             pausePlayButton.centerXAnchor.constraint(equalTo: controlsPanelView.centerXAnchor),
             pausePlayButton.centerYAnchor.constraint(equalTo: controlsPanelView.centerYAnchor)
             ])
         
+        playlistView.delegate = self
+        
         playerOverlayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showControls(_:))))
         controlsPanelView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideControls(_:))))
-        
-
     }
     
     func loadVideo(id: String) {
-        plVideos = [YTPLVideo]()
         
         let vars = ["playsinline": 1,
                     "controls": 0,
@@ -166,29 +164,9 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
         player.delegate = self
         player.load(withVideoId: id, playerVars: vars)
     }
-    
-    func loadNextVideo() {
-        currentVideoIndex = currentVideoIndex + 1
-        let vars = ["playsinline": 1,
-                    "controls": 0,
-                    "rel": 0,
-                    "showinfo": 0]
-        
-        player.delegate = self
-        let videoId = plVideos[currentVideoIndex].resourceId?.videoId ?? ""
-        player.load(withVideoId: videoId, playerVars: vars)
-    }
-    
-    var currentVideoIndex = -1
-    var nextPageToken: String?
-    var plVideos = [YTPLVideo]()
-    
+
     func loadPlayList(list: YTPlayList) {
-        ApiService.sharedInstance.fetchPlayListItems(id: list.id, nextPageToken: nextPageToken) { (response) in
-            self.nextPageToken = response.nextPageToken
-            self.plVideos.append(contentsOf: response.items)
-            self.loadNextVideo()
-        }
+        playlistView.playlist = list
     }
     
     @objc func showControls(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -287,13 +265,7 @@ class MainPlayerView: UIView, YTPlayerViewDelegate {
             // todo
             break;
         case .ended:
-            
-            if plVideos.count > 0 {
-                loadNextVideo()
-            } else {
-               image = #imageLiteral(resourceName: "ic_replay")
-            }
-            
+            image = #imageLiteral(resourceName: "ic_replay")
             break;
         default:
             print("default")
