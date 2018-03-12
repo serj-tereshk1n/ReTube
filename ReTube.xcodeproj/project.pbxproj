@@ -150,6 +150,7 @@
 		CB0B8C5B203B37D200321C48 /* ReTube */ = {
 			isa = PBXGroup;
 			children = (
+				CB0B8C5C203B37D200321C48 /* AppDelegate.swift */,
 				CB3592AE2044790C008435EC /* ApiService */,
 				CB6B85BD203DC32100E108B2 /* Model */,
 				CB6B85B9203DC23600E108B2 /* View */,
@@ -216,7 +217,6 @@
 		CB6B85BC203DC28F00E108B2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				CB0B8C5C203B37D200321C48 /* AppDelegate.swift */,
 				CB0B8C5E203B37D200321C48 /* HomeController.swift */,
 				1BB71585203F8B42002ED3A9 /* SettingsLauncher.swift */,
 				CB832C2F2047016B00C643C0 /* VideoLauncher.swift */,

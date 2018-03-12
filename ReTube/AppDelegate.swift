@@ -13,6 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    let fakeStatusBar: UIView = {
+        let statusBarBackgroundView = UIView()
+        return statusBarBackgroundView
+    }()
+    
+    func setStatusBarColor(color: UIColor) {
+        fakeStatusBar.backgroundColor = color
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         let layout = UICollectionViewFlowLayout()
@@ -26,17 +35,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         
         application.statusBarStyle = .lightContent
-        let statusBarBackgroundView = UIView()
-//        statusBarBackgroundView.backgroundColor = .ytRedDark
-        statusBarBackgroundView.backgroundColor = UIColor.ytRedDark
+        
+        fakeStatusBar.backgroundColor = UIColor.ytRedDark
         
         let height = Int(UIApplication.shared.statusBarFrame.height)
         
-        window?.addSubview(statusBarBackgroundView)
-        window?.addConstraintsWithFormat(format: "H:|[v0]|", views: statusBarBackgroundView)
-        window?.addConstraintsWithFormat(format: "V:|[v0(\(height))]", views: statusBarBackgroundView)
-        
-//        ApiService.sharedInstance.download()
+        window?.addSubview(fakeStatusBar)
+        window?.addConstraintsWithFormat(format: "H:|[v0]|", views: fakeStatusBar)
+        window?.addConstraintsWithFormat(format: "V:|[v0(\(height))]", views: fakeStatusBar)
         
         return true
     }
