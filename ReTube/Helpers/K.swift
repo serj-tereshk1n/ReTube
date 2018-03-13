@@ -12,3 +12,4 @@ let kCloseVideoPlayerNotification = Notification.Name("kCloseVideoPlayerNotifica
 // yt channels ids
 let YT_CHANNEL_ID_ACADEMEG = "UC0lT9K8Wfuc1KPqm6YjRf1A"
 let YT_CHANNEL_ID_NEISTAT = "UCtinbF-Q-fVthA0qrFQTgXQ"
+let MARGIN: CGFloat = 16

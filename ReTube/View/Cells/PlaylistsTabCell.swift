@@ -8,25 +8,22 @@
 
 import UIKit
 
-class PlaylistsHostCell: FeedCell {
+class PlaylistsTabCell: BaseTabCell {
     
     var playLists = [YTPlayList]()
     
     let kPlaylistCellId = "kPlaylistCellId"
     
-    override func fetchVideos() {
+    override func fetchDataSource() {
 
         ApiService.sharedInstance.searchPlayListsNextPage(nextPageToken: nextPageToken) { (ytPlayListsResponse) in
             self.playLists.append(contentsOf: ytPlayListsResponse.items)
-            self.nextPageToken = nil
             self.nextPageToken = ytPlayListsResponse.nextPageToken
             self.collectionView.reloadData()
         }
     }
-    
-    override func setupViews() {
-        super.setupViews()
-        
+
+    override func registerCells() {
         collectionView.register(PlaylistCell.self, forCellWithReuseIdentifier: kPlaylistCellId)
     }
     
@@ -37,9 +34,9 @@ class PlaylistsHostCell: FeedCell {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPlaylistCellId, for: indexPath) as! PlaylistCell
         cell.playList = playLists[indexPath.row]
-        if indexPath.row == videos.count - 3 && nextPageToken != nil {
+        if indexPath.row == playLists.count - 3 && nextPageToken != nil {
             // request next page
-            fetchVideos()
+            fetchDataSource()
         }
         return cell
     }

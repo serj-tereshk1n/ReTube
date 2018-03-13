@@ -16,6 +16,14 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
         loadVideo(id: id)
     }
     
+    func videosCount(count: Int) {
+        // todo
+    }
+    
+    func currentVideoIndex(index: Int) {
+        // todo
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupPlayerView()
@@ -261,14 +269,20 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
         case .paused:
             image = #imageLiteral(resourceName: "ic_play_arrow")
             break;
-        case .unstarted:
-            // todo
-            break;
-        case .ended:
+        case .ended,
+             .unstarted:
+            playlistView.playNextVideo()
             image = #imageLiteral(resourceName: "ic_replay")
             break;
-        default:
-            print("default")
+        case .buffering:
+            print("Player buffering video")
+            break;
+        case .queued:
+            print("Player queued")
+            break;
+        case .unknown:
+            print("Player unknown state")
+            break;
         }
         
         pausePlayButton.setImage(image, for: .normal)
@@ -289,7 +303,7 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
     }
     
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
-     // todo
+        print("YTPlayerView receivedError:", error)
     }
     
     // what?

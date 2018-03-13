@@ -10,6 +10,8 @@ import UIKit
 
 @objc protocol PlaylistViewDelegate: class {
     @objc func didSelectVideoWith(id: String)
+    @objc func videosCount(count: Int)
+    @objc func currentVideoIndex(index: Int)
 }
 
 class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -17,9 +19,12 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     weak var delegate: PlaylistViewDelegate?
     
     var videos = [YTPLVideo]()
+    var currentIndexPath: IndexPath?
     var nextPageToken: String?
     var playlist: YTPlayList? {
         didSet {
+            listName.text = playlist?.snippet.title
+            nextPageToken = nil
             videos = [YTPLVideo]()
             fetchVideos()
         }
@@ -27,10 +32,16 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func fetchVideos() {
         if let list = playlist {
             ApiService.sharedInstance.fetchPlayListItems(id: list.id, nextPageToken: nextPageToken) { (response) in
-                self.nextPageToken = nil
                 self.nextPageToken = response.nextPageToken
                 self.videos.append(contentsOf: response.items)
                 self.collectionView.reloadData()
+                
+                self.delegate?.videosCount(count: self.videos.count)
+                
+                // if first page, start playing first video
+                if (response.items.count > 0 && self.videos.count == response.items.count) {
+                    self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 0, section: 0))
+                }
             }
         }
     }
@@ -83,6 +94,15 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         addConstraintsWithFormat(format: "V:|[v0(70)]-0-[v1]|", views: currentVideoInfoView, collectionView)
     }
     
+    func playNextVideo() {
+        if let indexPath = currentIndexPath {
+            let nextIndexPath = IndexPath(row: indexPath.row + 1, section: 0)
+            if videos.count > nextIndexPath.row {
+                collectionView(collectionView, didSelectItemAt: nextIndexPath)
+            }
+        }
+    }
+    
     func setupCollectionView() {
         collectionView.register(PlaylistItemCell.self, forCellWithReuseIdentifier: kPlayListItemCellId)
     }
@@ -112,7 +132,10 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let id = videos[indexPath.row].snippet.resourceId?.videoId {
+            title.text = videos[indexPath.row].snippet.title
             delegate?.didSelectVideoWith(id: id)
+            delegate?.currentVideoIndex(index: indexPath.row)
+            currentIndexPath = indexPath
             collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
         }
     }
@@ -128,5 +151,4 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: kMargins, left: 0, bottom: kMargins, right: kMargins)
     }
-    
 }

@@ -10,10 +10,11 @@ import UIKit
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let kSectionCellId = "kSectionCellId"
-    let kFeedCellId = "kFeedCellId"
-    let kTrandingCellId = "kTrandingCellId"
-    let kSubscriptionsCellId = "kSubscriptionsCellId"
+    // tab page ids
+    let kHomeTabId = "kHomeTabId"
+    let kPlayListsTabId = "kPlayListsTabId"
+    let kLikedTabId = "kLikedTabId"
+    let kProfileTabId = "kProfileTabId"
     
     let settingsLauncher = SettingsLauncher()
     
@@ -46,10 +47,10 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         
         collectionView?.backgroundColor = .white
-//        collectionView?.register(VideoCell.self, forCellWithReuseIdentifier: kCellId)
-        collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: kSectionCellId)
-        collectionView?.register(PlaylistsHostCell.self, forCellWithReuseIdentifier: kTrandingCellId)
-        collectionView?.register(SubscriptionFeed.self, forCellWithReuseIdentifier: kSubscriptionsCellId)
+        collectionView?.register(HomeTabCell.self, forCellWithReuseIdentifier: kHomeTabId)
+        collectionView?.register(PlaylistsTabCell.self, forCellWithReuseIdentifier: kPlayListsTabId)
+        collectionView?.register(SubscriptionFeed.self, forCellWithReuseIdentifier: kLikedTabId)
+        collectionView?.register(SubscriptionFeed.self, forCellWithReuseIdentifier: kProfileTabId)
         collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         collectionView?.isPagingEnabled = true
@@ -57,8 +58,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     private func setupMenuBar() {
-        
-//        navigationController?.hidesBarsOnSwipe = true
         
         let redView = UIView()
         redView.backgroundColor = .ytRed
@@ -89,7 +88,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     @objc private func handleSearch() {
-        ///
+        /// TO DO
     }
     
     func scrollToMenuAt(indexPath: IndexPath) {
@@ -107,12 +106,18 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.item == 1 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: kTrandingCellId, for: indexPath) as! PlaylistsHostCell
-        } else if indexPath.item == 2 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: kSubscriptionsCellId, for: indexPath) as! SubscriptionFeed
-        } else {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: kSectionCellId, for: indexPath) as! FeedCell
+        switch indexPath.item {
+        case 0:
+            return collectionView.dequeueReusableCell(withReuseIdentifier: kHomeTabId, for: indexPath)
+        case 1:
+            return collectionView.dequeueReusableCell(withReuseIdentifier: kPlayListsTabId, for: indexPath)
+        case 2:
+            return collectionView.dequeueReusableCell(withReuseIdentifier: kLikedTabId, for: indexPath)
+        case 3:
+            return collectionView.dequeueReusableCell(withReuseIdentifier: kProfileTabId, for: indexPath)
+        default:
+            print("Something went very wrong with tab cellls")
+            return UICollectionViewCell()
         }
     }
     
