@@ -16,19 +16,31 @@ class PlaylistItemCell: BaseCollectionViewCell {
                 thumbImageView.sd_setImage(with: URL(string: v.snippet.thumbnails.medium.url),
                                           placeholderImage: UIImage(named: "placeholder.png"))
                 titleTextView.text = v.snippet.title
-                indexView.text = String(describing: v.snippet.position ?? 0)
+                indexLabel.text = String(describing: v.snippet.position ?? 0)
             }
         }
     }
-    
-    let indexView: UILabel = {
+    override var isSelected: Bool {
+        didSet {
+            currentVideoIndicator.isHidden = !isSelected
+            indexLabel.isHidden = isSelected
+        }
+    }
+    let indexLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 13)
         label.textAlignment = .center
         return label
     }()
-    
+    let currentVideoIndicator: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "ic_play_arrow").withRenderingMode(.alwaysTemplate)
+        imageView.contentMode = .scaleAspectFit
+        imageView.isHidden = true
+        imageView.tintColor = .gray
+        return imageView
+    }()
     let thumbImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "thumbnail_dislike")
@@ -52,19 +64,22 @@ class PlaylistItemCell: BaseCollectionViewCell {
     }()
     
     override func setupViews() {
-        addSubview(indexView)
+        addSubview(indexLabel)
         addSubview(thumbImageView)
         addSubview(titleTextView)
+        addSubview(currentVideoIndicator)
         
-//        backgroundColor = UIColor.rgb(red: 35, green: 35, blue: 35)
-        
-        addConstraintsWithFormat(format: "H:|[v0(25)]-0-[v1]-8-[v2]-8-|", views: indexView, thumbImageView, titleTextView)
-        addConstraintsWithFormat(format: "V:|[v0]|", views: indexView)
+        addConstraintsWithFormat(format: "H:|[v0(25)]-8-[v1]-8-[v2]-8-|", views: indexLabel, thumbImageView, titleTextView)
+        addConstraintsWithFormat(format: "V:|[v0]|", views: indexLabel)
         addConstraintsWithFormat(format: "V:|[v0]|", views: thumbImageView)
         addConstraintsWithFormat(format: "V:|-8-[v0]-8-|", views: titleTextView)
         
-        thumbImageView.widthAnchor.constraint(equalTo: thumbImageView.heightAnchor, multiplier: 16 / 9).isActive = true
-        
+        NSLayoutConstraint.activate([
+            thumbImageView.widthAnchor.constraint(equalTo: thumbImageView.heightAnchor, multiplier: 16 / 9),
+            currentVideoIndicator.widthAnchor.constraint(equalTo: indexLabel.widthAnchor),
+            currentVideoIndicator.heightAnchor.constraint(equalTo: indexLabel.heightAnchor),
+            currentVideoIndicator.centerXAnchor.constraint(equalTo: indexLabel.centerXAnchor),
+            currentVideoIndicator.centerYAnchor.constraint(equalTo: indexLabel.centerYAnchor)
+            ])
     }
-
 }

@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol PlaylistViewDelegate: class {
     @objc func didSelectVideoWith(id: String)
+    
 }
 
 class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -18,6 +19,7 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     var videos = [YTPLVideo]()
     var nextPageToken: String?
+    var currentVideo: YTPLVideo?
     var playlist: YTPlayList? {
         didSet {
             videos = [YTPLVideo]()
@@ -31,6 +33,10 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                 self.nextPageToken = response.nextPageToken
                 self.videos.append(contentsOf: response.items)
                 self.collectionView.reloadData()
+                
+                if response.items.count > 0 && self.videos.count == response.items.count {
+                    self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 0, section: 0))
+                }
             }
         }
     }
@@ -39,14 +45,14 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = UIColor.rgb(red: 25, green: 25, blue: 25)
+        cv.backgroundColor = .mDarkGray
         cv.delegate = self
         cv.dataSource = self
         return cv
     }()
     let currentVideoInfoView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.rgb(red: 35, green: 35, blue: 35)
+        view.backgroundColor = .mLightGray
         return view
     }()
     let title: UILabel = {
@@ -63,6 +69,8 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
+    
+//    func playNext
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -97,7 +105,13 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPlayListItemCellId, for: indexPath) as! PlaylistItemCell
-        cell.video = videos[indexPath.row]
+        let video = videos[indexPath.row]
+//        if let v = currentVideo {
+//            if v.snippet.resourceId?.videoId == video.snippet.resourceId?.videoId {
+//                cell.
+//            }
+//        }
+        cell.video = video
         
         if indexPath.row == videos.count - 3 && nextPageToken != nil {
             // request next page
@@ -111,9 +125,13 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let id = videos[indexPath.row].snippet.resourceId?.videoId {
-            delegate?.didSelectVideoWith(id: id)
-            collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        currentVideo = videos[indexPath.row]
+        if let video = currentVideo {
+            if let id = video.snippet.resourceId?.videoId {
+                title.text = video.snippet.title
+                delegate?.didSelectVideoWith(id: id)
+                collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+            }
         }
     }
     
