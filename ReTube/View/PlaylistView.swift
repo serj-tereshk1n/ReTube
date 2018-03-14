@@ -18,10 +18,13 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     weak var delegate: PlaylistViewDelegate?
     
     var videos = [YTPLVideo]()
+    var currentIndexPath: IndexPath?
     var nextPageToken: String?
     var currentVideo: YTPLVideo?
     var playlist: YTPlayList? {
         didSet {
+            listName.text = playlist?.snippet.title
+            nextPageToken = nil
             videos = [YTPLVideo]()
             fetchVideos()
         }
@@ -29,7 +32,6 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func fetchVideos() {
         if let list = playlist {
             ApiService.sharedInstance.fetchPlayListItems(id: list.id, nextPageToken: nextPageToken) { (response) in
-                self.nextPageToken = nil
                 self.nextPageToken = response.nextPageToken
                 self.videos.append(contentsOf: response.items)
                 self.collectionView.reloadData()
@@ -91,6 +93,15 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         addConstraintsWithFormat(format: "V:|[v0(70)]-0-[v1]|", views: currentVideoInfoView, collectionView)
     }
     
+    func playNextVideo() {
+        if let indexPath = currentIndexPath {
+            let nextIndexPath = IndexPath(row: indexPath.row + 1, section: 0)
+            if videos.count > nextIndexPath.row {
+                collectionView(collectionView, didSelectItemAt: nextIndexPath)
+            }
+        }
+    }
+    
     func setupCollectionView() {
         collectionView.register(PlaylistItemCell.self, forCellWithReuseIdentifier: kPlayListItemCellId)
     }
@@ -146,5 +157,4 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: kMargins, left: 0, bottom: kMargins, right: kMargins)
     }
-    
 }

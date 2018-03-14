@@ -38,7 +38,7 @@ class ApiService: NSObject {
     
     static let sharedInstance = ApiService()
     
-    let CURRENT_CHANNEL_ID = YT_CHANNEL_ID_ACADEMEG
+    let CURRENT_CHANNEL_ID = YT_CHANNEL_ID_NEISTAT
     
     // PLayLists
     let PLAYLISTS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlists"

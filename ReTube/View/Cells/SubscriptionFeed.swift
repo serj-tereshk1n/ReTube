@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SubscriptionFeed: FeedCell {
+class SubscriptionFeed: BaseTabCell {
 //    override func fetchVideos() {
 //        ApiService.sharedInstance.fetchSubscriptions { (videos) in
 //            self.videos = videos
