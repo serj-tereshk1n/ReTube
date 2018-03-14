@@ -10,36 +10,42 @@ import UIKit
 
 @objc protocol PlaylistViewDelegate: class {
     @objc func didSelectVideoWith(id: String)
-    
+    @objc func videosCount(count: Int)
+    @objc func currentVideoIndex(index: Int)
 }
 
 class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     weak var delegate: PlaylistViewDelegate?
     
-    var videos = [YTPLVideo]()
+    var videos = [STVideo]()
     var currentIndexPath: IndexPath?
     var nextPageToken: String?
-    var currentVideo: YTPLVideo?
+    var currentVideo: STVideo?
+    
     var playlist: YTPlayList? {
         didSet {
             listName.text = playlist?.snippet.title
             nextPageToken = nil
-            videos = [YTPLVideo]()
+            videos = [STVideo]()
             fetchVideos()
         }
     }
     func fetchVideos() {
         if let list = playlist {
-            ApiService.sharedInstance.fetchPlayListItems(id: list.id, nextPageToken: nextPageToken) { (response) in
+
+            ApiService.sharedInstance.playListItemsNextPage(id: list.id, nextPageToken: nextPageToken, completion: { (response) in
                 self.nextPageToken = response.nextPageToken
                 self.videos.append(contentsOf: response.items)
                 self.collectionView.reloadData()
                 
-                if response.items.count > 0 && self.videos.count == response.items.count {
+                self.delegate?.videosCount(count: self.videos.count)
+                
+                // if first page, start playing first video
+                if (response.items.count > 0 && self.videos.count == response.items.count) {
                     self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 0, section: 0))
                 }
-            }
+            })
         }
     }
     let kPlayListItemCellId = "kPlayListItemCellId"
@@ -136,14 +142,14 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        currentVideo = videos[indexPath.row]
-        if let video = currentVideo {
-            if let id = video.snippet.resourceId?.videoId {
-                title.text = video.snippet.title
-                delegate?.didSelectVideoWith(id: id)
-                collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-            }
-        }
+        let vdo = videos[indexPath.row]
+        
+        title.text = vdo.title
+        delegate?.didSelectVideoWith(id: vdo.id)
+        delegate?.currentVideoIndex(index: indexPath.row)
+        currentIndexPath = indexPath
+        collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

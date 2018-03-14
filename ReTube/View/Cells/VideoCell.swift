@@ -10,13 +10,13 @@ import UIKit
 
 class VideoCell: BaseCollectionViewCell {
     
-    var video: YTVideo? {
+    var video: STVideo? {
         didSet {
-            if let thumbUrl = video?.snippet.thumbnails.medium.url {
+            if let thumbUrl = video?.thumbnails.medium.url {
                 thumbnailImageView.sd_setImage(with: URL(string: thumbUrl),
                                                placeholderImage: UIImage(named: "placeholder.png"))
             }
-            titleLabel.text = video?.snippet.title
+            titleLabel.text = video?.title
         }
     }
     

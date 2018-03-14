@@ -6,6 +6,8 @@
 //  Copyright © 2018 sergey.tereshkin. All rights reserved.
 //
 
+import SDWebImage
+
 class BaseCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)

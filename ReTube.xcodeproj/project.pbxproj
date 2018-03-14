@@ -12,13 +12,11 @@
 		1BF23D28203E16910055CB20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF23D27203E16910055CB20 /* Constants.swift */; };
 		A373527E7497ED1E69694987 /* Pods_ReTube.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38A7134B78ABD78D0A45067 /* Pods_ReTube.framework */; };
 		CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CB042DBF203C373100451B39 /* HCYoutubeParser.m */; };
-		CB073F7D203EECED00DF2017 /* VideoTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB073F7C203EECED00DF2017 /* VideoTemp.swift */; };
 		CB0B8C5D203B37D200321C48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B8C5C203B37D200321C48 /* AppDelegate.swift */; };
 		CB0B8C5F203B37D200321C48 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B8C5E203B37D200321C48 /* HomeController.swift */; };
 		CB0B8C64203B37D200321C48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB0B8C63203B37D200321C48 /* Assets.xcassets */; };
 		CB0B8C67203B37D200321C48 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB0B8C65203B37D200321C48 /* LaunchScreen.storyboard */; };
 		CB0DC39D203D86AF0032605D /* YTStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0DC39C203D86AF0032605D /* YTStructs.swift */; };
-		CB0DC39F203D87C90032605D /* YTHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0DC39E203D87C90032605D /* YTHelper.swift */; };
 		CB1253A32040822F00A6A6B8 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1253A22040822F00A6A6B8 /* SettingCell.swift */; };
 		CB13ADAC204D807D00F04384 /* MinimizedPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB13ADAB204D807D00F04384 /* MinimizedPlayerView.swift */; };
 		CB13ADB0204D87AC00F04384 /* YTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB13ADAE204D87AC00F04384 /* YTPlayerView.m */; };
@@ -32,7 +30,6 @@
 		CB2202232056D128001EF6A8 /* PlaylistItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2202222056D128001EF6A8 /* PlaylistItemCell.swift */; };
 		CB3592B020447929008435EC /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3592AF20447929008435EC /* ApiService.swift */; };
 		CB6B85B8203DC1E900E108B2 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B85B7203DC1E900E108B2 /* Extentions.swift */; };
-		CB6B85BB203DC25100E108B2 /* VideoCellTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B85BA203DC25100E108B2 /* VideoCellTemp.swift */; };
 		CB6B85BF203DD08200E108B2 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B85BE203DD08200E108B2 /* MenuBar.swift */; };
 		CB6B85DF203DE25200E108B2 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B85DE203DE25200E108B2 /* BaseCollectionViewCell.swift */; };
 		CB6B85E1203DE32700E108B2 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B85E0203DE32700E108B2 /* MenuCell.swift */; };
@@ -52,7 +49,6 @@
 		CB042DBE203C373000451B39 /* ReTube-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReTube-Bridging-Header.h"; sourceTree = "<group>"; };
 		CB042DBF203C373100451B39 /* HCYoutubeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCYoutubeParser.m; sourceTree = "<group>"; };
 		CB042DC0203C373100451B39 /* HCYoutubeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCYoutubeParser.h; sourceTree = "<group>"; };
-		CB073F7C203EECED00DF2017 /* VideoTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTemp.swift; sourceTree = "<group>"; };
 		CB0B8C59203B37D200321C48 /* ReTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB0B8C5C203B37D200321C48 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB0B8C5E203B37D200321C48 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -60,7 +56,6 @@
 		CB0B8C66203B37D200321C48 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB0B8C68203B37D200321C48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB0DC39C203D86AF0032605D /* YTStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTStructs.swift; sourceTree = "<group>"; };
-		CB0DC39E203D87C90032605D /* YTHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTHelper.swift; sourceTree = "<group>"; };
 		CB1253A22040822F00A6A6B8 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		CB13ADAB204D807D00F04384 /* MinimizedPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimizedPlayerView.swift; sourceTree = "<group>"; };
 		CB13ADAE204D87AC00F04384 /* YTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTPlayerView.m; sourceTree = "<group>"; };
@@ -75,7 +70,6 @@
 		CB2202222056D128001EF6A8 /* PlaylistItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistItemCell.swift; sourceTree = "<group>"; };
 		CB3592AF20447929008435EC /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		CB6B85B7203DC1E900E108B2 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
-		CB6B85BA203DC25100E108B2 /* VideoCellTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCellTemp.swift; sourceTree = "<group>"; };
 		CB6B85BE203DD08200E108B2 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		CB6B85DE203DE25200E108B2 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		CB6B85E0203DE32700E108B2 /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
@@ -114,7 +108,6 @@
 				1BCE3F5320587ABC0046C3D9 /* HomeTabCell.swift */,
 				CB1BD2A42045C16D00CDF423 /* PlaylistsTabCell.swift */,
 				CB1BD2A62045C58D00CDF423 /* SubscriptionFeed.swift */,
-				CB6B85BA203DC25100E108B2 /* VideoCellTemp.swift */,
 				CB6B85E0203DE32700E108B2 /* MenuCell.swift */,
 				CB1253A22040822F00A6A6B8 /* SettingCell.swift */,
 				CB7A9F572052CD1B0032EC66 /* VideoCell.swift */,
@@ -233,8 +226,6 @@
 			children = (
 				1BF23D27203E16910055CB20 /* Constants.swift */,
 				CB0DC39C203D86AF0032605D /* YTStructs.swift */,
-				CB0DC39E203D87C90032605D /* YTHelper.swift */,
-				CB073F7C203EECED00DF2017 /* VideoTemp.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -371,12 +362,10 @@
 			files = (
 				CB0B8C5F203B37D200321C48 /* HomeController.swift in Sources */,
 				1BF23D28203E16910055CB20 /* Constants.swift in Sources */,
-				CB6B85BB203DC25100E108B2 /* VideoCellTemp.swift in Sources */,
 				CB7A9F582052CD1B0032EC66 /* VideoCell.swift in Sources */,
 				CB831AB220485C8B00203CBD /* MainPlayerView.swift in Sources */,
 				1BB71586203F8B42002ED3A9 /* SettingsLauncher.swift in Sources */,
 				CB1253A32040822F00A6A6B8 /* SettingCell.swift in Sources */,
-				CB073F7D203EECED00DF2017 /* VideoTemp.swift in Sources */,
 				CB832C302047016B00C643C0 /* VideoLauncher.swift in Sources */,
 				CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */,
 				CB2202232056D128001EF6A8 /* PlaylistItemCell.swift in Sources */,
@@ -396,7 +385,6 @@
 				CB1BD2A72045C58D00CDF423 /* SubscriptionFeed.swift in Sources */,
 				CB1A43F520513630008161FD /* PlayerViewCtrl.swift in Sources */,
 				CB1BD2A320459B4900CDF423 /* BaseTabCell.swift in Sources */,
-				CB0DC39F203D87C90032605D /* YTHelper.swift in Sources */,
 				CB6B85B8203DC1E900E108B2 /* Extentions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

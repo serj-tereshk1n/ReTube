@@ -10,14 +10,14 @@ import UIKit
 
 class HomeTabCell: BaseTabCell {
     
-    var videos = [YTVideo]()
+    var videos = [STVideo]()
     
     let kFeedCellID = "kFeedCellID"
     
     override func fetchDataSource() {
-        ApiService.sharedInstance.searchVideosNextPage(nextPageToken: nextPageToken) { (ytSearchResponse) in
-            self.videos.append(contentsOf: ytSearchResponse.items)
-            self.nextPageToken = ytSearchResponse.nextPageToken
+        ApiService.sharedInstance.searchNextPage(nextPageToken: nextPageToken) { (response) in
+            self.videos.append(contentsOf: response.items)
+            self.nextPageToken = response.nextPageToken
             self.collectionView.reloadData()
         }
     }
@@ -51,7 +51,7 @@ class HomeTabCell: BaseTabCell {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         VideoLauncher.sharedInstance.showVideoPlayer()
-        VideoLauncher.sharedInstance.loadVideo(id: videos[indexPath.row].id.videoId ?? "")
+        VideoLauncher.sharedInstance.loadVideo(id: videos[indexPath.row].id)
     }
     
 //    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -10,22 +10,17 @@ import UIKit
 
 class PlaylistItemCell: BaseCollectionViewCell {
 
-    var video: YTPLVideo? {
+    var video: STVideo? {
         didSet {
             if let v = video {
-                thumbImageView.sd_setImage(with: URL(string: v.snippet.thumbnails.medium.url),
+                thumbImageView.sd_setImage(with: URL(string: v.thumbnails.medium.url),
                                           placeholderImage: UIImage(named: "placeholder.png"))
-                titleTextView.text = v.snippet.title
-                indexLabel.text = String(describing: v.snippet.position ?? 0)
+                titleTextView.text = v.title
+                indexLabel.text = String(describing: v.position)
             }
         }
     }
-    override var isSelected: Bool {
-        didSet {
-            currentVideoIndicator.isHidden = !isSelected
-            indexLabel.isHidden = isSelected
-        }
-    }
+
     let indexLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
@@ -67,7 +62,7 @@ class PlaylistItemCell: BaseCollectionViewCell {
         addSubview(indexLabel)
         addSubview(thumbImageView)
         addSubview(titleTextView)
-        addSubview(currentVideoIndicator)
+//        addSubview(currentVideoIndicator)
         
         addConstraintsWithFormat(format: "H:|[v0(25)]-8-[v1]-8-[v2]-8-|", views: indexLabel, thumbImageView, titleTextView)
         addConstraintsWithFormat(format: "V:|[v0]|", views: indexLabel)
@@ -75,11 +70,12 @@ class PlaylistItemCell: BaseCollectionViewCell {
         addConstraintsWithFormat(format: "V:|-8-[v0]-8-|", views: titleTextView)
         
         NSLayoutConstraint.activate([
-            thumbImageView.widthAnchor.constraint(equalTo: thumbImageView.heightAnchor, multiplier: 16 / 9),
-            currentVideoIndicator.widthAnchor.constraint(equalTo: indexLabel.widthAnchor),
-            currentVideoIndicator.heightAnchor.constraint(equalTo: indexLabel.heightAnchor),
-            currentVideoIndicator.centerXAnchor.constraint(equalTo: indexLabel.centerXAnchor),
-            currentVideoIndicator.centerYAnchor.constraint(equalTo: indexLabel.centerYAnchor)
+            thumbImageView.widthAnchor.constraint(equalTo: thumbImageView.heightAnchor, multiplier: 16 / 9)
+//            ,
+//            currentVideoIndicator.widthAnchor.constraint(equalTo: indexLabel.widthAnchor),
+//            currentVideoIndicator.heightAnchor.constraint(equalTo: indexLabel.heightAnchor),
+//            currentVideoIndicator.centerXAnchor.constraint(equalTo: indexLabel.centerXAnchor),
+//            currentVideoIndicator.centerYAnchor.constraint(equalTo: indexLabel.centerYAnchor)
             ])
     }
 }
