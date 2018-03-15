@@ -53,25 +53,34 @@ struct STResponse {
 struct STVideo {
     let id: String
     let title: String
+    let publishedAt: String
     let description: String
     let thumbnails: YTThumbnails
     let position: Int
     
     init(plitem: YTPLVideo) {
-        id = plitem.snippet.resourceId?.videoId ?? "noooo"
+        id = plitem.snippet.resourceId?.videoId ?? "WTF?"
         title = plitem.snippet.title
         description = plitem.snippet.description
         thumbnails = plitem.snippet.thumbnails
         position = plitem.snippet.position ?? 0
+        publishedAt = plitem.snippet.publishedAt
     }
     
     init(item: YTVideo) {
-        id = item.id?.videoId ?? "noooo"
+        id = item.id?.videoId ?? "WTF?"
         title = item.snippet.title
         description = item.snippet.description
         thumbnails = item.snippet.thumbnails
         position = 0
+        publishedAt = item.snippet.publishedAt
     }
+}
+
+struct STPlayList {
+    let id: String
+    let snippet: YTSnippet
+    let items: [STVideo]
 }
 
 struct YTPageInfo: Decodable {

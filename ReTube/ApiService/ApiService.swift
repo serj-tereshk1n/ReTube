@@ -40,6 +40,10 @@ class ApiService: NSObject {
         case playlistItems = 2, searchItems = 3
     }
     
+    enum Order: String {
+        case date = "order", rating = "rating"
+    }
+    
     static let sharedInstance = ApiService()
     
     let CURRENT_CHANNEL_ID = YT_CHANNEL_ID_NEISTAT
@@ -62,8 +66,8 @@ class ApiService: NSObject {
         fetchLinkWith(strUrl: url, type: .playlistItems, completion: completion)
     }
     
-    func searchNextPage(nextPageToken: String?, completion: @escaping (STResponse) -> ()) {
-        var url = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet&order=date&type=video&maxResults=20"
+    func searchNextPage(nextPageToken: String?, order: Order, completion: @escaping (STResponse) -> ()) {
+        var url = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet&order=\(order)&type=video&maxResults=20"
         if let nextPageToken = nextPageToken {
             url.append("&pageToken=\(nextPageToken)")
         }

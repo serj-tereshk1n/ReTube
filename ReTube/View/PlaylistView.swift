@@ -21,8 +21,6 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     var videos = [STVideo]()
     var currentIndexPath: IndexPath?
     var nextPageToken: String?
-    var currentVideo: STVideo?
-    
     var playlist: YTPlayList? {
         didSet {
             listName.text = playlist?.snippet.title
@@ -78,8 +76,6 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         return label
     }()
     
-//    func playNext
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -122,13 +118,7 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPlayListItemCellId, for: indexPath) as! PlaylistItemCell
-        let video = videos[indexPath.row]
-//        if let v = currentVideo {
-//            if v.snippet.resourceId?.videoId == video.snippet.resourceId?.videoId {
-//                cell.
-//            }
-//        }
-        cell.video = video
+        cell.video = videos[indexPath.row]
         
         if indexPath.row == videos.count - 3 && nextPageToken != nil {
             // request next page
