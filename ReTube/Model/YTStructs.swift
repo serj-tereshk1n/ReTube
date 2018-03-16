@@ -57,6 +57,7 @@ struct STVideo {
     let description: String
     let thumbnails: YTThumbnails
     let position: Int
+//    let statistics: STStatistics
     
     init(plitem: YTPLVideo) {
         id = plitem.snippet.resourceId?.videoId ?? "WTF?"
@@ -77,10 +78,39 @@ struct STVideo {
     }
 }
 
+struct STStatistics: Decodable {
+    let viewCount: String
+    let likeCount: String
+    let dislikeCount: String
+}
+
 struct STPlayList {
-    let id: String
-    let snippet: YTSnippet
+
+    let title: String
     let items: [STVideo]
+    
+    init(title: String, items: [STVideo]) {
+        self.title = title
+        self.items = items
+    }
+    
+    init(title: String, items: [YTVideo]) {
+        self.title = title
+        var tempItems = [STVideo]()
+        for (_, plitem) in items.enumerated() {
+            tempItems.append(STVideo(item: plitem))
+        }
+        self.items = tempItems
+    }
+    
+    init(title: String, items: [YTPLVideo]) {
+        self.title = title
+        var tempItems = [STVideo]()
+        for (_, item) in items.enumerated() {
+            tempItems.append(STVideo(plitem: item))
+        }
+        self.items = tempItems
+    }
 }
 
 struct YTPageInfo: Decodable {
@@ -110,6 +140,15 @@ struct YTPLItemsResponse: Decodable {
     let nextPageToken: String?
     let prevPageToken: String?
     let items: [YTPLVideo]
+}
+struct YTStatsResponse: Decodable {
+    let etag: String
+    let kind: String
+    let pageInfo: YTPageInfo
+    let items: [YTStatistics]
+}
+struct YTStatistics: Decodable {
+    let statistics: STStatistics
 }
 struct YTChannel: Decodable {
     

@@ -37,10 +37,17 @@ class MinimizedPlayerView: UIView {
     }
     
     func setupPlayerView() {
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
+        addSubview(blurEffectView)
         addSubview(playerContainer)
         addSubview(closeButton)
         addSubview(pausePlayButton)
+        
+        addFullScreenConstraintsFor(views: blurEffectView, inside: self)
         
         playerContainer.addSubview(placeholderImageView)
         
@@ -52,7 +59,7 @@ class MinimizedPlayerView: UIView {
         addConstraintsWithFormat(format: "V:|[v0]|", views: pausePlayButton)
         addConstraintsWithFormat(format: "V:|[v0]|", views: closeButton)
         
-        playerContainer.backgroundColor = .green
+        playerContainer.backgroundColor = .clear
     }
     
     func inFocusWith(player: UIView) {

@@ -14,6 +14,8 @@ class HomeTabCell: BaseTabCell {
     var feed = [STVideo]()
     var popular = [STVideo]()
     
+    let kMargin: CGFloat = 16
+    
     let kSectionHeaderId = "kSectionHeaderId"
     let kFeedCellID = "kFeedCellID"
     let kPopularSectionCellID = "kPopularSectionCellID"
@@ -22,7 +24,7 @@ class HomeTabCell: BaseTabCell {
         ApiService.sharedInstance.searchNextPage(nextPageToken: nextPageToken, order: .date) { (response) in
             self.feed.append(contentsOf: response.items)
             self.nextPageToken = response.nextPageToken
-            ApiService.sharedInstance.searchNextPage(nextPageToken: nil, order: .rating, completion: { (response) in
+            ApiService.sharedInstance.searchNextPage(nextPageToken: nil, order: .viewCount, completion: { (response) in
                 self.popular.append(contentsOf: response.items)
                 self.collectionView.reloadData()
             })
@@ -73,20 +75,28 @@ class HomeTabCell: BaseTabCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    
+        let isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad
         
-        let width = frame.width
+        let width = frame.width - kMargin * 2
+        let ipadWidth = (frame.width - kMargin * 4) / 3
+        let ratioIndex: CGFloat = 9 / 16
+        let height = isIpad ? ipadWidth * ratioIndex : width * ratioIndex
+        let supplementaryHeight: CGFloat = 102
         
         if indexPath.section == 0 {
-            return CGSize(width: width, height: 170)
+            return CGSize(width: frame.width,
+                          height: 170)
         }
         
-        let height = (width - 32) * 9 / 16
-        return CGSize(width: width, height: height + 112)
+        return CGSize(width: isIpad ? ipadWidth : width,
+                      height: height + supplementaryHeight)
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         VideoLauncher.sharedInstance.showVideoPlayer()
-        VideoLauncher.sharedInstance.loadVideo(id: feed[indexPath.row].id)
+        VideoLauncher.sharedInstance.loadVideAndRelatedPlaylist(video: feed[indexPath.row])
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -116,11 +126,22 @@ class HomeTabCell: BaseTabCell {
         return CGSize(width: collectionView.frame.size.width, height: 35)
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+        if section == 1 {
+            return UIEdgeInsets(top: kMargin, left: kMargin, bottom: kMargin, right: kMargin)
+        }
+    
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+     
+        return kMargin
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+
+        return kMargin
+    }
 }

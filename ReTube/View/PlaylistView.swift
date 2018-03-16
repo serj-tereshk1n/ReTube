@@ -21,24 +21,44 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     var videos = [STVideo]()
     var currentIndexPath: IndexPath?
     var nextPageToken: String?
-    var playlist: YTPlayList? {
+    var fetchSelector: Selector? {
         didSet {
-            listName.text = playlist?.snippet.title
-            nextPageToken = nil
-            videos = [STVideo]()
-            fetchVideos()
+            if let selector = fetchSelector {
+                performSelector(onMainThread: selector, with: nil, waitUntilDone: false)
+            }
         }
     }
-    func fetchVideos() {
+    var playlist: YTPlayList? {
+        didSet {
+            if  playlist != nil {
+                video = nil
+                clearDataSource()
+                fetchSelector = #selector(fetchPlaylistVideos)
+            }
+        }
+    }
+    var video: STVideo? {
+        didSet {
+            if  let video = video {
+                playlist = nil
+                clearDataSource()
+                videos.append(video)
+                collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 0, section: 0))
+                fetchSelector = #selector(fetchRelatedVideos)
+            }
+        }
+    }
+    
+    func clearDataSource() {
+        nextPageToken = nil
+        videos = [STVideo]()
+    }
+    
+    @objc func fetchPlaylistVideos() {
         if let list = playlist {
-
+            listName.text = list.snippet.title
             ApiService.sharedInstance.playListItemsNextPage(id: list.id, nextPageToken: nextPageToken, completion: { (response) in
-                self.nextPageToken = response.nextPageToken
-                self.videos.append(contentsOf: response.items)
-                self.collectionView.reloadData()
-                
-                self.delegate?.videosCount(count: self.videos.count)
-                
+                self.manageResponse(response: response)
                 // if first page, start playing first video
                 if (response.items.count > 0 && self.videos.count == response.items.count) {
                     self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 0, section: 0))
@@ -46,6 +66,24 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             })
         }
     }
+    
+    @objc func fetchRelatedVideos() {
+        if let video = video {
+            listName.text = "Related videos"
+            ApiService.sharedInstance.relatedVideosTo(videoId: video.id, nextPageToken: nextPageToken, order: .rating, completion: { (response) in
+                self.manageResponse(response: response)
+            })
+        }
+    }
+    
+    func manageResponse(response: STResponse) {
+        self.nextPageToken = response.nextPageToken
+        self.videos.append(contentsOf: response.items)
+        self.collectionView.reloadData()
+        
+        self.delegate?.videosCount(count: self.videos.count)
+    }
+    
     let kPlayListItemCellId = "kPlayListItemCellId"
     let kMargins: CGFloat = 8
     lazy var collectionView: UICollectionView = {
@@ -99,47 +137,53 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         if let indexPath = currentIndexPath {
             let nextIndexPath = IndexPath(row: indexPath.row + 1, section: 0)
             if videos.count > nextIndexPath.row {
+                collectionView.selectItem(at: nextIndexPath, animated: true, scrollPosition: .centeredVertically)
                 collectionView(collectionView, didSelectItemAt: nextIndexPath)
             }
         }
     }
     
     func setupCollectionView() {
-        collectionView.register(PlaylistItemCell.self, forCellWithReuseIdentifier: kPlayListItemCellId)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        collectionView.register(PlaylistVideoCell.self, forCellWithReuseIdentifier: kPlayListItemCellId)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return videos.count
     }
     
+    var currentVideo: STVideo?
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPlayListItemCellId, for: indexPath) as! PlaylistItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPlayListItemCellId, for: indexPath) as! PlaylistVideoCell
         cell.video = videos[indexPath.row]
+        
+        if let currentId = currentVideo?.id {
+            cell.isCurrentVideo = currentId == videos[indexPath.row].id
+        } else {
+            cell.isCurrentVideo = false
+        }
         
         if indexPath.row == videos.count - 3 && nextPageToken != nil {
             // request next page
-            fetchVideos()
+            if let selector = fetchSelector {
+                performSelector(onMainThread: selector, with: nil, waitUntilDone: false)
+            }
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width - kMargins * 2, height: 70)
+        return CGSize(width: frame.width - kMargins, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vdo = videos[indexPath.row]
-        
+        currentVideo = vdo
         title.text = vdo.title
         delegate?.didSelectVideoWith(id: vdo.id)
         delegate?.currentVideoIndex(index: indexPath.row)
         currentIndexPath = indexPath
-        collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-        
+//        collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -152,5 +196,9 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: kMargins, left: 0, bottom: kMargins, right: kMargins)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

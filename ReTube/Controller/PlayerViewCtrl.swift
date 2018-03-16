@@ -15,7 +15,7 @@ class PlayerViewCtrl: UIView {
     
     let minimizedPlayerContainerView: UIView = {
         let mplayer = UIView()
-        mplayer.backgroundColor = .black
+        mplayer.backgroundColor = .clear
         mplayer.isUserInteractionEnabled = true
         mplayer.alpha = 0
         return mplayer
@@ -62,18 +62,18 @@ class PlayerViewCtrl: UIView {
         playerView.minimizedContainer = minimizedPlayerContainerView
         playerView.listContainer = bottomView
         
-        portraintPlayerConstraints()
+        portraitPlayerConstraints()
     }
-    
-    func loadVideo(id: String) {
-        playerView.loadVideo(id: id)
+        
+    func loadVideAndRelatedPlaylist(video: STVideo) {
+        playerView.loadVideAndRelatedPlaylist(video: video)
     }
     
     func loadPlayList(list: YTPlayList) {
         playerView.loadPlayList(list: list)
     }
     
-    func portraintPlayerConstraints() {
+    func portraitPlayerConstraints() {
         playerViewContainer.addSubview(playerView)
         addFullScreenConstraintsFor(views: playerView, inside: playerViewContainer)
     }
@@ -124,7 +124,7 @@ class PlayerViewCtrl: UIView {
             break;
         case .portrait:
        
-            portraintPlayerConstraints()
+            portraitPlayerConstraints()
 
             UIView.animate(withDuration: 0.3, animations: {
                 self.layoutIfNeeded()

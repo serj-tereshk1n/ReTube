@@ -62,7 +62,7 @@ class HSectionCell: BaseCollectionViewCell, UICollectionViewDelegateFlowLayout, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         VideoLauncher.sharedInstance.showVideoPlayer()
-        VideoLauncher.sharedInstance.loadVideo(id: videos[indexPath.row].id)
+        VideoLauncher.sharedInstance.loadVideAndRelatedPlaylist(video: videos[indexPath.row])
     }
     
 }

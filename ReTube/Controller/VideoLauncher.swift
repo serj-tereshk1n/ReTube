@@ -58,8 +58,8 @@ class VideoLauncher: NSObject {
         playerCtrlView.launcher = self
     }
     
-    func loadVideo(id: String) {
-        playerCtrlView.loadVideo(id: id)
+    func loadVideAndRelatedPlaylist(video: STVideo) {
+        playerCtrlView.loadVideAndRelatedPlaylist(video: video)
     }
     
     func loadPlayList(list: YTPlayList) {

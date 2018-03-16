@@ -15,7 +15,7 @@
 // part=snippet,CcontentDetails
 // key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
 
-// https://www.googleapis.com/youtube/v3/playlists?maxResults=20&channelId=UC0lT9K8Wfuc1KPqm6YjRf1A&part=snippet,CcontentDetails&key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
+// https://www.googleapis.com/youtube/v3/playlistItems?maxResults=20&playlistId=PLiCpP_44QZBwAebJGnNzH-gEHAqFL9et5&part=snippet&key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M
 
 // PLayList Items
 // https://www.googleapis.com/youtube/v3/playlistItems?
@@ -34,6 +34,12 @@
 
 // https://www.googleapis.com/youtube/v3/search?key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M&channelId=UC0lT9K8Wfuc1KPqm6YjRf1A&part=snippet,id&order=date&maxResults=20
 
+// related videos search (type=video & relatedToVideoId= )
+// https://www.googleapis.com/youtube/v3/search?maxResults=10&relatedToVideoId=xyVdZrL3Sbo&channelId=UCtinbF-Q-fVthA0qrFQTgXQ&part=snippet&key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M&type=video
+
+// video statistics
+// https://www.googleapis.com/youtube/v3/videos?key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M&id=xyVdZrL3Sbo&part=statistics
+
 class ApiService: NSObject {
     
     enum DecodableType: Int {
@@ -41,7 +47,7 @@ class ApiService: NSObject {
     }
     
     enum Order: String {
-        case date = "order", rating = "rating"
+        case date = "order", rating = "rating", viewCount = "viewCount"
     }
     
     static let sharedInstance = ApiService()
@@ -54,9 +60,6 @@ class ApiService: NSObject {
     let PLAYLIST_ITEMS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
     // Search Videos in Channel
     let SEARCH_BASE_URL = "https://www.googleapis.com/youtube/v3/search"
-    
-    // test url
-    let baseUrl = "https://s3-us-west-2.amazonaws.com/youtubeassets/"
     
     func playListItemsNextPage(id: String, nextPageToken: String?, completion: @escaping (STResponse) -> ()) {
         var url = "\(PLAYLIST_ITEMS_BASE_URL)?key=\(YT_API_KEY)&playlistId=\(id)&channelId=\(CURRENT_CHANNEL_ID)&type=video&part=snippet,contentDetails&order=date&maxResults=10"
@@ -72,6 +75,34 @@ class ApiService: NSObject {
             url.append("&pageToken=\(nextPageToken)")
         }
         fetchLinkWith(strUrl: url, type: .searchItems, completion: completion)
+    }
+    
+    func relatedVideosTo(videoId: String, nextPageToken: String?, order: Order, completion: @escaping (STResponse) -> ()) {
+        var url = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet&order=\(order)&type=video&maxResults=20&relatedToVideoId=\(videoId)"
+
+        if let nextPageToken = nextPageToken {
+            url.append("&pageToken=\(nextPageToken)")
+        }
+        fetchLinkWith(strUrl: url, type: .searchItems, completion: completion)
+    }
+    
+    func statisticsForVideo(id: String, completion: @escaping (STStatistics) -> ()) {
+        
+        let url = "https://www.googleapis.com/youtube/v3/videos?id=\(id)&key=\(YT_API_KEY)&part=statistics"
+        
+        dataWith(strUrl: url) { (data) in
+            
+            do {
+                let ytresp = try JSONDecoder().decode(YTStatsResponse.self, from: data)
+                if  ytresp.items.count > 0 {
+                    DispatchQueue.main.async {
+                        completion(ytresp.items[0].statistics)
+                    }
+                }
+            } catch let err {
+                print("Errro while decoding statistics:", err)
+            }
+        }
     }
     
     func fetchLinkWith(strUrl: String, type: DecodableType, completion: @escaping (STResponse) -> ()) {

@@ -99,7 +99,7 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
     }()
     let minimizedPlayer: MinimizedPlayerView = {
         let mplayer = MinimizedPlayerView()
-        mplayer.backgroundColor = .black
+        mplayer.backgroundColor = .clear
         return mplayer
     }()
     let playlistView: PlaylistView = {
@@ -162,7 +162,7 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
         controlsPanelView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideControls(_:))))
     }
     
-    func loadVideo(id: String) {
+    private func loadVideo(id: String) {
         
         let vars = ["playsinline": 1,
                     "controls": 0,
@@ -171,6 +171,21 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
         
         player.delegate = self
         player.load(withVideoId: id, playerVars: vars)
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            try audioSession.setActive(true)
+        } catch let err {
+            print("Error:", err)
+        }
+        
+        player.webView?.mediaPlaybackRequiresUserAction = false
+    }
+    
+    func loadVideAndRelatedPlaylist(video: STVideo) {
+        playlistView.video = video
     }
 
     func loadPlayList(list: YTPlayList) {
@@ -269,8 +284,10 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
         case .paused:
             image = #imageLiteral(resourceName: "ic_play_arrow")
             break;
-        case .ended,
-             .unstarted:
+        case .unstarted:
+                ///
+            break;
+        case .ended:
             playlistView.playNextVideo()
             image = #imageLiteral(resourceName: "ic_replay")
             break;
