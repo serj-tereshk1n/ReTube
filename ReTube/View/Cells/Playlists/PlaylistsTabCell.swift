@@ -11,7 +11,9 @@ import UIKit
 class PlaylistsTabCell: BaseTabCell {
     
     var playLists = [YTPlayList]()
+    let kMargin: CGFloat = 16
     
+    let kSectionHeaderId = "kSectionHeaderId"
     let kPlaylistCellId = "kPlaylistCellId"
     
     override func fetchDataSource() {
@@ -24,7 +26,12 @@ class PlaylistsTabCell: BaseTabCell {
     }
 
     override func registerCells() {
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: kSectionHeaderId)
         collectionView.register(PlaylistCell.self, forCellWithReuseIdentifier: kPlaylistCellId)
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -42,8 +49,32 @@ class PlaylistsTabCell: BaseTabCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let collectionViewSize = collectionView.frame.size.width - 32 - 16
-        return CGSize(width: collectionViewSize/2, height: (collectionViewSize/2) * 0.85)
+//        let collectionViewSize = collectionView.frame.size.width - 32 - 16
+        
+        let isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad
+        
+        let width = frame.width - kMargin * 2
+        let ipadWidth = (frame.width - kMargin * 4) / 3
+        let ratioIndex: CGFloat = 9 / 16
+        let height = isIpad ? ipadWidth * ratioIndex : width * ratioIndex
+        let supplementaryHeight: CGFloat = 60
+        
+        return CGSize(width: isIpad ? ipadWidth : width, height: height + supplementaryHeight)
+        
+//        return CGSize(width: collectionViewSize/2, height: (collectionViewSize/2) * 0.85)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: kSectionHeaderId, for: indexPath) as! SectionHeaderView
+        
+        header.titleLabel.text = "Official Playlists"
+        
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.size.width, height: 35)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -52,6 +83,6 @@ class PlaylistsTabCell: BaseTabCell {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        return UIEdgeInsets(top: kMargin, left: kMargin, bottom: kMargin, right: kMargin)
     }
 }

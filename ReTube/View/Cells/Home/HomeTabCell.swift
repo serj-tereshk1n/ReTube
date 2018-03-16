@@ -82,7 +82,7 @@ class HomeTabCell: BaseTabCell {
         let ipadWidth = (frame.width - kMargin * 4) / 3
         let ratioIndex: CGFloat = 9 / 16
         let height = isIpad ? ipadWidth * ratioIndex : width * ratioIndex
-        let supplementaryHeight: CGFloat = 102
+        let supplementaryHeight: CGFloat = 100
         
         if indexPath.section == 0 {
             return CGSize(width: frame.width,
