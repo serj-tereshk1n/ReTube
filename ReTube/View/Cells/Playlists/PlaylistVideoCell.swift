@@ -24,32 +24,21 @@ class PlaylistVideoCell: BaseCollectionViewCell {
     var isCurrentVideo: Bool? {
         didSet {
             if let current = isCurrentVideo {
-                backgroundColor = current ? .mLightGray : .mDarkGray
+                currentVideoIndicator.backgroundColor = current ? .ytRed : .mDarkGray
             }
         }
     }
     
     override var isSelected: Bool {
         didSet {
-            backgroundColor = isSelected ? .mLightGray : .mDarkGray
+            currentVideoIndicator.backgroundColor = isSelected ? .ytRed : .mDarkGray
         }
     }
     
-//    let indexLabel: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .gray
-//        label.font = UIFont.systemFont(ofSize: 13)
-//        label.textAlignment = .center
-//        return label
-//    }()
-//    let currentVideoIndicator: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.image = #imageLiteral(resourceName: "ic_play_arrow").withRenderingMode(.alwaysTemplate)
-//        imageView.contentMode = .scaleAspectFit
-//        imageView.isHidden = true
-//        imageView.tintColor = .gray
-//        return imageView
-//    }()
+    let currentVideoIndicator: UIView = {
+        let view = UIView()
+        return view
+    }()
     let thumbImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "thumbnail_dislike")
@@ -76,12 +65,11 @@ class PlaylistVideoCell: BaseCollectionViewCell {
 //        addSubview(indexLabel)
         addSubview(thumbImageView)
         addSubview(titleTextView)
-//        addSubview(currentVideoIndicator)
+        addSubview(currentVideoIndicator)
         
-//        addConstraintsWithFormat(format: "H:|[v0(25)]-8-[v1]-8-[v2]-8-|", views: indexLabel, thumbImageView, titleTextView)
-        addConstraintsWithFormat(format: "H:|[v0]-8-[v1]-8-|", views: thumbImageView, titleTextView)
-//        addConstraintsWithFormat(format: "V:|[v0]|", views: indexLabel)
+        addConstraintsWithFormat(format: "H:|[v0]-8-[v1]-4-[v2(4)]|", views: thumbImageView, titleTextView, currentVideoIndicator)
         addConstraintsWithFormat(format: "V:|[v0]|", views: thumbImageView)
+        addConstraintsWithFormat(format: "V:|[v0]|", views: currentVideoIndicator)
         addConstraintsWithFormat(format: "V:|-8-[v0]-8-|", views: titleTextView)
         
         NSLayoutConstraint.activate([

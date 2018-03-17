@@ -108,6 +108,8 @@ class PlayerViewCtrl: UIView {
                 div = 2.0
             }
             
+            playerView.minimizeButton.isHidden = true
+            
             if let kw = keyWindow {
                 kw.addSubview(playerView)
                 
@@ -125,7 +127,9 @@ class PlayerViewCtrl: UIView {
         case .portrait:
        
             portraitPlayerConstraints()
-
+            
+            playerView.minimizeButton.isHidden = false
+            
             UIView.animate(withDuration: 0.3, animations: {
                 self.layoutIfNeeded()
                 UIApplication.shared.isStatusBarHidden = false

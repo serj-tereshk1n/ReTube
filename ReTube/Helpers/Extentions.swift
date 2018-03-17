@@ -15,7 +15,10 @@ extension NSObject {
     
     func timeStringFromSeconds(seconds: Int) -> String {
         let (h, m, s) = secondsToHoursMinutesSeconds(seconds: seconds)
-        return h > 0 ? "\(h)\(m):\(s)" : "\(m):\(s)"
+        
+        let strSec = s < 10 ? "0\(s)" : "\(s)"
+        
+        return h > 0 ? "\(h)\(m):\(strSec)" : "\(m):\(strSec)"
     }
 }
 extension CGFloat {

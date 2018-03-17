@@ -53,6 +53,7 @@ class ApiService: NSObject {
     static let sharedInstance = ApiService()
     
     let CURRENT_CHANNEL_ID = YT_CHANNEL_ID_NEISTAT
+    let kQueryLimit = 50 // should be maximum acceptable for api in use
     
     // PLayLists
     let PLAYLISTS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlists"
@@ -62,7 +63,7 @@ class ApiService: NSObject {
     let SEARCH_BASE_URL = "https://www.googleapis.com/youtube/v3/search"
     
     func playListItemsNextPage(id: String, nextPageToken: String?, completion: @escaping (STResponse) -> ()) {
-        var url = "\(PLAYLIST_ITEMS_BASE_URL)?key=\(YT_API_KEY)&playlistId=\(id)&channelId=\(CURRENT_CHANNEL_ID)&type=video&part=snippet,contentDetails&order=date&maxResults=10"
+        var url = "\(PLAYLIST_ITEMS_BASE_URL)?key=\(YT_API_KEY)&playlistId=\(id)&channelId=\(CURRENT_CHANNEL_ID)&type=video&part=snippet,contentDetails&order=date&maxResults=\(kQueryLimit)"
         if let nextPageToken = nextPageToken {
             url.append("&pageToken=\(nextPageToken)")
         }
@@ -70,7 +71,7 @@ class ApiService: NSObject {
     }
     
     func searchNextPage(nextPageToken: String?, order: Order, completion: @escaping (STResponse) -> ()) {
-        var url = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet&order=\(order)&type=video&maxResults=20"
+        var url = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet&order=\(order)&type=video&maxResults=\(kQueryLimit)"
         if let nextPageToken = nextPageToken {
             url.append("&pageToken=\(nextPageToken)")
         }
@@ -78,8 +79,16 @@ class ApiService: NSObject {
     }
     
     func relatedVideosTo(videoId: String, nextPageToken: String?, order: Order, completion: @escaping (STResponse) -> ()) {
-        var url = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet&order=\(order)&type=video&maxResults=20&relatedToVideoId=\(videoId)"
+        var url = "\(SEARCH_BASE_URL)?key=\(YT_API_KEY)&videoSyndicated=true&channelId=\(CURRENT_CHANNEL_ID)&part=snippet&order=\(order)&type=video&maxResults=\(kQueryLimit)&relatedToVideoId=\(videoId)"
 
+        if let nextPageToken = nextPageToken {
+            url.append("&pageToken=\(nextPageToken)")
+        }
+        fetchLinkWith(strUrl: url, type: .searchItems, completion: completion)
+    }
+    
+    func searchPublishedBefore(before: String, nextPageToken: String?, order: Order, completion: @escaping (STResponse) -> ()) {
+        var url = "\(SEARCH_BASE_URL)?publishedBefore=\(before)&key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet&order=\(order)&type=video&maxResults=\(kQueryLimit)"
         if let nextPageToken = nextPageToken {
             url.append("&pageToken=\(nextPageToken)")
         }
@@ -150,7 +159,7 @@ class ApiService: NSObject {
     }
     
     func searchPlayListsNextPage(nextPageToken: String?, completion: @escaping (YTPLResponse) -> ()) {
-        var url = "\(PLAYLISTS_BASE_URL)?key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet,contentDetails,id&order=date&maxResults=10"
+        var url = "\(PLAYLISTS_BASE_URL)?key=\(YT_API_KEY)&channelId=\(CURRENT_CHANNEL_ID)&part=snippet,contentDetails,id&order=date&maxResults=\(kQueryLimit)"
         if let nextPageToken = nextPageToken {
             url.append("&pageToken=\(nextPageToken)")
         }

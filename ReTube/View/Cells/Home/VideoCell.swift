@@ -68,9 +68,9 @@ class VideoCell: BaseCollectionViewCell {
                 titleLabel.text = video.title
                 
                 //measure title text
-                let size = CGSize(width: frame.width - 16 - 44 - 8 - 16, height: 1000)
+                let size = CGSize(width: frame.width, height: 1000)
                 let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-                let estimatedRect = NSString(string: video.title).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)], context: nil)
+                let estimatedRect = NSString(string: video.title).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: titleLabel.font], context: nil)
                 
                 if estimatedRect.size.height > 20 {
                     titleLabelHeightConstraint?.constant = 44
@@ -93,6 +93,7 @@ class VideoCell: BaseCollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 16)
         label.text = "Зачем покупать корейца, если есть Geely Atlas ??"
         return label
     }()

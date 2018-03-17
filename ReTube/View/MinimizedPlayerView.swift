@@ -53,11 +53,19 @@ class MinimizedPlayerView: UIView {
         
         addFullScreenConstraintsFor(views: placeholderImageView, inside: playerContainer)
         
-        addConstraintsWithFormat(format: "H:|[v0(128)]", views: playerContainer)
+        let buttonSize = 35
+        
+        addConstraintsWithFormat(format: "H:|[v0]", views: playerContainer)
         addConstraintsWithFormat(format: "V:|[v0]|", views: playerContainer)
-        addConstraintsWithFormat(format: "H:[v0(50)]-8-[v1(50)]-8-|", views: pausePlayButton, closeButton)
-        addConstraintsWithFormat(format: "V:|[v0]|", views: pausePlayButton)
-        addConstraintsWithFormat(format: "V:|[v0]|", views: closeButton)
+        addConstraintsWithFormat(format: "H:[v0(\(buttonSize))]-16-[v1(\(buttonSize))]-16-|", views: pausePlayButton, closeButton)
+        addConstraintsWithFormat(format: "V:[v0(\(buttonSize))]", views: pausePlayButton)
+        addConstraintsWithFormat(format: "V:[v0(\(buttonSize))]", views: closeButton)
+        
+        NSLayoutConstraint.activate([
+            pausePlayButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            closeButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            playerContainer.widthAnchor.constraint(equalTo: playerContainer.heightAnchor, multiplier: 16 / 9)
+            ])
         
         playerContainer.backgroundColor = .clear
     }
