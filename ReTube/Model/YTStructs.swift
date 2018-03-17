@@ -57,7 +57,6 @@ struct STVideo {
     let description: String
     let thumbnails: YTThumbnails
     let position: Int
-//    let statistics: STStatistics
     
     init(plitem: YTPLVideo) {
         id = plitem.snippet.resourceId?.videoId ?? "WTF?"
@@ -82,6 +81,10 @@ struct STStatistics: Decodable {
     let viewCount: String
     let likeCount: String
     let dislikeCount: String
+}
+
+struct STContentDetails: Decodable {
+    let duration: String
 }
 
 struct STPlayList {
@@ -149,6 +152,7 @@ struct YTStatsResponse: Decodable {
 }
 struct YTStatistics: Decodable {
     let statistics: STStatistics
+    let contentDetails: STContentDetails
 }
 struct YTChannel: Decodable {
     

@@ -38,7 +38,7 @@
 // https://www.googleapis.com/youtube/v3/search?maxResults=10&relatedToVideoId=xyVdZrL3Sbo&channelId=UCtinbF-Q-fVthA0qrFQTgXQ&part=snippet&key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M&type=video
 
 // video statistics
-// https://www.googleapis.com/youtube/v3/videos?key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M&id=xyVdZrL3Sbo&part=statistics
+// https://www.googleapis.com/youtube/v3/videos?key=AIzaSyBizkOnS-AAX8rb5ZtqGUfav0afp7WKh0M&id=xyVdZrL3Sbo&part=statistics,contentDetails
 
 class ApiService: NSObject {
     
@@ -52,7 +52,7 @@ class ApiService: NSObject {
     
     static let sharedInstance = ApiService()
     
-    let CURRENT_CHANNEL_ID = YT_CHANNEL_ID_NEISTAT
+    let CURRENT_CHANNEL_ID = YT_CHANNEL_ID_ACADEMEG
     let kQueryLimit = 50 // should be maximum acceptable for api in use
     
     // PLayLists
@@ -95,9 +95,9 @@ class ApiService: NSObject {
         fetchLinkWith(strUrl: url, type: .searchItems, completion: completion)
     }
     
-    func statisticsForVideo(id: String, completion: @escaping (STStatistics) -> ()) {
+    func statisticsForVideo(id: String, completion: @escaping (STStatistics, STContentDetails) -> ()) {
         
-        let url = "https://www.googleapis.com/youtube/v3/videos?id=\(id)&key=\(YT_API_KEY)&part=statistics"
+        let url = "https://www.googleapis.com/youtube/v3/videos?id=\(id)&key=\(YT_API_KEY)&part=statistics,contentDetails"
         
         dataWith(strUrl: url) { (data) in
             
@@ -105,7 +105,7 @@ class ApiService: NSObject {
                 let ytresp = try JSONDecoder().decode(YTStatsResponse.self, from: data)
                 if  ytresp.items.count > 0 {
                     DispatchQueue.main.async {
-                        completion(ytresp.items[0].statistics)
+                        completion(ytresp.items[0].statistics, ytresp.items[0].contentDetails)
                     }
                 }
             } catch let err {

@@ -53,9 +53,9 @@ class VideoCell: BaseCollectionViewCell {
     var video: STVideo? {
         didSet {
             if let video = video {
-                ApiService.sharedInstance.statisticsForVideo(id: video.id, completion: { (stats) in
+                ApiService.sharedInstance.statisticsForVideo(id: video.id, completion: { (statistics, contentDetails) in
                     
-                    let intViews = Int64(stats.viewCount) ?? 666
+                    let intViews = Int64(statistics.viewCount) ?? 666
                     let localizedViews = NumberFormatter.localizedString(from: NSNumber(value: intViews), number: NumberFormatter.Style.decimal)
                     
                     var subTitle = "\(localizedViews) views"
@@ -63,7 +63,10 @@ class VideoCell: BaseCollectionViewCell {
                         subTitle.append(" • \(date)")
                     }
                     self.subtitleTextView.text = subTitle
+                    
+                    print("Duration: ", contentDetails.duration)
                 })
+                
                 thumbnailImageView.sd_setImage(with: URL(string: video.thumbnails.medium.url), placeholderImage: UIImage(named: "placeholder.png"))
                 titleLabel.text = video.title
                 

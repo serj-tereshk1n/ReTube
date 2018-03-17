@@ -15,6 +15,7 @@ class BaseTabCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectio
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        cv.backgroundColor = .mDarkGray
         cv.backgroundColor = .white
         cv.delegate = self
         cv.dataSource = self
