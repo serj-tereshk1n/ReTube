@@ -51,7 +51,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.register(PlaylistsTabCell.self, forCellWithReuseIdentifier: kPlayListsTabId)
         collectionView?.register(SubscriptionFeed.self, forCellWithReuseIdentifier: kLikedTabId)
         collectionView?.register(SubscriptionFeed.self, forCellWithReuseIdentifier: kProfileTabId)
-        collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0) // 84 for ihone X
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
         collectionView?.isPagingEnabled = true
         collectionView?.alwaysBounceVertical = false

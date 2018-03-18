@@ -12,6 +12,7 @@ class HSectionCell: BaseCollectionViewCell, UICollectionViewDelegateFlowLayout, 
     
     let kSpacing: CGFloat = 4
     var videos = [STVideo]()
+    var nextPageToken: String?
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -23,6 +24,14 @@ class HSectionCell: BaseCollectionViewCell, UICollectionViewDelegateFlowLayout, 
         return cv;
     }()
     
+    func fetchDataSource() {
+        ApiService.sharedInstance.searchNextPage(nextPageToken: nextPageToken, order: .viewCount, completion: { (response) in
+            self.nextPageToken = response.nextPageToken
+            self.videos.append(contentsOf: response.items)
+            self.collectionView.reloadData()
+        })
+    }
+    
     override func setupViews() {
         super.setupViews()
         
@@ -31,6 +40,8 @@ class HSectionCell: BaseCollectionViewCell, UICollectionViewDelegateFlowLayout, 
         addFullScreenConstraintsFor(views: collectionView, inside: self)
         
         collectionView.register(PopularCell.self, forCellWithReuseIdentifier: "cell")
+        
+        fetchDataSource()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -40,6 +51,12 @@ class HSectionCell: BaseCollectionViewCell, UICollectionViewDelegateFlowLayout, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PopularCell
         cell.video = videos[indexPath.row]
+        
+        if indexPath.row == videos.count - 3 && nextPageToken != nil {
+            // request next page
+            fetchDataSource()
+        }
+        
         return cell
     }
     

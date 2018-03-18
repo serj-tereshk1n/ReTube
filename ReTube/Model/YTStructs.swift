@@ -79,8 +79,8 @@ struct STVideo {
 
 struct STStatistics: Decodable {
     let viewCount: String
-    let likeCount: String
-    let dislikeCount: String
+    let likeCount: String?
+    let dislikeCount: String?
 }
 
 struct STContentDetails: Decodable {

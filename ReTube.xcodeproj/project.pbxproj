@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B378276205EA07E006580D5 /* BaseVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B378275205EA07E006580D5 /* BaseVideoCell.swift */; };
+		1B378279205EC29C006580D5 /* ObjCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B378278205EC29C006580D5 /* ObjCHelper.m */; };
 		1BB71586203F8B42002ED3A9 /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB71585203F8B42002ED3A9 /* SettingsLauncher.swift */; };
 		1BCE3F5420587ABC0046C3D9 /* HomeTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCE3F5320587ABC0046C3D9 /* HomeTabCell.swift */; };
 		1BF23D28203E16910055CB20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF23D27203E16910055CB20 /* Constants.swift */; };
@@ -44,6 +46,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B378275205EA07E006580D5 /* BaseVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVideoCell.swift; sourceTree = "<group>"; };
+		1B378277205EC29C006580D5 /* ObjCHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjCHelper.h; sourceTree = "<group>"; };
+		1B378278205EC29C006580D5 /* ObjCHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjCHelper.m; sourceTree = "<group>"; };
 		1BB71585203F8B42002ED3A9 /* SettingsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
 		1BCE3F5320587ABC0046C3D9 /* HomeTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabCell.swift; sourceTree = "<group>"; };
 		1BF23D27203E16910055CB20 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -118,6 +123,7 @@
 				CB1BD2A62045C58D00CDF423 /* SubscriptionFeed.swift */,
 				CB6B85E0203DE32700E108B2 /* MenuCell.swift */,
 				CB1253A22040822F00A6A6B8 /* SettingCell.swift */,
+				1B378275205EA07E006580D5 /* BaseVideoCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -200,6 +206,8 @@
 				CB0DC399203D802D0032605D /* HCYoutubeParser */,
 				CB6B85B7203DC1E900E108B2 /* Extentions.swift */,
 				CB1A43F620517CB6008161FD /* K.swift */,
+				1B378277205EC29C006580D5 /* ObjCHelper.h */,
+				1B378278205EC29C006580D5 /* ObjCHelper.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -393,6 +401,7 @@
 				CB7A9F582052CD1B0032EC66 /* VideoCell.swift in Sources */,
 				CB831AB220485C8B00203CBD /* MainPlayerView.swift in Sources */,
 				CB9A4634205AB38100F32B7F /* SectionHeaderView.swift in Sources */,
+				1B378279205EC29C006580D5 /* ObjCHelper.m in Sources */,
 				CB9A463A205ADA2A00F32B7F /* PLGenerator.swift in Sources */,
 				1BB71586203F8B42002ED3A9 /* SettingsLauncher.swift in Sources */,
 				CB1253A32040822F00A6A6B8 /* SettingCell.swift in Sources */,
@@ -417,6 +426,7 @@
 				CB1BD2A72045C58D00CDF423 /* SubscriptionFeed.swift in Sources */,
 				CB1A43F520513630008161FD /* PlayerViewCtrl.swift in Sources */,
 				CB1BD2A320459B4900CDF423 /* BaseTabCell.swift in Sources */,
+				1B378276205EA07E006580D5 /* BaseVideoCell.swift in Sources */,
 				CB6B85B8203DC1E900E108B2 /* Extentions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

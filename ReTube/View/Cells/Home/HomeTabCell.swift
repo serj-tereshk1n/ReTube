@@ -12,7 +12,7 @@ class HomeTabCell: BaseTabCell {
     
     var numberOfSections = 2
     var feed = [STVideo]()
-    var popular = [STVideo]()
+//    var popular = [STVideo]()
     
     let kMargin: CGFloat = 16
     
@@ -24,10 +24,7 @@ class HomeTabCell: BaseTabCell {
         ApiService.sharedInstance.searchNextPage(nextPageToken: nextPageToken, order: .date) { (response) in
             self.feed.append(contentsOf: response.items)
             self.nextPageToken = response.nextPageToken
-            ApiService.sharedInstance.searchNextPage(nextPageToken: nil, order: .viewCount, completion: { (response) in
-                self.popular.append(contentsOf: response.items)
-                self.collectionView.reloadData()
-            })
+            self.collectionView.reloadData()
         }
     }
     
@@ -41,7 +38,7 @@ class HomeTabCell: BaseTabCell {
         
         switch section {
         case 0:
-            return popular.count > 0 ? 1 : 0
+            return 1 //popular.count > 0 ? 1 : 0
         case 1:
             return feed.count
         default:
@@ -63,7 +60,6 @@ class HomeTabCell: BaseTabCell {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPopularSectionCellID, for: indexPath) as! HSectionCell
-            cell.videos = popular
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFeedCellID, for: indexPath) as! VideoCell
