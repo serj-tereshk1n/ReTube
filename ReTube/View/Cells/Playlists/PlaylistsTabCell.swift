@@ -16,12 +16,19 @@ class PlaylistsTabCell: BaseTabCell {
     let kSectionHeaderId = "kSectionHeaderId"
     let kPlaylistCellId = "kPlaylistCellId"
     
+    override func startingRefresh() {
+        super.startingRefresh()
+        playLists = [YTPlayList]()
+        collectionView.reloadData()
+    }
+    
     override func fetchDataSource() {
 
         ApiService.sharedInstance.searchPlayListsNextPage(nextPageToken: nextPageToken) { (ytPlayListsResponse) in
             self.playLists.append(contentsOf: ytPlayListsResponse.items)
             self.nextPageToken = ytPlayListsResponse.nextPageToken
             self.collectionView.reloadData()
+            self.refresher.endRefreshing()
         }
     }
 

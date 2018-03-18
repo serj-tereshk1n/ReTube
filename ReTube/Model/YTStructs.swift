@@ -58,6 +58,9 @@ struct STVideo {
     let thumbnails: YTThumbnails
     let position: Int
     
+    var statistics: STStatistics?
+    var contentDetails: STContentDetails?
+    
     init(plitem: YTPLVideo) {
         id = plitem.snippet.resourceId?.videoId ?? "WTF?"
         title = plitem.snippet.title

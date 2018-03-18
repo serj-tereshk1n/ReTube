@@ -12,19 +12,25 @@ class HomeTabCell: BaseTabCell {
     
     var numberOfSections = 2
     var feed = [STVideo]()
-//    var popular = [STVideo]()
     
     let kMargin: CGFloat = 16
-    
     let kSectionHeaderId = "kSectionHeaderId"
     let kFeedCellID = "kFeedCellID"
     let kPopularSectionCellID = "kPopularSectionCellID"
+    
+    override func startingRefresh() {
+        super.startingRefresh()
+        feed = [STVideo]()
+        collectionView.reloadData()
+    }
     
     override func fetchDataSource() {
         ApiService.sharedInstance.searchNextPage(nextPageToken: nextPageToken, order: .date) { (response) in
             self.feed.append(contentsOf: response.items)
             self.nextPageToken = response.nextPageToken
             self.collectionView.reloadData()
+//            self.activityIndicatorView.startAnimating()
+            self.refresher.endRefreshing()
         }
     }
     
@@ -38,7 +44,7 @@ class HomeTabCell: BaseTabCell {
         
         switch section {
         case 0:
-            return 1 //popular.count > 0 ? 1 : 0
+            return 1
         case 1:
             return feed.count
         default:

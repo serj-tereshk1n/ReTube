@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 class BaseTabCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -15,15 +16,29 @@ class BaseTabCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectio
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        cv.backgroundColor = .mDarkGray
         cv.backgroundColor = .white
+        cv.alwaysBounceVertical = true
         cv.delegate = self
         cv.dataSource = self
         return cv
     }()
     
+    lazy var refresher: UIRefreshControl = {
+        let refresher = UIRefreshControl()
+        refresher.tintColor = .mDarkGray
+        refresher.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return refresher
+    }()
+    
+    lazy var activityIndicatorView: NVActivityIndicatorView = {
+        let frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        let indicator = NVActivityIndicatorView(frame: frame, type: .ballClipRotate, color: .red, padding: 0)
+        return indicator
+    }()
+    
     func registerCells() {}
     func fetchDataSource() {}
+    func startingRefresh() { nextPageToken = nil }
     
     override func setupViews() {
         super.setupViews()
@@ -31,8 +46,15 @@ class BaseTabCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectio
         addSubview(collectionView)
         addConstraintsWithFormat(format: "H:|[v0]|", views: collectionView)
         addConstraintsWithFormat(format: "V:|[v0]|", views: collectionView)
-        collectionView.alwaysBounceVertical = false
+        collectionView.addSubview(refresher)
+        
         registerCells()
+        fetchDataSource()
+    }
+    
+    @objc func refreshData() {
+//        activityIndicatorView.startAnimating()
+        startingRefresh()
         fetchDataSource()
     }
     
