@@ -111,8 +111,8 @@ class InfoVideoHeader: UICollectionReusableView {
 
         buttonsContainer.addArrangedSubview(repeatBtn)
         buttonsContainer.addArrangedSubview(shuffleBtn)
-        buttonsContainer.addArrangedSubview(likeBtn)
         buttonsContainer.addArrangedSubview(shareBtn)
+        buttonsContainer.addArrangedSubview(likeBtn)
         
         addConstraintsWithFormat(format: "H:|-16-[v0]-16-|", views: title)
         addConstraintsWithFormat(format: "H:|-16-[v0]-16-|", views: viewsCounter)

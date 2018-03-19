@@ -54,8 +54,6 @@ class BaseVideoCell: BaseCollectionViewCell {
     var titleLabelHeightConstraint: NSLayoutConstraint?
     var titleLabelWidth: CGFloat?
     
-    
-    
     let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -70,14 +68,14 @@ class BaseVideoCell: BaseCollectionViewCell {
         label.numberOfLines = 2
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 16)
-        label.text = "Зачем покупать корейца, если есть Geely Atlas ??"
+        label.text = ""
         return label
     }()
     let durationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 15)
-        label.text = "00:00"
+        label.text = ""
         label.textAlignment = .center
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 2
@@ -89,7 +87,7 @@ class BaseVideoCell: BaseCollectionViewCell {
         let tv = UITextView()
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.font = UIFont.systemFont(ofSize: 13)
-        tv.text = "988.228 visualizzazioni • 2 giorni fa"
+        tv.text = ""
         tv.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0)
         tv.textColor = .subtitle
         tv.backgroundColor = .darkBackground

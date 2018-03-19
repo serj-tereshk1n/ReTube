@@ -56,11 +56,10 @@ class PlaylistsTabCell: BaseTabCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let collectionViewSize = collectionView.frame.size.width - 32 - 16
-        
+
         let isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad
         
-        let width = frame.width / 2 - kMargin * 2
+        let width = (frame.width - kMargin * 3) / 2
         let ipadWidth = (frame.width - kMargin * 4) / 3
         let ratioIndex: CGFloat = 9 / 16
         let height = isIpad ? ipadWidth * ratioIndex : width * ratioIndex
@@ -69,6 +68,10 @@ class PlaylistsTabCell: BaseTabCell {
         return CGSize(width: isIpad ? ipadWidth : width, height: height + supplementaryHeight)
         
 //        return CGSize(width: collectionViewSize/2, height: (collectionViewSize/2) * 0.85)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return kMargin
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

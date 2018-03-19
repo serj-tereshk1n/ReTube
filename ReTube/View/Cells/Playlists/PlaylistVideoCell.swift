@@ -38,10 +38,7 @@ class PlaylistVideoCell: BaseVideoCell {
         addConstraintsWithFormat(format: "V:|[v0]|", views: currentVideoIndicator)
         
         backgroundColor = .darkBackground
-//        titleLabel.textColor = .white
         durationLabel.font = UIFont.systemFont(ofSize: 12)
         titleLabel.font = UIFont.systemFont(ofSize: 14)
-//        titleLabel.backgroundColor = .mDarkGray
-//        subtitleTextView.backgroundColor = .mDarkGray
     }
 }

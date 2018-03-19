@@ -192,10 +192,18 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad
+        
+        if isIpad {
+            return CGSize(width: (collectionView.frame.size.width - kMargins * 3) / 2, height: 100)
+        }
+        
         return CGSize(width: frame.width - kMargins * 2, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         let vdo = videos[indexPath.row]
         
         let cell = collectionView.cellForItem(at: indexPath) as? PlaylistVideoCell ?? PlaylistVideoCell()

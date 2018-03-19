@@ -38,6 +38,14 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         setupCollectionView()
         setupMenuBar()
         setupNavBarButtons()
+        
+        becomeFirstResponder()
+    }
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if(event?.subtype == .motionShake) {
+            NotificationCenter.default.post(name: kPlayRandomVideoNotification, object: nil)
+        }
     }
     
     private func setupCollectionView() {

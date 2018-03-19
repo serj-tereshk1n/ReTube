@@ -38,6 +38,18 @@ class HomeTabCell: BaseTabCell {
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: kSectionHeaderId)
         collectionView.register(VideoCell.self, forCellWithReuseIdentifier: kFeedCellID)
         collectionView.register(HSectionCell.self, forCellWithReuseIdentifier: kPopularSectionCellID)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playRandomVideo),
+            name: kPlayRandomVideoNotification,
+            object: nil)
+    }
+    
+    @objc func playRandomVideo() {
+        let index = arc4random_uniform(UInt32(feed.count - 1))
+        VideoLauncher.sharedInstance.showVideoPlayer()
+        VideoLauncher.sharedInstance.loadVideAndRelatedPlaylist(video: feed[Int(index)])
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
