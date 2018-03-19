@@ -35,7 +35,7 @@ class BaseVideoCell: BaseCollectionViewCell {
                     self.subtitleTextView.text = subTitle
                 })
                 
-                thumbnailImageView.sd_setImage(with: URL(string: video.thumbnails.medium.url), placeholderImage: UIImage(named: "placeholder.png"))
+                thumbnailImageView.sd_setImage(with: URL(string: video.thumbnailHigh), placeholderImage: UIImage(named: "placeholder.png"))
                 titleLabel.text = video.title
                 
                 let height = video.title.height(withConstrainedWidth: titleLabelWidth ?? frame.width, font: titleLabel.font)
@@ -54,6 +54,17 @@ class BaseVideoCell: BaseCollectionViewCell {
     var titleLabelHeightConstraint: NSLayoutConstraint?
     var titleLabelWidth: CGFloat?
     
+    @objc func handleLike(sender: UIButton) {
+        // to do
+    }
+    
+    let likeBtn: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "ic_like"), for: .normal)
+        button.tintColor = .mDarkGray
+        button.addTarget(self, action: #selector(handleLike(sender:)), for: .touchUpInside)
+        return button
+    }()
     let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -125,6 +136,7 @@ class BaseVideoCell: BaseCollectionViewCell {
     func setupSquareCellViews() {
         addCommonViews()
         addCommonConstraints()
+        
         // H constraints
         for (_, view) in [thumbnailImageView, titleLabel, subtitleTextView].enumerated() {
             addConstraintsWithFormat(format: "H:|[v0]|", views: view)

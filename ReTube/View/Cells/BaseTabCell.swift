@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import NVActivityIndicatorView
+//import NVActivityIndicatorView
 
 class BaseTabCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -30,11 +30,11 @@ class BaseTabCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectio
         return refresher
     }()
     
-    lazy var activityIndicatorView: NVActivityIndicatorView = {
-        let frame = CGRect(x: 0, y: 0, width: 300, height: 300)
-        let indicator = NVActivityIndicatorView(frame: frame, type: .ballClipRotate, color: .red, padding: 0)
-        return indicator
-    }()
+//    lazy var activityIndicatorView: NVActivityIndicatorView = {
+//        let frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+//        let indicator = NVActivityIndicatorView(frame: frame, type: .ballClipRotate, color: .red, padding: 0)
+//        return indicator
+//    }()
     
     func registerCells() {}
     func fetchDataSource() {}

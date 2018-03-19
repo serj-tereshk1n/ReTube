@@ -13,6 +13,9 @@
 		1BCE3F5420587ABC0046C3D9 /* HomeTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCE3F5320587ABC0046C3D9 /* HomeTabCell.swift */; };
 		1BF23D28203E16910055CB20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF23D27203E16910055CB20 /* Constants.swift */; };
 		A373527E7497ED1E69694987 /* Pods_ReTube.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38A7134B78ABD78D0A45067 /* Pods_ReTube.framework */; };
+		CB010C9F205FDAC200F4A146 /* InfoVideoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB010C9E205FDAC200F4A146 /* InfoVideoHeader.swift */; };
+		CB010CA1206006B700F4A146 /* STLikedHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB010CA0206006B700F4A146 /* STLikedHelper.swift */; };
+		CB010CA420600BC100F4A146 /* LikedTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB010CA320600BC100F4A146 /* LikedTabCell.swift */; };
 		CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CB042DBF203C373100451B39 /* HCYoutubeParser.m */; };
 		CB0B8C5D203B37D200321C48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B8C5C203B37D200321C48 /* AppDelegate.swift */; };
 		CB0B8C5F203B37D200321C48 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B8C5E203B37D200321C48 /* HomeController.swift */; };
@@ -55,6 +58,9 @@
 		64ED2F1710A798D68E02D3FC /* Pods-ReTube.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReTube.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReTube/Pods-ReTube.debug.xcconfig"; sourceTree = "<group>"; };
 		9F3E0657A245C941BF128402 /* Pods-ReTube.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReTube.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReTube/Pods-ReTube.release.xcconfig"; sourceTree = "<group>"; };
 		C38A7134B78ABD78D0A45067 /* Pods_ReTube.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReTube.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB010C9E205FDAC200F4A146 /* InfoVideoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoVideoHeader.swift; sourceTree = "<group>"; };
+		CB010CA0206006B700F4A146 /* STLikedHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STLikedHelper.swift; sourceTree = "<group>"; };
+		CB010CA320600BC100F4A146 /* LikedTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedTabCell.swift; sourceTree = "<group>"; };
 		CB042DBE203C373000451B39 /* ReTube-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReTube-Bridging-Header.h"; sourceTree = "<group>"; };
 		CB042DBF203C373100451B39 /* HCYoutubeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCYoutubeParser.m; sourceTree = "<group>"; };
 		CB042DC0203C373100451B39 /* HCYoutubeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCYoutubeParser.h; sourceTree = "<group>"; };
@@ -116,6 +122,7 @@
 		1B7D1A752053EA15004D31A6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CB010CA220600B9900F4A146 /* Liked */,
 				CB6B85DE203DE25200E108B2 /* BaseCollectionViewCell.swift */,
 				CB1BD2A220459B4900CDF423 /* BaseTabCell.swift */,
 				CB9A4638205AB3C600F32B7F /* Playlists */,
@@ -134,6 +141,14 @@
 				C38A7134B78ABD78D0A45067 /* Pods_ReTube.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CB010CA220600B9900F4A146 /* Liked */ = {
+			isa = PBXGroup;
+			children = (
+				CB010CA320600BC100F4A146 /* LikedTabCell.swift */,
+			);
+			path = Liked;
 			sourceTree = "<group>";
 		};
 		CB0B8C50203B37D200321C48 = {
@@ -208,6 +223,7 @@
 				CB1A43F620517CB6008161FD /* K.swift */,
 				1B378277205EC29C006580D5 /* ObjCHelper.h */,
 				1B378278205EC29C006580D5 /* ObjCHelper.m */,
+				CB010CA0206006B700F4A146 /* STLikedHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -262,6 +278,7 @@
 				CB1BD2A42045C16D00CDF423 /* PlaylistsTabCell.swift */,
 				CB7A9F5B2052EF330032EC66 /* PlaylistCell.swift */,
 				CB2202222056D128001EF6A8 /* PlaylistVideoCell.swift */,
+				CB010C9E205FDAC200F4A146 /* InfoVideoHeader.swift */,
 			);
 			path = Playlists;
 			sourceTree = "<group>";
@@ -398,6 +415,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB010CA420600BC100F4A146 /* LikedTabCell.swift in Sources */,
+				CB010C9F205FDAC200F4A146 /* InfoVideoHeader.swift in Sources */,
 				CB0B8C5F203B37D200321C48 /* HomeController.swift in Sources */,
 				1BF23D28203E16910055CB20 /* Constants.swift in Sources */,
 				CB7A9F582052CD1B0032EC66 /* VideoCell.swift in Sources */,
@@ -407,6 +426,7 @@
 				CB9A463A205ADA2A00F32B7F /* PLGenerator.swift in Sources */,
 				1BB71586203F8B42002ED3A9 /* SettingsLauncher.swift in Sources */,
 				CB1253A32040822F00A6A6B8 /* SettingCell.swift in Sources */,
+				CB010CA1206006B700F4A146 /* STLikedHelper.swift in Sources */,
 				CB832C302047016B00C643C0 /* VideoLauncher.swift in Sources */,
 				CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */,
 				CB2202232056D128001EF6A8 /* PlaylistVideoCell.swift in Sources */,

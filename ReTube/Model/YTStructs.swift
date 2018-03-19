@@ -50,22 +50,21 @@ struct STResponse {
     }
 }
 
-struct STVideo {
+struct STVideo: Codable {
     let id: String
     let title: String
     let publishedAt: String
     let description: String
-    let thumbnails: YTThumbnails
+    let thumbnailHigh: String
+    let thumbnailMedium: String
     let position: Int
-    
-    var statistics: STStatistics?
-    var contentDetails: STContentDetails?
     
     init(plitem: YTPLVideo) {
         id = plitem.snippet.resourceId?.videoId ?? "WTF?"
         title = plitem.snippet.title
         description = plitem.snippet.description
-        thumbnails = plitem.snippet.thumbnails
+        thumbnailHigh = plitem.snippet.thumbnails.high.url
+        thumbnailMedium = plitem.snippet.thumbnails.medium.url
         position = plitem.snippet.position ?? 0
         publishedAt = plitem.snippet.publishedAt
     }
@@ -74,10 +73,12 @@ struct STVideo {
         id = item.id?.videoId ?? "WTF?"
         title = item.snippet.title
         description = item.snippet.description
-        thumbnails = item.snippet.thumbnails
+        thumbnailHigh = item.snippet.thumbnails.high.url
+        thumbnailMedium = item.snippet.thumbnails.medium.url
         position = 0
         publishedAt = item.snippet.publishedAt
     }
+    
 }
 
 struct STStatistics: Decodable {
