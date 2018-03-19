@@ -55,7 +55,6 @@ class LikedTabCell: BaseTabCell {
         
         return CGSize(width: isIpad ? ipadWidth : width,
                       height: height + supplementaryHeight)
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

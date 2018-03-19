@@ -12,9 +12,9 @@ class SettingCell: BaseCollectionViewCell {
     
     override var isHighlighted: Bool {
         didSet{
-            backgroundColor = isHighlighted ? .darkGray : .white
-            nameLabel.textColor = isHighlighted ? .white : .black
-            iconImageView.tintColor = isHighlighted ? .white : .darkGray
+            backgroundColor = isHighlighted ? .lightBackground : .darkBackground
+            nameLabel.textColor = isHighlighted ? .selected : .deselected
+            iconImageView.tintColor = isHighlighted ? .selected : .deselected
         }
     }
     
@@ -22,7 +22,7 @@ class SettingCell: BaseCollectionViewCell {
         didSet {
             nameLabel.text = setting?.name
             iconImageView.image = UIImage(named: setting?.imageName ?? "")?.withRenderingMode(.alwaysTemplate)
-            iconImageView.tintColor = .darkGray
+            iconImageView.tintColor = .deselected
         }
     }
     
@@ -36,6 +36,7 @@ class SettingCell: BaseCollectionViewCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Settings"
+        label.textColor = .deselected
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()

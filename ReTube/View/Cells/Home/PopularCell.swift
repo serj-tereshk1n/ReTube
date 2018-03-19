@@ -15,11 +15,8 @@ class PopularCell: BaseVideoCell {
         
         setupSquareCellViews()
         
-        backgroundColor = .mDarkGray
         titleLabel.textColor = .white
         durationLabel.font = UIFont.systemFont(ofSize: 12)
         titleLabel.font = UIFont.systemFont(ofSize: 14)
-        titleLabel.backgroundColor = .mDarkGray
-        subtitleTextView.backgroundColor = .mDarkGray
     }
 }

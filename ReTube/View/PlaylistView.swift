@@ -122,7 +122,7 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .mDarkGray
+        cv.backgroundColor = .darkBackground
         cv.delegate = self
         cv.dataSource = self
         return cv

@@ -33,13 +33,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = UINavigationController(rootViewController: HomeController(collectionViewLayout: layout))
         
-        UINavigationBar.appearance().barTintColor = .ytRed
+        UINavigationBar.appearance().barTintColor = .darkBackground
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         
         application.statusBarStyle = .lightContent
         
-        fakeStatusBar.backgroundColor = UIColor.ytRedDark
+        fakeStatusBar.backgroundColor = .lightBackground
         
         let height = Int(UIApplication.shared.statusBarFrame.height)
         

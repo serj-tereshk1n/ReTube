@@ -10,7 +10,7 @@ class MenuCell: BaseCollectionViewCell {
     
     let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.tintColor = .menuSelectedColor
+        iv.tintColor = .deselected
         return iv
     }()
     
@@ -27,13 +27,13 @@ class MenuCell: BaseCollectionViewCell {
     
     override var isHighlighted: Bool {
         didSet{
-            imageView.tintColor = isHighlighted ? .white : .menuSelectedColor
+            imageView.tintColor = isHighlighted ? .selected : .deselected
         }
     }
 
     override var isSelected: Bool {
         didSet{
-            imageView.tintColor = isSelected ? .white : .menuSelectedColor
+            imageView.tintColor = isSelected ? .selected : .deselected
         }
     }
 }

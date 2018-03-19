@@ -21,9 +21,9 @@ class SettingsLauncher: NSObject, UICollectionViewDelegate, UICollectionViewData
 
     override init() {
         super.init()
-        
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.backgroundColor = .darkBackground
         collectionView.register(SettingCell.self, forCellWithReuseIdentifier: kMenuCellId)
     }
     
@@ -51,7 +51,7 @@ class SettingsLauncher: NSObject, UICollectionViewDelegate, UICollectionViewData
         
         if let window = UIApplication.shared.keyWindow {
             
-            blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+            blackView.backgroundColor = UIColor(white: 0, alpha: 0.7)
             
             window.addSubview(blackView)
             window.addSubview(collectionView)

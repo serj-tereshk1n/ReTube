@@ -88,13 +88,23 @@ extension UIColor {
         }
     }
     
-    static let ytRed = UIColor.rgb(red: 230, green: 32, blue: 31)
-    static let ytRedDark = UIColor.rgb(red: 194, green: 31, blue: 31)
-    static let ytLightGray = UIColor.rgb(red: 230, green: 230, blue: 230)
-    static let menuSelectedColor = UIColor.rgb(red: 91, green: 14, blue: 13)
+    // colors stolen from telegram
+    static let darkBackground = UIColor.rgb(red: 24, green: 34, blue: 45)
+    static let lightBackground = UIColor.rgb(red: 34, green: 48, blue: 63)
+    static let subtitle = UIColor.rgb(red: 178, green: 195, blue: 212)
+    static let blue = UIColor.rgb(red: 55, green: 168, blue: 252)
+    // same colors as subtitle and blue
+    static let deselected = UIColor.rgb(red: 178, green: 195, blue: 212)
+    static let selected = UIColor.rgb(red: 55, green: 168, blue: 252)
     
-    static let mDarkGray = UIColor.rgb(red: 25, green: 25, blue: 25)
-    static let mLightGray = UIColor.rgb(red: 35, green: 35, blue: 35)
+    // old colors
+//    static let ytRed = UIColor.rgb(red: 230, green: 32, blue: 31)
+//    static let ytRedDark = UIColor.rgb(red: 194, green: 31, blue: 31)
+//    static let ytLightGray = UIColor.rgb(red: 230, green: 230, blue: 230)
+//    static let menuSelectedColor = UIColor.rgb(red: 91, green: 14, blue: 13)
+//
+//    static let mDarkGray = UIColor.rgb(red: 25, green: 25, blue: 25)
+//    static let mLightGray = UIColor.rgb(red: 35, green: 35, blue: 35)
 }
 
 extension UIView {

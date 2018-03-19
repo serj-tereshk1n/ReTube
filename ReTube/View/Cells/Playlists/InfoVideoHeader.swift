@@ -98,7 +98,7 @@ class InfoVideoHeader: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .mLightGray
+        backgroundColor = .lightBackground
         
         let buttonsContainer = UIStackView()
         

@@ -24,6 +24,9 @@ class PlaylistCell: BaseCollectionViewCell {
     let thumbnailImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "zil_thumbnail")
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 2
         return imageView
     }()
     
@@ -33,8 +36,8 @@ class PlaylistCell: BaseCollectionViewCell {
         tv.font = UIFont.systemFont(ofSize: 15)
         tv.text = "Зачем покупать корейца, если есть Geely Atlas ??"
         tv.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0)
-        tv.textColor = .black
-        tv.backgroundColor = .clear
+        tv.textColor = .white
+        tv.backgroundColor = .darkBackground
         tv.isEditable = false
         tv.isSelectable = false
         tv.isScrollEnabled = false
@@ -43,7 +46,7 @@ class PlaylistCell: BaseCollectionViewCell {
     
     let counterView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        view.backgroundColor = UIColor.darkBackground.withAlphaComponent(0.8)
         return view
     }()
     

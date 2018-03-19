@@ -16,7 +16,7 @@ class BaseTabCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectio
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
+        cv.backgroundColor = .darkBackground
         cv.alwaysBounceVertical = true
         cv.delegate = self
         cv.dataSource = self
@@ -25,7 +25,7 @@ class BaseTabCell: BaseCollectionViewCell, UICollectionViewDelegate, UICollectio
     
     lazy var refresher: UIRefreshControl = {
         let refresher = UIRefreshControl()
-        refresher.tintColor = .mDarkGray
+        refresher.tintColor = .selected
         refresher.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         return refresher
     }()

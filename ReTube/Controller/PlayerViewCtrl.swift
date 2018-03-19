@@ -95,6 +95,7 @@ class PlayerViewCtrl: UIView {
     // MARK - Device orientation callback
     @objc func orientationDidChange() {
         
+//        let isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad
         let keyWindow = UIApplication.shared.keyWindow
         
         switch UIDevice.current.orientation {

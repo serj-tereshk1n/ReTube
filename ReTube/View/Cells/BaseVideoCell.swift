@@ -35,7 +35,7 @@ class BaseVideoCell: BaseCollectionViewCell {
                     self.subtitleTextView.text = subTitle
                 })
                 
-                thumbnailImageView.sd_setImage(with: URL(string: video.thumbnailHigh), placeholderImage: UIImage(named: "placeholder.png"))
+                thumbnailImageView.sd_setImage(with: URL(string: video.thumbnailHigh), placeholderImage: nil)
                 titleLabel.text = video.title
                 
                 let height = video.title.height(withConstrainedWidth: titleLabelWidth ?? frame.width, font: titleLabel.font)
@@ -54,21 +54,13 @@ class BaseVideoCell: BaseCollectionViewCell {
     var titleLabelHeightConstraint: NSLayoutConstraint?
     var titleLabelWidth: CGFloat?
     
-    @objc func handleLike(sender: UIButton) {
-        // to do
-    }
     
-    let likeBtn: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "ic_like"), for: .normal)
-        button.tintColor = .mDarkGray
-        button.addTarget(self, action: #selector(handleLike(sender:)), for: .touchUpInside)
-        return button
-    }()
+    
     let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 2
         imageView.image = #imageLiteral(resourceName: "academeg_plagiat_thumbnail")
         return imageView
     }()
@@ -76,6 +68,7 @@ class BaseVideoCell: BaseCollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
+        label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 16)
         label.text = "Зачем покупать корейца, если есть Geely Atlas ??"
         return label
@@ -88,7 +81,7 @@ class BaseVideoCell: BaseCollectionViewCell {
         label.textAlignment = .center
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 2
-        label.textColor = .white
+        label.textColor = .subtitle
         label.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         return label
     }()
@@ -98,8 +91,8 @@ class BaseVideoCell: BaseCollectionViewCell {
         tv.font = UIFont.systemFont(ofSize: 13)
         tv.text = "988.228 visualizzazioni • 2 giorni fa"
         tv.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0)
-        tv.textColor = .lightGray
-        tv.backgroundColor = .white
+        tv.textColor = .subtitle
+        tv.backgroundColor = .darkBackground
         tv.isEditable = false
         tv.isSelectable = false
         tv.isScrollEnabled = false
@@ -131,6 +124,7 @@ class BaseVideoCell: BaseCollectionViewCell {
         durationLabelWidthConstraint?.isActive = true
         durationLabelHeightConstraint?.isActive = true
         thumbnailImageView.heightAnchor.constraint(equalTo: thumbnailImageView.widthAnchor, multiplier: 9 / 16).isActive = true
+
     }
     
     func setupSquareCellViews() {

@@ -46,7 +46,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
             flowLayout.minimumLineSpacing = 0
         }
         
-        collectionView?.backgroundColor = .white
+        collectionView?.backgroundColor = .darkBackground
         collectionView?.register(HomeTabCell.self, forCellWithReuseIdentifier: kHomeTabId)
         collectionView?.register(PlaylistsTabCell.self, forCellWithReuseIdentifier: kPlayListsTabId)
         collectionView?.register(LikedTabCell.self, forCellWithReuseIdentifier: kLikedTabId)
@@ -60,7 +60,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     private func setupMenuBar() {
         
         let redView = UIView()
-        redView.backgroundColor = .ytRed
+        redView.backgroundColor = .darkBackground
         
         view.addSubview(redView)
         view.addSubview(menuBar)
@@ -75,10 +75,12 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     private func setupNavBarButtons() {
-        let searchImage = UIImage(named: "ic_search")?.withRenderingMode(.alwaysOriginal)
-        let moreVerticalImage = UIImage(named: "ic_more_vertical")?.withRenderingMode(.alwaysOriginal)
+        let searchImage = UIImage(named: "ic_search")?.withRenderingMode(.alwaysTemplate)
+        let moreVerticalImage = UIImage(named: "ic_more_vertical")?.withRenderingMode(.alwaysTemplate)
         let searchBarButtonItem = UIBarButtonItem(image: searchImage, style: .plain, target: self, action: #selector(handleSearch))
         let moreBarButtonItem = UIBarButtonItem(image: moreVerticalImage, style: .plain, target: self, action: #selector(handleMore))
+        searchBarButtonItem.tintColor = .selected
+        moreBarButtonItem.tintColor = .selected
         navigationItem.rightBarButtonItems = [moreBarButtonItem, searchBarButtonItem]
     }
     

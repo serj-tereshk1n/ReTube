@@ -12,7 +12,7 @@ class VideoCell: BaseVideoCell {
     
     let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .ytLightGray
+        view.backgroundColor = .lightBackground
         return view
     }()
     

@@ -46,6 +46,7 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
     let activityIndicatorView: UIView = {
         let container = UIView()
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        indicator.tintColor = .selected
         container.backgroundColor = .black
         container.addSubview(indicator)
         indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -70,15 +71,15 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
         let label = UILabel()
         label.text = "00:00"
         label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = .white
+        label.textColor = .subtitle
         label.textAlignment = .center
         return label
     }()
     lazy var seekSlider: UISlider = {
         let slider = UISlider()
         slider.setThumbImage(#imageLiteral(resourceName: "ic_thumb"), for: .normal)
-        slider.minimumTrackTintColor = .ytRed
-        slider.maximumTrackTintColor = .white
+        slider.minimumTrackTintColor = .selected
+        slider.maximumTrackTintColor = .deselected
         slider.addTarget(self, action: #selector(seekSliderDidChange(slider:)), for: .valueChanged)
         return slider
     }()
@@ -86,7 +87,7 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
         let label = UILabel()
         label.text = "00:00"
         label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = .white
+        label.textColor = .subtitle
         label.textAlignment = .center
         return label
     }()
@@ -122,7 +123,6 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
             if let container =  listContainer{
                 container.addSubview(playlistView)
                 addFullScreenConstraintsFor(views: playlistView, inside: container)
-                
             }
         }
     }

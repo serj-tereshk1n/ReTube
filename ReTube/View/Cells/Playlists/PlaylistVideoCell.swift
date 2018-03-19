@@ -13,14 +13,14 @@ class PlaylistVideoCell: BaseVideoCell {
     var isCurrentVideo: Bool? {
         didSet {
             if let current = isCurrentVideo {
-                currentVideoIndicator.backgroundColor = current ? .ytRed : .mDarkGray
+                currentVideoIndicator.backgroundColor = current ? .selected : .darkBackground
             }
         }
     }
     
     override var isSelected: Bool {
         didSet {
-            currentVideoIndicator.backgroundColor = isSelected ? .ytRed : .mDarkGray
+            currentVideoIndicator.backgroundColor = isSelected ? .selected : .darkBackground
         }
     }
     
@@ -37,11 +37,11 @@ class PlaylistVideoCell: BaseVideoCell {
         addConstraintsWithFormat(format: "H:[v0(4)]|", views: currentVideoIndicator)
         addConstraintsWithFormat(format: "V:|[v0]|", views: currentVideoIndicator)
         
-        backgroundColor = .mDarkGray
-        titleLabel.textColor = .white
+        backgroundColor = .darkBackground
+//        titleLabel.textColor = .white
         durationLabel.font = UIFont.systemFont(ofSize: 12)
         titleLabel.font = UIFont.systemFont(ofSize: 14)
-        titleLabel.backgroundColor = .mDarkGray
-        subtitleTextView.backgroundColor = .mDarkGray
+//        titleLabel.backgroundColor = .mDarkGray
+//        subtitleTextView.backgroundColor = .mDarkGray
     }
 }

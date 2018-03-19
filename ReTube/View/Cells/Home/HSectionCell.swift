@@ -18,7 +18,7 @@ class HSectionCell: BaseCollectionViewCell, UICollectionViewDelegateFlowLayout, 
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .mDarkGray
+        cv.backgroundColor = .darkBackground
         cv.delegate = self
         cv.dataSource = self
         return cv;

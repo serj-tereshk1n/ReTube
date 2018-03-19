@@ -76,8 +76,8 @@ class VideoLauncher: NSObject {
                                          width: self.playerCtrlView.frame.width,
                                          height: self.playerCtrlView.frame.height)
             self.playerCtrlView.minimizedPlayerContainerView.alpha = 0
-            let app = UIApplication.shared.delegate as! AppDelegate
-            app.setStatusBarColor(color: UIColor.rgb(red: 25, green: 25, blue: 25))
+//            let app = UIApplication.shared.delegate as! AppDelegate
+//            app.setStatusBarColor(color: UIColor.rgb(red: 25, green: 25, blue: 25))
         }, completion: { (_) in
               self.playerCtrlView.didMaximized()
         })
@@ -92,8 +92,8 @@ class VideoLauncher: NSObject {
                                          width: self.playerCtrlView.frame.width,
                                          height: self.playerCtrlView.frame.height)
             self.playerCtrlView.minimizedPlayerContainerView.alpha = 1
-            let app = UIApplication.shared.delegate as! AppDelegate
-            app.setStatusBarColor(color: .ytRedDark)
+//            let app = UIApplication.shared.delegate as! AppDelegate
+//            app.setStatusBarColor(color: .ytRedDark)
         }, completion: { (_) in
             self.playerCtrlView.didMinimized()
         })
