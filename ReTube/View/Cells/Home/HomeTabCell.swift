@@ -17,6 +17,7 @@ class HomeTabCell: BaseTabCell {
     let kSectionHeaderId = "kSectionHeaderId"
     let kFeedCellID = "kFeedCellID"
     let kPopularSectionCellID = "kPopularSectionCellID"
+    let kSectionFooterId = "kSectionFooterId"
     
     override func startingRefresh() {
         super.startingRefresh()
@@ -29,15 +30,15 @@ class HomeTabCell: BaseTabCell {
             self.feed.append(contentsOf: response.items)
             self.nextPageToken = response.nextPageToken
             self.collectionView.reloadData()
-//            self.activityIndicatorView.startAnimating()
             self.refresher.endRefreshing()
         }
     }
     
     override func registerCells() {
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: kSectionHeaderId)
-        collectionView.register(VideoCell.self, forCellWithReuseIdentifier: kFeedCellID)
         collectionView.register(HSectionCell.self, forCellWithReuseIdentifier: kPopularSectionCellID)
+        collectionView.register(VideoCell.self, forCellWithReuseIdentifier: kFeedCellID)
+        collectionView.register(LoadingCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: kSectionFooterId)
         
         NotificationCenter.default.addObserver(
             self,
@@ -100,7 +101,7 @@ class HomeTabCell: BaseTabCell {
         
         if indexPath.section == 0 {
             return CGSize(width: frame.width,
-                          height: 170)
+                          height: 175)
         }
         
         return CGSize(width: isIpad ? ipadWidth : width,
@@ -115,29 +116,48 @@ class HomeTabCell: BaseTabCell {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: kSectionHeaderId, for: indexPath) as! SectionHeaderView
-        
-        var headerTitle = "Header"
-        
-        switch indexPath.section {
-        case 0:
-            headerTitle = "Popular videos"
-            break;
-        case 1:
-            headerTitle = "Channel feed"
-            break;
-        default:
-            print("Unknown header for section:", indexPath.section)
-            break;
+        if kind == UICollectionElementKindSectionFooter {
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: kSectionFooterId, for: indexPath) as! LoadingCell
+            
+            return footer
+            
+        } else {
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: kSectionHeaderId, for: indexPath) as! SectionHeaderView
+            
+            var headerTitle = "Header"
+            
+            switch indexPath.section {
+            case 0:
+                headerTitle = "Popular videos"
+                break;
+            case 1:
+                headerTitle = "Channel feed"
+                break;
+            default:
+                print("Unknown header for section:", indexPath.section)
+                break;
+            }
+            
+            header.titleLabel.text = headerTitle
+            
+            return header
         }
-        
-        header.titleLabel.text = headerTitle
-        
-        return header
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.size.width, height: 35)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if section == 1 {
+            if feed.count == 0 {
+                return CGSize(width: collectionView.frame.size.width - kMargin - kMargin, height: collectionView.frame.size.height - 175 - 70 - kMargin - kMargin)
+            } else {
+                return CGSize(width: collectionView.frame.size.width, height: 50)
+            }
+        } else {
+            return .zero
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

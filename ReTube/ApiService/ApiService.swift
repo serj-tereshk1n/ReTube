@@ -53,8 +53,8 @@ class ApiService: NSObject {
     static let sharedInstance = ApiService()
     
     let CURRENT_CHANNEL_ID = YT_CHANNEL_ID_ACADEMEG
-    let kQueryLimit = 50 // should be maximum acceptable for api in use
-    
+//    let kQueryLimit = 50 // should be maximum acceptable for api in use
+    let kQueryLimit = 10
     // PLayLists
     let PLAYLISTS_BASE_URL = "https://www.googleapis.com/youtube/v3/playlists"
     // PLayList Items

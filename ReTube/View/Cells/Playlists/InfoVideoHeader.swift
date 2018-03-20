@@ -14,11 +14,10 @@ enum ActionType: Int {
 }
 
 protocol InfoVideoHeaderDelegate: class {
-    func didPressButtonWithAction(type: ActionType)
-
+    func didPressButtonWithAction(type: ActionType, isOn: Bool)
 }
 
-class InfoVideoHeader: UICollectionReusableView {
+class InfoVideoHeader: UIView {
     
     let title: UILabel = {
         let label = UILabel()
@@ -73,25 +72,34 @@ class InfoVideoHeader: UICollectionReusableView {
         btn.addTarget(self, action: #selector(handleAction(sender:)), for: .touchUpInside)
         return btn
     }()
+    let separator: UIView = {
+        let separator = UIView()
+        separator.alpha = 0.3
+        separator.backgroundColor = .deselected
+        return separator
+    }()
     
     var mDelegate: InfoVideoHeaderDelegate?
     
     @objc func handleAction(sender: UIButton) {
-
-        if sender.isEqual(shareBtn) {
-            mDelegate?.didPressButtonWithAction(type: .share)
-        } else if sender.isEqual(likeBtn) {
-            mDelegate?.didPressButtonWithAction(type: .like)
-        } else if sender.isEqual(repeatBtn) {
-            mDelegate?.didPressButtonWithAction(type: .repeet)
-        } else if sender.isEqual(shuffleBtn) {
-            mDelegate?.didPressButtonWithAction(type: .shuffle)
-        }
+        
+        var isOn = false
         
         if sender.alpha < 1 {
             sender.alpha = 1
+            isOn = true
         } else {
             sender.alpha = 0.5
+        }
+        
+        if sender.isEqual(shareBtn) {
+            mDelegate?.didPressButtonWithAction(type: .share, isOn: isOn); sender.alpha = 0.5
+        } else if sender.isEqual(likeBtn) {
+            mDelegate?.didPressButtonWithAction(type: .like, isOn: isOn)
+        } else if sender.isEqual(repeatBtn) {
+            mDelegate?.didPressButtonWithAction(type: .repeet, isOn: isOn)
+        } else if sender.isEqual(shuffleBtn) {
+            mDelegate?.didPressButtonWithAction(type: .shuffle, isOn: isOn)
         }
     }
     
@@ -108,7 +116,8 @@ class InfoVideoHeader: UICollectionReusableView {
         addSubview(title)
         addSubview(viewsCounter)
         addSubview(buttonsContainer)
-
+        addSubview(separator)
+        
         buttonsContainer.addArrangedSubview(repeatBtn)
         buttonsContainer.addArrangedSubview(shuffleBtn)
         buttonsContainer.addArrangedSubview(shareBtn)
@@ -117,8 +126,8 @@ class InfoVideoHeader: UICollectionReusableView {
         addConstraintsWithFormat(format: "H:|-16-[v0]-16-|", views: title)
         addConstraintsWithFormat(format: "H:|-16-[v0]-16-|", views: viewsCounter)
         addConstraintsWithFormat(format: "H:|-16-[v0]-16-|", views: buttonsContainer)
-        addConstraintsWithFormat(format: "V:|-8-[v0]-4-[v1]-4-[v2(40)]-8-|", views: title, viewsCounter, buttonsContainer)
-        
+        addConstraintsWithFormat(format: "H:|-16-[v0]-16-|", views: separator)
+        addConstraintsWithFormat(format: "V:|-8-[v0]-4-[v1]-8-[v2(1)]-4-[v3(40)]-8-|", views: title, viewsCounter, separator, buttonsContainer)
     }
     
     required init?(coder aDecoder: NSCoder) {

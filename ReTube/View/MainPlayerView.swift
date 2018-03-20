@@ -46,8 +46,8 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
     let activityIndicatorView: UIView = {
         let container = UIView()
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-        indicator.tintColor = .selected
-        container.backgroundColor = .black
+        indicator.color = .selected
+        container.backgroundColor = .lightBackground
         container.addSubview(indicator)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
@@ -128,7 +128,7 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
     }
 
     func setupPlayerView() {
-
+        backgroundColor = .lightBackground
         addSubview(placeholderImageView)
         addSubview(player)
         addSubview(playerOverlayView)
@@ -155,19 +155,17 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
             pausePlayButton.centerXAnchor.constraint(equalTo: controlsPanelView.centerXAnchor),
             pausePlayButton.centerYAnchor.constraint(equalTo: controlsPanelView.centerYAnchor)
             ])
-        
         playlistView.delegate = self
-        
         playerOverlayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showControls(_:))))
         controlsPanelView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideControls(_:))))
     }
     
+    let vars = ["playsinline": 1,
+                "controls": 0,
+                "rel": 0,
+                "showinfo": 0]
+    
     private func loadVideo(id: String) {
-        
-        let vars = ["playsinline": 1,
-                    "controls": 0,
-                    "rel": 0,
-                    "showinfo": 0]
         
         player.delegate = self
         player.load(withVideoId: id, playerVars: vars)
@@ -305,24 +303,19 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
         pausePlayButton.setImage(image, for: .normal)
         minimizedPlayer.pausePlayButton.setImage(image, for: .normal)
     }
-    
     func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
         return activityIndicatorView
     }
-    
     func playerViewPreferredWebViewBackgroundColor(_ playerView: YTPlayerView) -> UIColor {
-        return .black
+        return .lightBackground
     }
-    
     func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
         videoCurrentTimeLabel.text = timeStringFromSeconds(seconds: Int(playTime))
         seekSlider.setValue(playTime, animated: true)
     }
-    
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
         print("YTPlayerView receivedError:", error)
     }
-    
     // what?
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
