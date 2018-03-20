@@ -67,7 +67,6 @@ class InfoVideoHeader: UIView {
     let shareBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(#imageLiteral(resourceName: "ic_share"), for: .normal)
-        btn.tintColor = .white
         btn.alpha = 0.5
         btn.addTarget(self, action: #selector(handleAction(sender:)), for: .touchUpInside)
         return btn

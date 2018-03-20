@@ -53,8 +53,6 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             if  /* let video = */ video != nil {
                 playlist = nil
                 infoVideoHeader.repeatBtn.isEnabled = false
-                infoVideoHeader.repeatBtn.alpha = 0.5
-                repeet = false
                 clearDataSource()
                 fetchSelector = #selector(fetchRelatedVideos)
             }
@@ -62,6 +60,12 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func clearDataSource() {
+        infoVideoHeader.shuffleBtn.alpha = 0.5
+        shuffle = false
+        
+        infoVideoHeader.repeatBtn.alpha = 0.5
+        repeet = false
+        
         nextPageToken = nil
         shuffledVideos = [STVideo]()
         videos = [STVideo]()

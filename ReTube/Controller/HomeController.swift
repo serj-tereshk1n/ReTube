@@ -64,7 +64,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.contentInset = UIEdgeInsets(top: topInsest, left: 0, bottom: 0, right: 0) // 84 for ihone X
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: topInsest, left: 0, bottom: 0, right: 0)
         collectionView?.isPagingEnabled = true
-        collectionView?.alwaysBounceVertical = false
+//        collectionView?.alwaysBounceVertical = false
+        collectionView?.bounces = false
     }
 
     private func setupMenuBar() {

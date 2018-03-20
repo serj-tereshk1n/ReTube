@@ -155,6 +155,7 @@ class ApiService: NSObject {
             } else if let data = data {
                 completion(data)
             }
+            print("Function fail (dataWith:)", response ?? "nil response")
         }.resume()
     }
     
