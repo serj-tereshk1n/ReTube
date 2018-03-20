@@ -110,6 +110,8 @@ extension UIColor {
         }
     }
     
+    #if false
+    // TEELGRAM THEME
     // colors stolen from telegram
     static let darkBackground = UIColor.rgb(red: 24, green: 34, blue: 45)
     static let lightBackground = UIColor.rgb(red: 34, green: 48, blue: 63)
@@ -118,6 +120,17 @@ extension UIColor {
     // same colors as subtitle and blue
     static let deselected = UIColor.rgb(red: 178, green: 195, blue: 212)
     static let selected = UIColor.rgb(red: 55, green: 168, blue: 252)
+    #else
+    // YOURUBE DARK THEME
+    // colors stolen from telegram
+    static let darkBackground = UIColor.rgb(red: 25, green: 25, blue: 25)
+    static let lightBackground = UIColor.rgb(red: 35, green: 35, blue: 35)
+    static let subtitle = UIColor.rgb(red: 135, green: 135, blue: 135)
+    static let blue = UIColor.rgb(red: 230, green: 32, blue: 31)
+    // same colors as subtitle and blue
+    static let deselected = UIColor.white
+    static let selected = UIColor.rgb(red: 230, green: 32, blue: 31)
+    #endif
     
     // old colors
 //    static let ytRed = UIColor.rgb(red: 230, green: 32, blue: 31)
