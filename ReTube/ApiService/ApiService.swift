@@ -52,7 +52,7 @@ class ApiService: NSObject {
     
     static let sharedInstance = ApiService()
     
-    let CURRENT_CHANNEL_ID = YT_CHANNEL_ID_ACADEMEG
+    let CURRENT_CHANNEL_ID = YT_CHANNEL_ID_FAVIJ
 //    let kQueryLimit = 50 // should be maximum acceptable for api in use
     let kQueryLimit = 10
     // PLayLists

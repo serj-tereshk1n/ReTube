@@ -14,5 +14,7 @@ let kPlayRandomVideoNotification = Notification.Name("kPlayRandomVideoNotificati
 // yt channels ids
 let YT_CHANNEL_ID_ACADEMEG = "UC0lT9K8Wfuc1KPqm6YjRf1A"
 let YT_CHANNEL_ID_NEISTAT = "UCtinbF-Q-fVthA0qrFQTgXQ"
+let YT_CHANNEL_ID_FAVIJ = "UCSFC5Cio8zaLQDFPxA7y_HQ"
+
 let NSDefaultsLikedVideosKey = "NSDefaultsLikedVideosKey"
 let MARGIN: CGFloat = 16
