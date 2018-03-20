@@ -42,6 +42,7 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         didSet {
             if  playlist != nil {
                 video = nil
+                infoVideoHeader.repeatBtn.isEnabled = true
                 clearDataSource()
                 fetchSelector = #selector(fetchPlaylistVideos)
             }
@@ -51,6 +52,9 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         didSet {
             if  /* let video = */ video != nil {
                 playlist = nil
+                infoVideoHeader.repeatBtn.isEnabled = false
+                infoVideoHeader.repeatBtn.alpha = 0.5
+                repeet = false
                 clearDataSource()
                 fetchSelector = #selector(fetchRelatedVideos)
             }

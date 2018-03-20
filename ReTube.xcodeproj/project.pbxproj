@@ -23,7 +23,7 @@
 		CB0B8C67203B37D200321C48 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB0B8C65203B37D200321C48 /* LaunchScreen.storyboard */; };
 		CB0DC39D203D86AF0032605D /* YTStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0DC39C203D86AF0032605D /* YTStructs.swift */; };
 		CB1253A32040822F00A6A6B8 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1253A22040822F00A6A6B8 /* SettingCell.swift */; };
-		CB12687D20612BE200C5BACC /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB12687C20612BE200C5BACC /* LoadingCell.swift */; };
+		CB12687D20612BE200C5BACC /* LoadingFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB12687C20612BE200C5BACC /* LoadingFooterView.swift */; };
 		CB13ADAC204D807D00F04384 /* MinimizedPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB13ADAB204D807D00F04384 /* MinimizedPlayerView.swift */; };
 		CB13ADB0204D87AC00F04384 /* YTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB13ADAE204D87AC00F04384 /* YTPlayerView.m */; };
 		CB13ADB2204D8C9F00F04384 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = CB13ADB1204D8C9F00F04384 /* Assets */; };
@@ -73,7 +73,7 @@
 		CB0B8C68203B37D200321C48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB0DC39C203D86AF0032605D /* YTStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTStructs.swift; sourceTree = "<group>"; };
 		CB1253A22040822F00A6A6B8 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
-		CB12687C20612BE200C5BACC /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
+		CB12687C20612BE200C5BACC /* LoadingFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFooterView.swift; sourceTree = "<group>"; };
 		CB13ADAB204D807D00F04384 /* MinimizedPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimizedPlayerView.swift; sourceTree = "<group>"; };
 		CB13ADAE204D87AC00F04384 /* YTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTPlayerView.m; sourceTree = "<group>"; };
 		CB13ADAF204D87AC00F04384 /* YTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTPlayerView.h; sourceTree = "<group>"; };
@@ -133,7 +133,7 @@
 				CB6B85E0203DE32700E108B2 /* MenuCell.swift */,
 				CB1253A22040822F00A6A6B8 /* SettingCell.swift */,
 				1B378275205EA07E006580D5 /* BaseVideoCell.swift */,
-				CB12687C20612BE200C5BACC /* LoadingCell.swift */,
+				CB12687C20612BE200C5BACC /* LoadingFooterView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -424,7 +424,7 @@
 				1BF23D28203E16910055CB20 /* Constants.swift in Sources */,
 				CB7A9F582052CD1B0032EC66 /* VideoCell.swift in Sources */,
 				CB831AB220485C8B00203CBD /* MainPlayerView.swift in Sources */,
-				CB12687D20612BE200C5BACC /* LoadingCell.swift in Sources */,
+				CB12687D20612BE200C5BACC /* LoadingFooterView.swift in Sources */,
 				CB9A4634205AB38100F32B7F /* SectionHeaderView.swift in Sources */,
 				1B378279205EC29C006580D5 /* ObjCHelper.m in Sources */,
 				CB9A463A205ADA2A00F32B7F /* PLGenerator.swift in Sources */,

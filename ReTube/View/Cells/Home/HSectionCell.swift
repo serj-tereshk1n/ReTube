@@ -10,9 +10,12 @@ import UIKit
 
 class HSectionCell: BaseCollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    let kSpacing: CGFloat = 4
+    let kSpacing: CGFloat = 16
     var videos = [STVideo]()
+    
     var nextPageToken: String?
+    let kCellId = "kCellId"
+    let kSectionFooterId = "kSectionFooterId"
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -39,7 +42,8 @@ class HSectionCell: BaseCollectionViewCell, UICollectionViewDelegateFlowLayout, 
         
         addFullScreenConstraintsFor(views: collectionView, inside: self)
         
-        collectionView.register(PopularCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(PopularCell.self, forCellWithReuseIdentifier: kCellId)
+        collectionView.register(LoadingFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: kSectionFooterId)
         
         fetchDataSource()
     }
@@ -49,7 +53,7 @@ class HSectionCell: BaseCollectionViewCell, UICollectionViewDelegateFlowLayout, 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PopularCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCellId, for: indexPath) as! PopularCell
         cell.video = videos[indexPath.row]
         
         if indexPath.row == videos.count - 3 && nextPageToken != nil {
@@ -67,6 +71,18 @@ class HSectionCell: BaseCollectionViewCell, UICollectionViewDelegateFlowLayout, 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: kSectionFooterId, for: indexPath) as! LoadingFooterView
+        footer.startAnimating()
+        return footer
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if videos.count > 0 && nextPageToken == nil { return .zero }
+        return CGSize(width: collectionView.frame.size.width - kSpacing * 2,
+                      height: collectionView.frame.size.height - kSpacing * 2)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

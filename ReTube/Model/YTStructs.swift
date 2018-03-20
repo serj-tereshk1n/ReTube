@@ -50,6 +50,22 @@ struct STResponse {
     }
 }
 
+enum STScrollDirection: Int {
+    case horizontal; case vertical;
+}
+
+struct STSection {
+    let headerTitle: String
+    let scrollDirection: STScrollDirection
+    let dataSource: [STVideo]
+    
+    init(headerTitle: String, scrollDirection: STScrollDirection, dataSource: [STVideo]) {
+        self.headerTitle = headerTitle
+        self.scrollDirection = scrollDirection
+        self.dataSource = dataSource
+    }
+}
+
 struct STVideo: Codable {
     let id: String
     let title: String

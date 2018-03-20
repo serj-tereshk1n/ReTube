@@ -11,9 +11,7 @@ import UIKit
 class LikedTabCell: BaseTabCell {
     
     var liked = [STVideo]()
-    
-    let kMargin: CGFloat = 16
-    let kSectionHeaderId = "kSectionHeaderId"
+
     let kFeedCellID = "kFeedCellID"
     
     @objc override func fetchDataSource() {
@@ -23,6 +21,8 @@ class LikedTabCell: BaseTabCell {
     }
     
     override func registerCells() {
+        super.registerCells()
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(fetchDataSource),
@@ -31,6 +31,14 @@ class LikedTabCell: BaseTabCell {
         
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: kSectionHeaderId)
         collectionView.register(VideoCell.self, forCellWithReuseIdentifier: kFeedCellID)
+    }
+    
+    override func numberOfSections() -> Int {
+        return 1
+    }
+    
+    override func heightForFooterIn(section: Int) -> CGFloat {
+        return 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -62,29 +70,20 @@ class LikedTabCell: BaseTabCell {
         VideoLauncher.sharedInstance.loadVideAndRelatedPlaylist(video: liked[indexPath.row])
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: kSectionHeaderId, for: indexPath) as! SectionHeaderView
-        header.titleLabel.text = "Liked videos"
-        return header
+    override func titleForHeaderIn(section: Int) -> String {
+        return "Liked videos"
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width, height: 35)
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
         return UIEdgeInsets(top: kMargin, left: kMargin, bottom: kMargin, right: kMargin)
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        
         return kMargin
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        
         return kMargin
     }
 }

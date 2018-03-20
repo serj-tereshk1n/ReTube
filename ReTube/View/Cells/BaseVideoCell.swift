@@ -35,7 +35,11 @@ class BaseVideoCell: BaseCollectionViewCell {
                     self.subtitleTextView.text = subTitle
                 })
                 
-                thumbnailImageView.sd_setImage(with: URL(string: video.thumbnailHigh), placeholderImage: nil)
+                activityIndicatorView.startAnimating()
+                thumbnailImageView.sd_setImage(with: URL(string: video.thumbnailHigh), completed: { (_, _, cacheType, _) in
+                    self.activityIndicatorView.stopAnimating()
+                })
+//                thumbnailImageView.sd_setImage(with: URL(string: video.thumbnailHigh), placeholderImage: nil)
                 titleLabel.text = video.title
                 
                 let height = video.title.height(withConstrainedWidth: titleLabelWidth ?? frame.width, font: titleLabel.font)
@@ -61,6 +65,13 @@ class BaseVideoCell: BaseCollectionViewCell {
         imageView.layer.cornerRadius = 2
         imageView.image = #imageLiteral(resourceName: "academeg_plagiat_thumbnail")
         return imageView
+    }()
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        indicator.color = .selected
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.startAnimating()
+        return indicator
     }()
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -106,23 +117,30 @@ class BaseVideoCell: BaseCollectionViewCell {
     }
     
     func addCommonViews() {
+       
         addSubview(thumbnailImageView)
         addSubview(titleLabel)
         addSubview(subtitleTextView)
+        thumbnailImageView.addSubview(activityIndicatorView)
         thumbnailImageView.addSubview(durationLabel)
     }
     
     func addCommonConstraints() {
+        addFullScreenConstraintsFor(views: activityIndicatorView, inside: thumbnailImageView)
         thumbnailImageView.addConstraintsWithFormat(format: "H:[v0]-4-|", views: durationLabel)
         thumbnailImageView.addConstraintsWithFormat(format: "V:[v0]-4-|", views: durationLabel)
+        
         titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 20)
         durationLabelWidthConstraint = durationLabel.widthAnchor.constraint(equalToConstant: 0)
         durationLabelHeightConstraint = durationLabel.heightAnchor.constraint(equalToConstant: 0)
+        
         titleLabelHeightConstraint?.isActive = true
         durationLabelWidthConstraint?.isActive = true
         durationLabelHeightConstraint?.isActive = true
-        thumbnailImageView.heightAnchor.constraint(equalTo: thumbnailImageView.widthAnchor, multiplier: 9 / 16).isActive = true
-
+        
+        NSLayoutConstraint.activate([
+            thumbnailImageView.heightAnchor.constraint(equalTo: thumbnailImageView.widthAnchor, multiplier: 9 / 16)
+            ])
     }
     
     func setupSquareCellViews() {

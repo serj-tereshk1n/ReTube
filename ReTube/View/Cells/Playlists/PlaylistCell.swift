@@ -13,8 +13,13 @@ class PlaylistCell: BaseCollectionViewCell {
     var playList: YTPlayList? {
         didSet {
             if let thumbUrl = playList?.snippet.thumbnails.medium.url {
-                thumbnailImage.sd_setImage(with: URL(string: thumbUrl),
-                                           placeholderImage: UIImage(named: "placeholder.png"))
+//                thumbnailImage.sd_setImage(with: URL(string: thumbUrl),
+//                                           placeholderImage: UIImage(named: "placeholder.png"))
+                
+                activityIndicatorView.startAnimating()
+                thumbnailImage.sd_setImage(with: URL(string: thumbUrl), completed: { (_, _, chacheType, _) in
+                    self.activityIndicatorView.stopAnimating()
+                })
             }
             titleTextView.text = playList?.snippet.title
             counterLabel.text = "\(playList?.contentDetails?.itemCount ?? 0)"
@@ -29,7 +34,6 @@ class PlaylistCell: BaseCollectionViewCell {
         imageView.layer.cornerRadius = 2
         return imageView
     }()
-    
     let titleTextView: UITextView = {
         let tv = UITextView()
         tv.translatesAutoresizingMaskIntoConstraints = false
@@ -43,20 +47,24 @@ class PlaylistCell: BaseCollectionViewCell {
         tv.isScrollEnabled = false
         return tv
     }()
-    
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        indicator.color = .selected
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.startAnimating()
+        return indicator
+    }()
     let counterView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.darkBackground.withAlphaComponent(0.8)
         return view
     }()
-    
     let counterIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "ic_playlist_play")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
     let counterLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -64,7 +72,6 @@ class PlaylistCell: BaseCollectionViewCell {
         label.textAlignment = .center
         return label
     }()
-    
     let counterStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -78,8 +85,11 @@ class PlaylistCell: BaseCollectionViewCell {
         
         addSubview(thumbnailImage)
         addSubview(titleTextView)
+        thumbnailImage.addSubview(activityIndicatorView)
         thumbnailImage.addSubview(counterView)
         counterView.addSubview(counterStackView)
+        
+        addFullScreenConstraintsFor(views: activityIndicatorView, inside: thumbnailImage)
         
         addConstraintsWithFormat(format: "H:|[v0]|", views: thumbnailImage)
         addConstraintsWithFormat(format: "H:|[v0]|", views: titleTextView)

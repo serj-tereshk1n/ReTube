@@ -8,19 +8,14 @@
 
 import UIKit
 
-class LoadingCell: UICollectionReusableView {
+class LoadingFooterView: UICollectionReusableView {
 
-    let activityIndicatorView: UIView = {
-        let container = UIView()
+    let activityIndicatorView: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         indicator.color = .selected
-        container.backgroundColor = .lightBackground
-        container.addSubview(indicator)
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
-        indicator.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
         indicator.startAnimating()
-        return container
+        return indicator
     }()
     
     override init(frame: CGRect) {
@@ -30,6 +25,10 @@ class LoadingCell: UICollectionReusableView {
         addFullScreenConstraintsFor(views: activityIndicatorView, inside: self)
     }
 
+    func startAnimating() {
+        activityIndicatorView.startAnimating()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
