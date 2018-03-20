@@ -12,7 +12,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    class NavigationController: UINavigationController {
+        
+        override var shouldAutorotate: Bool {
+            return false
+        }
+        override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+            return .portrait
+        }
+    }
+    
     let fakeStatusBar: UIView = {
         let statusBarBackgroundView = UIView()
         return statusBarBackgroundView
@@ -31,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = UINavigationController(rootViewController: HomeController(collectionViewLayout: layout))
+        window?.rootViewController = NavigationController(rootViewController: HomeController(collectionViewLayout: layout))
         
         UINavigationBar.appearance().barTintColor = .darkBackground
         UINavigationBar.appearance().shadowImage = UIImage()

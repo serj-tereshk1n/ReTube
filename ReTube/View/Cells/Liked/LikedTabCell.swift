@@ -55,7 +55,7 @@ class LikedTabCell: BaseTabCell {
         
         let isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad
         
-        let width = frame.width - kMargin * 2
+        let width = (frame.width - kMargin * 3) / 2
         let ipadWidth = (frame.width - kMargin * 4) / 3
         let ratioIndex: CGFloat = 9 / 16
         let height = isIpad ? ipadWidth * ratioIndex : width * ratioIndex

@@ -25,7 +25,19 @@ class PlaylistsTabCell: BaseTabCell {
         ApiService.sharedInstance.searchPlayListsNextPage(nextPageToken: nextPageToken) { (ytPlayListsResponse) in
             self.playLists.append(contentsOf: ytPlayListsResponse.items)
             self.nextPageToken = ytPlayListsResponse.nextPageToken
-            self.collectionView.reloadData()
+            
+            if ytPlayListsResponse.items.count > 0 && self.playLists.count == ytPlayListsResponse.items.count {
+                var paths = [IndexPath]()
+                for (key, _) in self.playLists.enumerated() {
+                    paths.append(IndexPath(row: key, section: 0))
+                }
+                self.collectionView.performBatchUpdates({
+                    self.collectionView.insertItems(at: paths)
+                }, completion: nil)
+            } else {
+                self.collectionView.reloadData()
+            }
+            
             self.refresher.endRefreshing()
         }
     }

@@ -54,17 +54,19 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
             flowLayout.minimumLineSpacing = 0
         }
         
+        let topInsest: CGFloat = isIphoneX() ? 84 : 50
+        
         collectionView?.backgroundColor = .darkBackground
         collectionView?.register(HomeTabCell.self, forCellWithReuseIdentifier: kHomeTabId)
         collectionView?.register(PlaylistsTabCell.self, forCellWithReuseIdentifier: kPlayListsTabId)
         collectionView?.register(LikedTabCell.self, forCellWithReuseIdentifier: kLikedTabId)
         collectionView?.register(SubscriptionFeed.self, forCellWithReuseIdentifier: kProfileTabId)
-        collectionView?.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0) // 84 for ihone X
-        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: topInsest, left: 0, bottom: 0, right: 0) // 84 for ihone X
+        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: topInsest, left: 0, bottom: 0, right: 0)
         collectionView?.isPagingEnabled = true
         collectionView?.alwaysBounceVertical = false
     }
-    
+
     private func setupMenuBar() {
         
         let redView = UIView()
@@ -149,6 +151,28 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         if let titleLabel = navigationItem.titleView as? UILabel {
             titleLabel.text = "  \(titles[Int(index)])"
         }
+    }
+    
+    func isIphoneX() -> Bool {
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+            case 1136:
+                print("iPhone 5 or 5S or 5C")
+                break;
+            case 1334:
+                print("iPhone 6/6S/7/8")
+                break;
+            case 1920, 2208:
+                print("iPhone 6+/6S+/7+/8+")
+                break;
+            case 2436:
+                print("iPhone X")
+                return true
+            default:
+                print("unknown")
+            }
+        }
+        return false
     }
 }
 

@@ -95,7 +95,7 @@ class PlayerViewCtrl: UIView {
     // MARK - Device orientation callback
     @objc func orientationDidChange() {
         
-//        let isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad
+        let isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad
         let keyWindow = UIApplication.shared.keyWindow
         
         switch UIDevice.current.orientation {
@@ -113,15 +113,22 @@ class PlayerViewCtrl: UIView {
             
             if let kw = keyWindow {
                 kw.addSubview(playerView)
-                
+
                 playerView.translatesAutoresizingMaskIntoConstraints = true
-                
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.layoutIfNeeded()
+
+                if isIpad {
                     UIApplication.shared.isStatusBarHidden = true
-                    self.playerView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / div)
-                    self.playerView.frame = CGRect(x: 0, y: 0, width: kw.frame.width, height: kw.frame.height)
-                })
+                    self.playerView.frame = CGRect(x: 0, y: 0, width: kw.frame.height, height: kw.frame.width)
+                    self.layoutIfNeeded()
+                } else {
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.layoutIfNeeded()
+                        UIApplication.shared.isStatusBarHidden = true
+                        self.playerView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / div)
+                        self.playerView.frame = CGRect(x: 0, y: 0, width: kw.frame.width, height: kw.frame.height)
+                    })
+                }
+
             }
             
             break;
@@ -131,11 +138,16 @@ class PlayerViewCtrl: UIView {
             
             playerView.minimizeButton.isHidden = false
             
-            UIView.animate(withDuration: 0.3, animations: {
+            if isIpad {
                 self.layoutIfNeeded()
                 UIApplication.shared.isStatusBarHidden = false
-                self.playerView.transform = CGAffineTransform(rotationAngle: 0)
-            })
+            } else {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.layoutIfNeeded()
+                    UIApplication.shared.isStatusBarHidden = false
+                    self.playerView.transform = CGAffineTransform(rotationAngle: 0)
+                })
+            }
             
             break;
         default:
