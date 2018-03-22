@@ -15,7 +15,7 @@ class LikedTabCell: BaseTabCell {
     let kFeedCellID = "kFeedCellID"
     
     @objc override func fetchDataSource() {
-        liked = STLikedHelper.shared.allVideos()
+        liked = STDefaultsHelper.shared.allVideos()
         collectionView.reloadData()
         refresher.endRefreshing()
     }

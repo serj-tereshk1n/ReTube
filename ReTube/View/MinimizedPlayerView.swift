@@ -11,6 +11,7 @@ import UIKit
 class MinimizedPlayerView: UIView {
 
     let playerContainer = UIView()
+    var progressBarWidthConstraint: NSLayoutConstraint?
     
     let pausePlayButton: UIButton = {
         let button = UIButton(type: .system)
@@ -31,6 +32,12 @@ class MinimizedPlayerView: UIView {
         return imageView
     }()
     
+    let progressBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .selected
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupPlayerView()
@@ -46,6 +53,7 @@ class MinimizedPlayerView: UIView {
         addSubview(playerContainer)
         addSubview(closeButton)
         addSubview(pausePlayButton)
+        addSubview(progressBar)
         
         addFullScreenConstraintsFor(views: blurEffectView, inside: self)
         
@@ -56,10 +64,15 @@ class MinimizedPlayerView: UIView {
         let buttonSize = 35
         
         addConstraintsWithFormat(format: "H:|[v0]", views: playerContainer)
+        addConstraintsWithFormat(format: "H:|[v0]", views: progressBar)
+        addConstraintsWithFormat(format: "V:[v0(4)]|", views: progressBar)
         addConstraintsWithFormat(format: "V:|[v0]|", views: playerContainer)
         addConstraintsWithFormat(format: "H:[v0(\(buttonSize))]-16-[v1(\(buttonSize))]-16-|", views: pausePlayButton, closeButton)
         addConstraintsWithFormat(format: "V:[v0(\(buttonSize))]", views: pausePlayButton)
         addConstraintsWithFormat(format: "V:[v0(\(buttonSize))]", views: closeButton)
+        
+        progressBarWidthConstraint = progressBar.widthAnchor.constraint(equalToConstant: 0)
+        progressBarWidthConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
             pausePlayButton.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -68,6 +81,12 @@ class MinimizedPlayerView: UIView {
             ])
         
         playerContainer.backgroundColor = .clear
+    }
+    
+    func updateProgressBarWith(percentage: Float) {
+        let progress = playerContainer.frame.width * (CGFloat(percentage) / 100)
+        progressBarWidthConstraint?.constant = progress
+//        layoutIfNeeded()
     }
     
     func inFocusWith(player: UIView) {

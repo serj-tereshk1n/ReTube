@@ -34,9 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        
-//        UserDefaults.standard.set(try? PropertyListEncoder().encode(songs), forKey:"songs")
-        
         let layout = UICollectionViewFlowLayout()
         
         window = UIWindow(frame: UIScreen.main.bounds)

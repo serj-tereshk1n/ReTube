@@ -155,7 +155,7 @@ class ApiService: NSObject {
             } else if let data = data {
                 completion(data)
             }
-            print("Function fail (dataWith:)", response ?? "nil response")
+//            print("Function fail (dataWith:)", response ?? "nil response")
         }.resume()
     }
     
@@ -170,7 +170,6 @@ class ApiService: NSObject {
                 
                 DispatchQueue.main.async {
                     completion(ytPlResponse)
-                    
                 }
             } catch let err {
                 print("Error parsing data:",err)

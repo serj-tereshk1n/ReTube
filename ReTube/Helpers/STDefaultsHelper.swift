@@ -8,9 +8,19 @@
 
 import UIKit
 
-class STLikedHelper: NSObject {
+class STDefaultsHelper: NSObject {
 
-    static let shared = STLikedHelper()
+    static let shared = STDefaultsHelper()
+    
+    func updatePercentageForVideo(id: String, percentage: Float) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(percentage, forKey: id)
+        userDefaults.synchronize()
+    }
+    
+    func percentageForVideo(id: String) -> Float {
+        return UserDefaults.standard.float(forKey: id)
+    }
     
     func add(video: STVideo) {
         if let data = UserDefaults.standard.value(forKey: NSDefaultsLikedVideosKey) as? Data {

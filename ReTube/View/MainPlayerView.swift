@@ -165,10 +165,14 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
                 "rel": 0,
                 "showinfo": 0]
     
+    var currentVideoId: String?
+    
     private func loadVideo(id: String) {
         
         player.delegate = self
         player.load(withVideoId: id, playerVars: vars)
+        
+        currentVideoId = id
         
         let audioSession = AVAudioSession.sharedInstance()
         
@@ -268,6 +272,15 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
         
         videoLengthLabel.text = timeStringFromSeconds(seconds: Int(duration))
         
+        // save watched percentage to nsdefaults
+        if seekSlider.maximumValue > 0, let id = currentVideoId {
+            let percentage = STDefaultsHelper.shared.percentageForVideo(id: id)
+            if percentage > 0 && percentage < 99 {
+                let time = (percentage / 100) * seekSlider.maximumValue
+                playerView.seek(toSeconds: time, allowSeekAhead: true)
+            }
+        }
+        
         playerView.playVideo()
     }
 
@@ -312,6 +325,12 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
     func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
         videoCurrentTimeLabel.text = timeStringFromSeconds(seconds: Int(playTime))
         seekSlider.setValue(playTime, animated: true)
+        // save watched percentage to nsdefaults
+        if seekSlider.maximumValue > 0, let id = currentVideoId {
+            let percentage = (playTime / seekSlider.maximumValue) * 100
+            minimizedPlayer.updateProgressBarWith(percentage: percentage)
+            STDefaultsHelper.shared.updatePercentageForVideo(id: id, percentage: percentage)
+        }
     }
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
         print("YTPlayerView receivedError:", error)

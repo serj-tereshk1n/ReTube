@@ -111,10 +111,10 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             break;
         case .like:
             if let liked = currentVideo {
-                if STLikedHelper.shared.isLiked(video: liked) {
-                    STLikedHelper.shared.remove(video: liked)
+                if STDefaultsHelper.shared.isLiked(video: liked) {
+                    STDefaultsHelper.shared.remove(video: liked)
                 } else {
-                    STLikedHelper.shared.add(video: liked)
+                    STDefaultsHelper.shared.add(video: liked)
                 }
             }
             print("Like button pressed")
@@ -256,7 +256,7 @@ class PlaylistView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         // update header info
         infoVideoHeader.title.text = vdo.title
-        infoVideoHeader.likeBtn.alpha = STLikedHelper.shared.isLiked(video: vdo) ? 1 : 0.5
+        infoVideoHeader.likeBtn.alpha = STDefaultsHelper.shared.isLiked(video: vdo) ? 1 : 0.5
         
         // save current player state
         currentVideo = vdo

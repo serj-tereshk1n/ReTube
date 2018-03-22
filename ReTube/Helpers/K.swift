@@ -17,4 +17,5 @@ let YT_CHANNEL_ID_NEISTAT = "UCtinbF-Q-fVthA0qrFQTgXQ"
 let YT_CHANNEL_ID_FAVIJ = "UCSFC5Cio8zaLQDFPxA7y_HQ"
 
 let NSDefaultsLikedVideosKey = "NSDefaultsLikedVideosKey"
+let NSDefaultsWatchedVideosKey = "NSDefaultsWatchedVideosKey"
 let MARGIN: CGFloat = 16

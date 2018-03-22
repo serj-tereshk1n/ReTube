@@ -3,5 +3,4 @@ use_frameworks!
 
 target 'ReTube' do
 pod 'SDWebImage', '~> 4.0'
-pod 'NVActivityIndicatorView'
 end

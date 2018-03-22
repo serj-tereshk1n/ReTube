@@ -14,7 +14,7 @@
 		1BF23D28203E16910055CB20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF23D27203E16910055CB20 /* Constants.swift */; };
 		A373527E7497ED1E69694987 /* Pods_ReTube.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38A7134B78ABD78D0A45067 /* Pods_ReTube.framework */; };
 		CB010C9F205FDAC200F4A146 /* InfoVideoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB010C9E205FDAC200F4A146 /* InfoVideoHeader.swift */; };
-		CB010CA1206006B700F4A146 /* STLikedHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB010CA0206006B700F4A146 /* STLikedHelper.swift */; };
+		CB010CA1206006B700F4A146 /* STDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB010CA0206006B700F4A146 /* STDefaultsHelper.swift */; };
 		CB010CA420600BC100F4A146 /* LikedTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB010CA320600BC100F4A146 /* LikedTabCell.swift */; };
 		CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CB042DBF203C373100451B39 /* HCYoutubeParser.m */; };
 		CB0B8C5D203B37D200321C48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B8C5C203B37D200321C48 /* AppDelegate.swift */; };
@@ -60,7 +60,7 @@
 		9F3E0657A245C941BF128402 /* Pods-ReTube.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReTube.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReTube/Pods-ReTube.release.xcconfig"; sourceTree = "<group>"; };
 		C38A7134B78ABD78D0A45067 /* Pods_ReTube.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReTube.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB010C9E205FDAC200F4A146 /* InfoVideoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoVideoHeader.swift; sourceTree = "<group>"; };
-		CB010CA0206006B700F4A146 /* STLikedHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STLikedHelper.swift; sourceTree = "<group>"; };
+		CB010CA0206006B700F4A146 /* STDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STDefaultsHelper.swift; sourceTree = "<group>"; };
 		CB010CA320600BC100F4A146 /* LikedTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedTabCell.swift; sourceTree = "<group>"; };
 		CB042DBE203C373000451B39 /* ReTube-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReTube-Bridging-Header.h"; sourceTree = "<group>"; };
 		CB042DBF203C373100451B39 /* HCYoutubeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCYoutubeParser.m; sourceTree = "<group>"; };
@@ -224,9 +224,9 @@
 				CB0DC399203D802D0032605D /* HCYoutubeParser */,
 				CB6B85B7203DC1E900E108B2 /* Extentions.swift */,
 				CB1A43F620517CB6008161FD /* K.swift */,
+				CB010CA0206006B700F4A146 /* STDefaultsHelper.swift */,
 				1B378277205EC29C006580D5 /* ObjCHelper.h */,
 				1B378278205EC29C006580D5 /* ObjCHelper.m */,
-				CB010CA0206006B700F4A146 /* STLikedHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -322,7 +322,12 @@
 					CB0B8C58203B37D200321C48 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -430,7 +435,7 @@
 				CB9A463A205ADA2A00F32B7F /* PLGenerator.swift in Sources */,
 				1BB71586203F8B42002ED3A9 /* SettingsLauncher.swift in Sources */,
 				CB1253A32040822F00A6A6B8 /* SettingCell.swift in Sources */,
-				CB010CA1206006B700F4A146 /* STLikedHelper.swift in Sources */,
+				CB010CA1206006B700F4A146 /* STDefaultsHelper.swift in Sources */,
 				CB832C302047016B00C643C0 /* VideoLauncher.swift in Sources */,
 				CB042DC1203C373100451B39 /* HCYoutubeParser.m in Sources */,
 				CB2202232056D128001EF6A8 /* PlaylistVideoCell.swift in Sources */,
@@ -584,13 +589,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TGFBR4524W;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = CTCBPHB7XA;
 				INFOPLIST_FILE = ReTube/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nerve.d4mage.ReTube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "35d9a53d-c118-4bae-9b24-3d69322c3365";
+				PROVISIONING_PROFILE_SPECIFIER = NerveD4mage;
 				SWIFT_OBJC_BRIDGING_HEADER = "ReTube/ReTube-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -604,13 +611,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TGFBR4524W;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ReTube/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nerve.d4mage.ReTube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ReTube/ReTube-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

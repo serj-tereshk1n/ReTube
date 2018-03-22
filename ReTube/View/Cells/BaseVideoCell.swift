@@ -13,7 +13,7 @@ class BaseVideoCell: BaseCollectionViewCell {
     var video: STVideo? {
         didSet {
             if let video = video {
-                
+
                 ApiService.sharedInstance.statisticsForVideo(id: video.id, completion: { (statistics, contentDetails) in
                     
                     let intViews = Int32(statistics.viewCount) ?? 666
@@ -35,11 +35,14 @@ class BaseVideoCell: BaseCollectionViewCell {
                     self.subtitleTextView.text = subTitle
                 })
                 
+                // setup watched percentage
+                watchedVideoIndicatorWidthConstraint?.constant = thumbnailImageView.frame.width * CGFloat((STDefaultsHelper.shared.percentageForVideo(id: video.id) / 100))
+                
                 activityIndicatorView.startAnimating()
                 thumbnailImageView.sd_setImage(with: URL(string: video.thumbnailHigh), completed: { (_, _, cacheType, _) in
                     self.activityIndicatorView.stopAnimating()
                 })
-//                thumbnailImageView.sd_setImage(with: URL(string: video.thumbnailHigh), placeholderImage: nil)
+
                 titleLabel.text = video.title
                 
                 let height = video.title.height(withConstrainedWidth: titleLabelWidth ?? frame.width, font: titleLabel.font)
@@ -56,6 +59,7 @@ class BaseVideoCell: BaseCollectionViewCell {
     var durationLabelWidthConstraint: NSLayoutConstraint?
     var durationLabelHeightConstraint: NSLayoutConstraint?
     var titleLabelHeightConstraint: NSLayoutConstraint?
+    var watchedVideoIndicatorWidthConstraint: NSLayoutConstraint?
     var titleLabelWidth: CGFloat?
     
     let thumbnailImageView: UIImageView = {
@@ -108,6 +112,11 @@ class BaseVideoCell: BaseCollectionViewCell {
         tv.isUserInteractionEnabled = false
         return tv
     }()
+    let percentageIndicator: UIView = {
+        let view = UIView()
+        view.backgroundColor = .selected
+        return view
+    }()
     
     private func sizeFor(text: String, font: UIFont, size: CGSize) -> CGSize {
         //measure title text
@@ -123,20 +132,26 @@ class BaseVideoCell: BaseCollectionViewCell {
         addSubview(subtitleTextView)
         thumbnailImageView.addSubview(activityIndicatorView)
         thumbnailImageView.addSubview(durationLabel)
+        thumbnailImageView.addSubview(percentageIndicator)
     }
     
     func addCommonConstraints() {
+        
         addFullScreenConstraintsFor(views: activityIndicatorView, inside: thumbnailImageView)
         thumbnailImageView.addConstraintsWithFormat(format: "H:[v0]-4-|", views: durationLabel)
+        thumbnailImageView.addConstraintsWithFormat(format: "H:|[v0]", views: percentageIndicator)
         thumbnailImageView.addConstraintsWithFormat(format: "V:[v0]-4-|", views: durationLabel)
+        thumbnailImageView.addConstraintsWithFormat(format: "V:[v0(4)]|", views: percentageIndicator)
         
         titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 20)
         durationLabelWidthConstraint = durationLabel.widthAnchor.constraint(equalToConstant: 0)
         durationLabelHeightConstraint = durationLabel.heightAnchor.constraint(equalToConstant: 0)
+        watchedVideoIndicatorWidthConstraint = percentageIndicator.widthAnchor.constraint(equalToConstant: 0)
         
         titleLabelHeightConstraint?.isActive = true
         durationLabelWidthConstraint?.isActive = true
         durationLabelHeightConstraint?.isActive = true
+        watchedVideoIndicatorWidthConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
             thumbnailImageView.heightAnchor.constraint(equalTo: thumbnailImageView.widthAnchor, multiplier: 9 / 16)
