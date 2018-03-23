@@ -290,6 +290,10 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
         
         switch state {
         case .playing:
+            if let vdo = playlistView.video {
+                STDefaultsHelper.shared.addContinueWatching(video: vdo)
+                STDefaultsHelper.shared.removeWatchAgain(video: vdo)
+            }
             image = #imageLiteral(resourceName: "ic_pause")
             break;
         case .paused:
@@ -299,6 +303,10 @@ class MainPlayerView: UIView, YTPlayerViewDelegate, PlaylistViewDelegate {
                 ///
             break;
         case .ended:
+            if let vdo = playlistView.video {
+                STDefaultsHelper.shared.removeContinueWatching(video: vdo)
+                STDefaultsHelper.shared.addWatchAgain(video: vdo)
+            }
             playlistView.playNextVideo()
             image = #imageLiteral(resourceName: "ic_replay")
             break;

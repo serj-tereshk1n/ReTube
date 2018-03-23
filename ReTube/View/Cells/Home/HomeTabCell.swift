@@ -90,11 +90,6 @@ class HomeTabCell: BaseTabCell {
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if indexPath.section == 0 {
-            return CGSize(width: frame.width,
-                          height: kPopularSectionHeight)
-        }
-        
         let isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad
         
         let width = frame.width - kMargin * 2
@@ -102,6 +97,11 @@ class HomeTabCell: BaseTabCell {
         let ratioIndex: CGFloat = 9 / 16
         let height = isIpad ? ipadWidth * ratioIndex : width * ratioIndex
         let supplementaryHeight: CGFloat = 86
+        
+        if indexPath.section == 0 {
+            return CGSize(width: frame.width,
+                          height: height)
+        }
         
         return CGSize(width: isIpad ? ipadWidth : width,
                       height: height + supplementaryHeight)

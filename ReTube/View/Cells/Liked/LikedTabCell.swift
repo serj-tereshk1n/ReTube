@@ -10,12 +10,30 @@ import UIKit
 
 class LikedTabCell: BaseTabCell {
     
-    var liked = [STVideo]()
+//    let kLikedSectionId = "kLikedSectionId"
+//    let kWatchAgainSectionId = "kWatchAgainSectionId"
+//    let kContinueWatchingSectionId = "kContinueWatchingSectionId"
+    
+    var sections = [STSection]()
 
     let kFeedCellID = "kFeedCellID"
     
     @objc override func fetchDataSource() {
-        liked = STDefaultsHelper.shared.allVideos()
+        sections = [STSection]()
+        
+        let watchAgain = STDefaultsHelper.shared.allWatchAgainVideos()
+        let continueWatching = STDefaultsHelper.shared.allContinueWatchingVideos()
+        let liked = STDefaultsHelper.shared.allLikedVideos()
+        
+        if watchAgain.count > 0 {
+            sections.append(STSection(headerTitle: "Watch again", scrollDirection: .horizontal, dataSource: watchAgain))
+        }
+        if continueWatching.count > 0 {
+            sections.append(STSection(headerTitle: "Continue watching", scrollDirection: .horizontal, dataSource: continueWatching))
+        }
+        if liked.count > 0 {
+            sections.append(STSection(headerTitle: "Liked videos", scrollDirection: .horizontal, dataSource: liked))
+        }
         collectionView.reloadData()
         refresher.endRefreshing()
     }
@@ -34,7 +52,7 @@ class LikedTabCell: BaseTabCell {
     }
     
     override func numberOfSections() -> Int {
-        return 1
+        return sections.count
     }
     
     override func heightForFooterIn(section: Int) -> CGFloat {
@@ -42,12 +60,12 @@ class LikedTabCell: BaseTabCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return liked.count
+        return sections[section].dataSource.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFeedCellID, for: indexPath) as! VideoCell
-        cell.video = liked[indexPath.row]
+        cell.video = sections[indexPath.section].dataSource[indexPath.row]
         return cell
     }
     
@@ -66,12 +84,13 @@ class LikedTabCell: BaseTabCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vdo = sections[indexPath.section].dataSource[indexPath.row]
         VideoLauncher.sharedInstance.showVideoPlayer()
-        VideoLauncher.sharedInstance.loadVideAndRelatedPlaylist(video: liked[indexPath.row])
+        VideoLauncher.sharedInstance.loadVideAndRelatedPlaylist(video: vdo)
     }
     
     override func titleForHeaderIn(section: Int) -> String {
-        return "Liked videos"
+        return sections[section].headerTitle
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

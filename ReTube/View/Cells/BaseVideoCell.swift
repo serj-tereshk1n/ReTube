@@ -27,7 +27,7 @@ class BaseVideoCell: BaseCollectionViewCell {
                     self.durationLabelWidthConstraint?.constant = estimatedRect.width + 8
                     self.durationLabelHeightConstraint?.constant = estimatedRect.height + 4
                     
-                    var subTitle = "\(localizedViews ?? localizedViewsFallback) views"
+                    var subTitle = "\(localizedViews ?? localizedViewsFallback)"
                     if let date = self.timeAgoStringFromDate(dateStr: video.publishedAt) {
                         subTitle.append(" • \(date)")
                     }
@@ -36,7 +36,10 @@ class BaseVideoCell: BaseCollectionViewCell {
                 })
                 
                 // setup watched percentage
-                watchedVideoIndicatorWidthConstraint?.constant = thumbnailImageView.frame.width * CGFloat((STDefaultsHelper.shared.percentageForVideo(id: video.id) / 100))
+                let m = CGFloat((STDefaultsHelper.shared.percentageForVideo(id: video.id) / 100)) //thumbnailImageView.frame.width * CGFloat((STDefaultsHelper.shared.percentageForVideo(id: video.id) / 100))
+                watchedVideoIndicatorWidthConstraint?.isActive = false
+                watchedVideoIndicatorWidthConstraint = percentageIndicator.widthAnchor.constraint(equalTo: thumbnailImageView.widthAnchor, multiplier: m)
+                watchedVideoIndicatorWidthConstraint?.isActive = true
                 
                 activityIndicatorView.startAnimating()
                 thumbnailImageView.sd_setImage(with: URL(string: video.thumbnailHigh), completed: { (_, _, cacheType, _) in
@@ -146,7 +149,7 @@ class BaseVideoCell: BaseCollectionViewCell {
         titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 20)
         durationLabelWidthConstraint = durationLabel.widthAnchor.constraint(equalToConstant: 0)
         durationLabelHeightConstraint = durationLabel.heightAnchor.constraint(equalToConstant: 0)
-        watchedVideoIndicatorWidthConstraint = percentageIndicator.widthAnchor.constraint(equalToConstant: 0)
+        watchedVideoIndicatorWidthConstraint = percentageIndicator.widthAnchor.constraint(equalTo: thumbnailImageView.widthAnchor, multiplier: 0)
         
         titleLabelHeightConstraint?.isActive = true
         durationLabelWidthConstraint?.isActive = true
@@ -214,7 +217,7 @@ class BaseVideoCell: BaseCollectionViewCell {
                 formatter.allowedUnits = .second
             }
             
-            let formatString = NSLocalizedString("%@ ago", comment: "Used to say how much time has passed. e.g. '2 hours ago'")
+            let formatString = NSLocalizedString("%@ \(NSLocalizedString("_ago", comment: ""))", comment: "Used to say how much time has passed. e.g. '2 hours ago'")
             
             guard let timeString = formatter.string(for: components) else {
                 return nil

@@ -47,6 +47,7 @@
 		CB9A4635205AB38100F32B7F /* HSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9A4632205AB38000F32B7F /* HSectionCell.swift */; };
 		CB9A4636205AB38100F32B7F /* PopularCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9A4633205AB38000F32B7F /* PopularCell.swift */; };
 		CB9A463A205ADA2A00F32B7F /* PLGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9A4639205ADA2A00F32B7F /* PLGenerator.swift */; };
+		CB9C94EE2065126700CBA2A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB9C94F02065126700CBA2A5 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,11 @@
 		CB9A4632205AB38000F32B7F /* HSectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSectionCell.swift; sourceTree = "<group>"; };
 		CB9A4633205AB38000F32B7F /* PopularCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularCell.swift; sourceTree = "<group>"; };
 		CB9A4639205ADA2A00F32B7F /* PLGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGenerator.swift; sourceTree = "<group>"; };
+		CB9C94E32065112300CBA2A5 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		CB9C94E42065112E00CBA2A5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		CB9C94F1206512C200CBA2A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CB9C94F2206512CF00CBA2A5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CB9C94F3206512E300CBA2A5 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,11 +130,11 @@
 		1B7D1A752053EA15004D31A6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CB9A4637205AB39300F32B7F /* Home */,
+				CB9A4638205AB3C600F32B7F /* Playlists */,
 				CB010CA220600B9900F4A146 /* Liked */,
 				CB6B85DE203DE25200E108B2 /* BaseCollectionViewCell.swift */,
 				CB1BD2A220459B4900CDF423 /* BaseTabCell.swift */,
-				CB9A4638205AB3C600F32B7F /* Playlists */,
-				CB9A4637205AB39300F32B7F /* Home */,
 				CB1BD2A62045C58D00CDF423 /* SubscriptionFeed.swift */,
 				CB6B85E0203DE32700E108B2 /* MenuCell.swift */,
 				CB1253A22040822F00A6A6B8 /* SettingCell.swift */,
@@ -182,8 +188,9 @@
 				CB6B85BC203DC28F00E108B2 /* Controller */,
 				CB6B85B6203DC1DB00E108B2 /* Helpers */,
 				CB0B8C63203B37D200321C48 /* Assets.xcassets */,
-				CB0B8C65203B37D200321C48 /* LaunchScreen.storyboard */,
+				CB9C94F02065126700CBA2A5 /* Localizable.strings */,
 				CB042DBE203C373000451B39 /* ReTube-Bridging-Header.h */,
+				CB0B8C65203B37D200321C48 /* LaunchScreen.storyboard */,
 				CB0B8C68203B37D200321C48 /* Info.plist */,
 			);
 			path = ReTube;
@@ -266,11 +273,11 @@
 		CB9A4637205AB39300F32B7F /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				1BCE3F5320587ABC0046C3D9 /* HomeTabCell.swift */,
 				CB7A9F572052CD1B0032EC66 /* VideoCell.swift */,
 				CB9A4632205AB38000F32B7F /* HSectionCell.swift */,
 				CB9A4633205AB38000F32B7F /* PopularCell.swift */,
 				CB9A4631205AB37D00F32B7F /* SectionHeaderView.swift */,
-				1BCE3F5320587ABC0046C3D9 /* HomeTabCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -322,7 +329,7 @@
 					CB0B8C58203B37D200321C48 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -338,6 +345,8 @@
 			knownRegions = (
 				en,
 				Base,
+				it,
+				ru,
 			);
 			mainGroup = CB0B8C50203B37D200321C48;
 			productRefGroup = CB0B8C5A203B37D200321C48 /* Products */;
@@ -355,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB0B8C67203B37D200321C48 /* LaunchScreen.storyboard in Resources */,
+				CB9C94EE2065126700CBA2A5 /* Localizable.strings in Resources */,
 				CB13ADB2204D8C9F00F04384 /* Assets in Resources */,
 				CB0B8C64203B37D200321C48 /* Assets.xcassets in Resources */,
 			);
@@ -469,8 +479,20 @@
 			isa = PBXVariantGroup;
 			children = (
 				CB0B8C66203B37D200321C48 /* Base */,
+				CB9C94E32065112300CBA2A5 /* it */,
+				CB9C94E42065112E00CBA2A5 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		CB9C94F02065126700CBA2A5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB9C94F1206512C200CBA2A5 /* Base */,
+				CB9C94F2206512CF00CBA2A5 /* ru */,
+				CB9C94F3206512E300CBA2A5 /* it */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -480,6 +502,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -537,6 +560,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -589,15 +613,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Manual;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CTCBPHB7XA;
 				INFOPLIST_FILE = ReTube/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nerve.d4mage.ReTube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "35d9a53d-c118-4bae-9b24-3d69322c3365";
-				PROVISIONING_PROFILE_SPECIFIER = NerveD4mage;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ReTube/ReTube-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -611,8 +636,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CTCBPHB7XA;
 				INFOPLIST_FILE = ReTube/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

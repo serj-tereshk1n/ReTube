@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  ReTube
+
+  Created by sergey.tereshkin on 23/03/2018.
+  Copyright © 2018 sergey.tereshkin. All rights reserved.
+*/
+
+"_ago" = "ago";
+"_header" = "Header";

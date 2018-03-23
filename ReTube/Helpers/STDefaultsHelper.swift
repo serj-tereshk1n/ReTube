@@ -12,46 +12,81 @@ class STDefaultsHelper: NSObject {
 
     static let shared = STDefaultsHelper()
     
+    let kUserDefaults = UserDefaults.standard
+    
+    // MARK - Liked videos interaction methods
+    
+    func addLiked(video: STVideo) {
+        addToDefaults(video: video, key: NSDefaultsLikedVideosKey)
+        NotificationCenter.default.post(name: kReloadLikedTabNotification, object: nil)
+    }
+    func removeLiked(video: STVideo) {
+        removeFromDefaults(video: video, key: NSDefaultsLikedVideosKey)
+        NotificationCenter.default.post(name: kReloadLikedTabNotification, object: nil)
+    }
+    func isLiked(video: STVideo) -> Bool {
+        return isPresent(video: video, under: NSDefaultsLikedVideosKey)
+    }
+    func allLikedVideos() -> [STVideo] {
+        return allVideosFor(key: NSDefaultsLikedVideosKey)
+    }
+    
+    // MARK - Watched/Continue Watching videos methods
+    
+    func addWatchAgain(video: STVideo) {
+        addToDefaults(video: video, key: NSDefaultsWatchAgainVideosKey)
+    }
+    func removeWatchAgain(video: STVideo) {
+        removeFromDefaults(video: video, key: NSDefaultsWatchAgainVideosKey)
+    }
+    func allWatchAgainVideos() -> [STVideo] {
+        return allVideosFor(key: NSDefaultsWatchAgainVideosKey)
+    }
+    
+    // Continue Watching
+    func addContinueWatching(video: STVideo) {
+        addToDefaults(video: video, key: NSDefaultsContinueWatchingVideosKey)
+    }
+    func removeContinueWatching(video: STVideo) {
+        removeFromDefaults(video: video, key: NSDefaultsContinueWatchingVideosKey)
+    }
+    func allContinueWatchingVideos() -> [STVideo] {
+        return allVideosFor(key: NSDefaultsContinueWatchingVideosKey)
+    }
+    
+    // MARK - Watched video percentage methods
+    
     func updatePercentageForVideo(id: String, percentage: Float) {
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(percentage, forKey: id)
-        userDefaults.synchronize()
+        kUserDefaults.set(percentage, forKey: id)
+        kUserDefaults.synchronize()
     }
-    
     func percentageForVideo(id: String) -> Float {
-        return UserDefaults.standard.float(forKey: id)
+        return kUserDefaults.float(forKey: id)
     }
     
-    func add(video: STVideo) {
-        if let data = UserDefaults.standard.value(forKey: NSDefaultsLikedVideosKey) as? Data {
+    // MARK fileprivate methods, can't touch this, to to do do, do do...  can't touch this
+    
+    fileprivate func addToDefaults(video: STVideo, key: String) {
+        if let data = kUserDefaults.value(forKey: key) as? Data {
             if var videos = try? PropertyListDecoder().decode(Dictionary<String, STVideo>.self, from: data) {
                 videos[video.id] = video
-                UserDefaults.standard.set(try? PropertyListEncoder().encode(videos), forKey: NSDefaultsLikedVideosKey)
-                print("STLikedHelper: Saved!")
+                kUserDefaults.set(try? PropertyListEncoder().encode(videos), forKey: key)
             }
         } else {
             let videos: Dictionary<String, STVideo> = [video.id: video]
-            UserDefaults.standard.set(try? PropertyListEncoder().encode(videos), forKey: NSDefaultsLikedVideosKey)
-            print("STLikedHelper: Saved!")
+            kUserDefaults.set(try? PropertyListEncoder().encode(videos), forKey: key)
         }
-        
-        NotificationCenter.default.post(name: kReloadLikedTabNotification, object: nil)
     }
-    
-    func remove(video: STVideo) {
-        if let data = UserDefaults.standard.value(forKey: NSDefaultsLikedVideosKey) as? Data {
+    fileprivate func removeFromDefaults(video: STVideo, key: String) {
+        if let data = kUserDefaults.value(forKey: key) as? Data {
             if var videos = try? PropertyListDecoder().decode(Dictionary<String, STVideo>.self, from: data) {
                 videos.removeValue(forKey: video.id)
-                UserDefaults.standard.set(try? PropertyListEncoder().encode(videos), forKey: NSDefaultsLikedVideosKey)
-                print("STLikedHelper: Removed!")
+                kUserDefaults.set(try? PropertyListEncoder().encode(videos), forKey: key)
             }
         }
-        
-        NotificationCenter.default.post(name: kReloadLikedTabNotification, object: nil)
     }
-    
-    func isLiked(video: STVideo) -> Bool {
-        if let data = UserDefaults.standard.value(forKey: NSDefaultsLikedVideosKey) as? Data {
+    fileprivate func isPresent(video: STVideo, under key: String) -> Bool{
+        if let data = kUserDefaults.value(forKey: key) as? Data {
             if var videos = try? PropertyListDecoder().decode(Dictionary<String, STVideo>.self, from: data) {
                 if videos[video.id] != nil {
                     return true
@@ -60,9 +95,8 @@ class STDefaultsHelper: NSObject {
         }
         return false
     }
-    
-    func allVideos() -> [STVideo] {
-        if let data = UserDefaults.standard.value(forKey: NSDefaultsLikedVideosKey) as? Data {
+    fileprivate func allVideosFor(key: String) -> [STVideo]  {
+        if let data = kUserDefaults.value(forKey: key) as? Data {
             if let videos = try? PropertyListDecoder().decode(Dictionary<String, STVideo>.self, from: data) {
                 let arr = Array(videos.values)
                 return arr
@@ -70,4 +104,5 @@ class STDefaultsHelper: NSObject {
         }
         return [STVideo]()
     }
+    
 }
